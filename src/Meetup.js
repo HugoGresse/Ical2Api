@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 const Meetup = () => {
   return (
-    <Grid item xs={12} sm={4} component={Box} display="flex">
+    <Grid item xs={12} sm={4} md={3} component={Box} display="flex">
       <Box flex={1}>
         <Typography variant="h6">Meetup1</Typography>
         <Box>
