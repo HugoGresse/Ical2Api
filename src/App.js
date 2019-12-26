@@ -1,19 +1,12 @@
 import React from "react";
+import AppLayout from "./layout/AppLayout";
+import MeetupList from "./MeetupList";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppLayout>
+      <MeetupList />
+    </AppLayout>
   );
 }
 
