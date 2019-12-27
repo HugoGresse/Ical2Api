@@ -11,7 +11,7 @@ Provide a read-only api for Meetup.com.
 
 - [ ] Front end to manage the meetup list
 - [ ] Firestore rules: only allow owner to write, read everyone
-- [ ] API
+- [x] API
 - [ ] Change owner
 
 #### Api Specs

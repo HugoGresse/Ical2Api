@@ -9,24 +9,28 @@ import {
 } from "mdi-material-ui";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import { countPassedEvents, countUpcomingEvents } from "../state/selectors";
 
-const Meetup = () => {
+const Meetup = ({ meetup, events }) => {
+  const upcomingEvents = countUpcomingEvents(events);
+  const passedEvents = countPassedEvents(events);
+
   return (
     <Grid item xs={12} sm={4} md={3} component={Box} display="flex">
       <Box flex={1}>
-        <Typography variant="h6">Meetup1</Typography>
+        <Typography variant="h6">{meetup.name}</Typography>
         <Box>
           <Box>
             <CalendarClock
               style={{ top: 6, marginRight: 4, position: "relative" }}
             />
-            1 upcoming event
+            {upcomingEvents} upcoming event
           </Box>
           <Box>
             <CalendarCheck
               style={{ top: 6, marginRight: 4, position: "relative" }}
             />
-            3 passed events
+            {passedEvents} passed events
           </Box>
         </Box>
       </Box>
