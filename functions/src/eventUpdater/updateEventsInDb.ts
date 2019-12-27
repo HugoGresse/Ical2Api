@@ -14,7 +14,7 @@ const updateEventInDb = async (events: Event[]): Promise<void> => {
       })
       .catch(error =>
         console.error(
-          `Failed to update ${event.title} - ${event.id} meetupId: ${event.meetupId}`,
+          `Failed to update ${event.title} - ${event.icalId} meetupId: ${event.meetupId}`,
           error
         )
       );
@@ -26,7 +26,7 @@ const updateEventInDb = async (events: Event[]): Promise<void> => {
 };
 
 const generateIdFromEvent = (e: Event): string => {
-  return `${e.meetupId}+${e.id}`;
+  return `${e.meetupId}+${e.icalId}`;
 };
 
 export default updateEventInDb;

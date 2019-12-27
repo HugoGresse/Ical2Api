@@ -1,5 +1,6 @@
 export interface Event {
-  id: string;
+  id?: string;
+  icalId: string;
   title: string;
   description: string;
   startDate: number;

@@ -11,18 +11,18 @@ const getUpcomingEvents = (icals: Ical[]) => {
 
     subComponents.forEach(vevent => {
       const event = new ICAL.Event(vevent);
-      const startTime = event.startDate.toUnixTime();
-      const endTime = event.endDate.toUnixTime();
+      const startTime = event.startDate.toUnixTime() * 1000;
+      const endTime = event.endDate.toUnixTime() * 1000;
       events.push({
         url: vevent.getFirstPropertyValue("url"),
         startDate: startTime,
         endDate: endTime,
-        durationInMinutes: Math.floor((endTime - startTime) / 60),
+        durationInMinutes: Math.floor((endTime - startTime) / 1000 / 60),
         description: event.description,
         title: event.summary,
         location: event.location,
         meetupId: ical.meetup.id,
-        id: vevent.getFirstPropertyValue("uid")
+        icalId: vevent.getFirstPropertyValue("uid")
       });
     });
   });
