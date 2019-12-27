@@ -22,7 +22,10 @@ Provide a read-only api for Meetup.com.
 
 Parameters:
 
-- `filter=upcoming` = filter only for upcoming events
-- `filter=passed` = filter only for passed events
-- `meetup=<meetupId>` = query only events for this meetup
-- `meetups=<id1,id2, id3>` = query only events for those meetups
+- `status=upcoming` = get only upcoming events
+- `status=passed` = get only passed events
+- `meetups=<id1,id2, id3>` = query only events for those meetups (max 10 id)
+
+`https://meetup2api.web.app/api/v1/meetups/`
+
+> get all meetups

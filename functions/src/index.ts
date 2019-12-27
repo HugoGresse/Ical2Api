@@ -1,1 +1,3 @@
-export { scheduleUpdateEventFromMeetup} from './triggers/updateEventsFromMeetup'
+export { scheduleUpdateEventFromMeetup } from "./triggers/updateEventsFromMeetup";
+
+export { api } from "./api";
