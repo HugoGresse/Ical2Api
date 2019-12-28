@@ -1,9 +1,14 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import { CalendarPlus } from "mdi-material-ui";
 import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import styled from "styled-components";
+
+const List = styled.ul`
+  list-style: none;
+  display: flex;
+`;
 
 const Header = () => {
   return (
@@ -14,19 +19,19 @@ const Header = () => {
 
       <Box alignSelf="center">
         <nav>
-          <ul>
+          <List>
             <li>
-              <Link to="/">Upcoming Events</Link>
+              <Button component={Link} to="/">
+                Upcoming Events
+              </Button>
             </li>
             <li>
-              <Link to="/icals">icals</Link>
+              <Button component={Link} to="/icals">
+                Icals
+              </Button>
             </li>
-          </ul>
+          </List>
         </nav>
-
-        <IconButton aria-label="index a new meetup">
-          <CalendarPlus />
-        </IconButton>
       </Box>
     </Box>
   );

@@ -38,7 +38,7 @@ const AppLayout = ({ children }) => {
       <ThemeProvider theme={theme}>
         <Container fixed>
           <Header />
-          <Box bgcolor="#eee" borderRadius={10} padding={2}>
+          <Box bgcolor="#eee" borderRadius={10} padding={3}>
             {children}
           </Box>
           <Footer />
