@@ -13,12 +13,18 @@ const DataLoading = ({ children }) => {
         payload: querySnapshot.docs.map(ref => ({ id: ref.id, ...ref.data() }))
       });
     });
-    firestore.collection("events").onSnapshot(querySnapshot => {
-      dispatch({
-        type: "eventsLoaded",
-        payload: querySnapshot.docs.map(ref => ({ id: ref.id, ...ref.data() }))
+    firestore
+      .collection("events")
+      .orderBy("startDate")
+      .onSnapshot(querySnapshot => {
+        dispatch({
+          type: "eventsLoaded",
+          payload: querySnapshot.docs.map(ref => ({
+            id: ref.id,
+            ...ref.data()
+          }))
+        });
       });
-    });
   }, [dispatch]);
 
   return children;

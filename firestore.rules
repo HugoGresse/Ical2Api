@@ -3,15 +3,15 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     match /events/{eventId} {
-      allow read if true;
+      allow read: if true;
     }
 
     match /icals/{icalId} {
-      allow read if true;
+      allow read: if true;
     }
 
     match /reminder/{reminderId} {
-      allow read if true;
+      allow read: if true;
     }
   }
 }
