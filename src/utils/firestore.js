@@ -20,8 +20,6 @@ export const firestore = firebaseMain.firestore();
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp;
 export const nowTimestamp = firebase.firestore.Timestamp.now;
 export const deleteField = firebase.firestore.FieldValue.delete;
-export const functions = {
-  updateMeetupEvents: firebase.functions().httpsCallable("updateMeetupEvents")
-};
+export const functions = {};
 
 authProvider.useDeviceLanguage();
