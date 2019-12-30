@@ -14,6 +14,7 @@ const getUpcomingEvents = (icals: Ical[]) => {
       const startTime = event.startDate.toUnixTime() * 1000;
       const endTime = event.endDate.toUnixTime() * 1000;
       events.push({
+        organizationId: ical.meetup.organizationId,
         url: vevent.getFirstPropertyValue("url"),
         startDate: startTime,
         endDate: endTime,

@@ -20,7 +20,7 @@ const updateEventInDb = async (events: Event[]): Promise<void> => {
       );
   }
 
-  console.log("> Updated completed!");
+  console.log("> Update completed!");
 
   return Promise.resolve();
 };
