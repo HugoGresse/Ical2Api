@@ -10,4 +10,5 @@ export interface Event {
   location: string;
   url: string;
   meetupId: string;
+  meetupName: string;
 }

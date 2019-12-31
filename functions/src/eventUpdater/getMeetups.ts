@@ -1,4 +1,4 @@
-import { db } from "../initFirebase";
+import { db } from "../utils/initFirebase";
 
 export interface Meetup {
   id: string;

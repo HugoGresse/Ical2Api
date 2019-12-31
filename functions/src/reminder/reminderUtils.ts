@@ -1,4 +1,4 @@
-import { db } from "../initFirebase";
+import { db } from "../utils/initFirebase";
 import { DateTime } from "luxon";
 import { Event } from "../eventUpdater/Event";
 

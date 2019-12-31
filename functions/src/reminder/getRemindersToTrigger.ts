@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import fetch from "node-fetch";
 import {
   getEventsBetween,
   getReminders,
@@ -8,7 +9,8 @@ import {
   REMINDER_WEEKLY
 } from "./reminderUtils";
 import { Event } from "../eventUpdater/Event";
-import { db } from "../initFirebase";
+import { db } from "../utils/initFirebase";
+import { extractHostname } from "../utils/extractHostname";
 
 export const getRemindersToTrigger = async () => {
   console.log("> getRemindersToTrigger");
@@ -53,14 +55,13 @@ const processWeeklyReminder = async (reminder: Reminder): Promise<void> => {
       zone: reminder.timezone
     }).plus({ days: 7 });
 
-    console.log(reminderTimeInUtc.toMillis(), toDate.toMillis());
     const events = await getEventsBetween(
       reminder.organizationId,
       reminderTimeInUtc,
       toDate
     );
+    console.log(`events count: ${events.length}`);
     events.forEach(e => console.log(`- ${e.id} - ${e.title}`));
-    console.log(`events get? ${events.length}`);
 
     if (events.length <= 0) {
       return Promise.resolve();
@@ -72,8 +73,6 @@ const processWeeklyReminder = async (reminder: Reminder): Promise<void> => {
     }
   }
   console.log(`Reminder ${reminder.id} not triggered`);
-
-  // Call slack api
 };
 
 const processDailyReminder = (reminder: Reminder): Promise<number> => {
@@ -84,7 +83,7 @@ export const getOrganization = async (
   orgId: string
 ): Promise<Organization | undefined> => {
   const doc = await db
-    .collection("reminders")
+    .collection("organizations")
     .doc(orgId)
     .get();
 
@@ -104,36 +103,64 @@ export const postReminder = async (
     return Promise.reject("Slack webhook url is not configured");
   }
 
-  const attachments = events.map(event => {
-    const formatedDate = DateTime.fromMillis(event.startDate)
-      .setLocale("fr")
-      .toLocaleString(DateTime.DATETIME_MED);
-    return {
+  const attachments: object[] = [
+    {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `*${event.title}*\ndu ${event.meetupId}.\n:clock1: ${formatedDate}\n:pushpin: ${event.location}\n${event.description}`
+        text: `:wave: Il y a *${events.length}* évènement${
+          events.length > 1 ? "s" : ""
+        } cette semaine:`
+      }
+    }
+  ];
+
+  events.forEach(event => {
+    const formatedDate = DateTime.fromMillis(event.startDate)
+      .setLocale("fr")
+      .toLocaleString(DateTime.DATETIME_MED);
+
+    attachments.push({
+      type: "divider"
+    });
+
+    attachments.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `- *${event.title}*\ndu meetup *${event.meetupName}*.\n`
       },
       accessory: {
         type: "button",
         text: {
           type: "plain_text",
-          text: "Voir sur TODO",
+          text: `Voir sur ${extractHostname(event.url)}`,
           emoji: true
         },
         url: event.url
       }
-    };
-  });
+    });
 
-  const slackContent = {
-    text: `Il y a *${events.length}* évènement(s) cette semaine:`,
-    attachments: attachments
-  };
+    attachments.push({
+      type: "section",
+      fields: [
+        {
+          type: "mrkdwn",
+          text: `*:clock1: Date*\n${formatedDate}`
+        },
+        {
+          type: "mrkdwn",
+          text: `*:pushpin: Lieu*\n${event.location ? event.location : "-"}`
+        }
+      ]
+    });
+  });
 
   const postPromise = fetch(slackWebHookUrl, {
     method: "POST",
-    body: JSON.stringify(slackContent),
+    body: JSON.stringify({
+      blocks: attachments
+    }),
     headers: {
       "Content-Type": "application/json"
     }

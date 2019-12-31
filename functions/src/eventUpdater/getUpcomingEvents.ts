@@ -23,6 +23,7 @@ const getUpcomingEvents = (icals: Ical[]) => {
         title: event.summary,
         location: event.location,
         meetupId: ical.meetup.id,
+        meetupName: ical.meetup.name,
         icalId: vevent.getFirstPropertyValue("uid")
       });
     });

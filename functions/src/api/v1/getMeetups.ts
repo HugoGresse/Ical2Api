@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "../../initFirebase";
+import { db } from "../../utils/initFirebase";
 import * as admin from "firebase-admin";
 import Query = admin.firestore.Query;
 
