@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { db } from "../../utils/initFirebase";
 import * as admin from "firebase-admin";
 import Query = admin.firestore.Query;
-import { getRemindersToTrigger } from "../../reminder/getRemindersToTrigger";
 
 export default async (req: Request, res: Response) => {
   const { meetups, status } = req.query;

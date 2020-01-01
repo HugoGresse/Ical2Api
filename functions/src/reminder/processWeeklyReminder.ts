@@ -1,36 +1,13 @@
+import { getEventsBetween, Reminder } from "./reminderUtils";
 import { DateTime } from "luxon";
-import fetch from "node-fetch";
-import {
-  getEventsBetween,
-  getReminders,
-  Organization,
-  Reminder,
-  REMINDER_HOUR,
-  REMINDER_WEEKLY
-} from "./reminderUtils";
+import { getOrganization } from "../utils/dbGetters";
 import { Event } from "../eventUpdater/Event";
-import { db } from "../utils/initFirebase";
 import { extractHostname } from "../utils/extractHostname";
+import { postMessageToSlack } from "./postMessageToSlack";
 
-export const getRemindersToTrigger = async () => {
-  console.log("> getRemindersToTrigger");
-  const dbReminders = await getReminders();
-
-  for (const reminder of dbReminders) {
-    switch (reminder.type) {
-      case REMINDER_WEEKLY:
-        await processWeeklyReminder(reminder);
-        break;
-      case REMINDER_HOUR:
-        await processDailyReminder(reminder);
-        break;
-      default:
-        console.error(`Reminder type ${reminder.type} not managed`);
-    }
-  }
-};
-
-const processWeeklyReminder = async (reminder: Reminder): Promise<void> => {
+export const processWeeklyReminder = async (
+  reminder: Reminder
+): Promise<void> => {
   if (!reminder.weekday) {
     console.warn("Weekly reminder without weekday");
     return Promise.resolve();
@@ -75,27 +52,7 @@ const processWeeklyReminder = async (reminder: Reminder): Promise<void> => {
   console.log(`Reminder ${reminder.id} not triggered`);
 };
 
-const processDailyReminder = (reminder: Reminder): Promise<number> => {
-  return Promise.resolve(1);
-};
-
-export const getOrganization = async (
-  orgId: string
-): Promise<Organization | undefined> => {
-  const doc = await db
-    .collection("organizations")
-    .doc(orgId)
-    .get();
-
-  if (doc.exists) {
-    return {
-      id: doc.id,
-      ...doc.data()
-    } as any;
-  }
-  return undefined;
-};
-export const postReminder = async (
+const postReminder = async (
   events: Event[],
   slackWebHookUrl: string
 ): Promise<void> => {
@@ -103,7 +60,7 @@ export const postReminder = async (
     return Promise.reject("Slack webhook url is not configured");
   }
 
-  const attachments: object[] = [
+  const blocks: object[] = [
     {
       type: "section",
       text: {
@@ -118,17 +75,23 @@ export const postReminder = async (
   events.forEach(event => {
     const formatedDate = DateTime.fromMillis(event.startDate)
       .setLocale("fr")
-      .toLocaleString(DateTime.DATETIME_MED);
+      .toLocaleString({
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric"
+      });
 
-    attachments.push({
+    blocks.push({
       type: "divider"
     });
 
-    attachments.push({
+    blocks.push({
       type: "section",
       text: {
         type: "mrkdwn",
-        text: `- *${event.title}*\ndu meetup *${event.meetupName}*.\n`
+        text: `:arrow_right: *${event.title}*\ndu meetup *${event.meetupName}*.\n`
       },
       accessory: {
         type: "button",
@@ -141,7 +104,7 @@ export const postReminder = async (
       }
     });
 
-    attachments.push({
+    blocks.push({
       type: "section",
       fields: [
         {
@@ -156,21 +119,5 @@ export const postReminder = async (
     });
   });
 
-  const postPromise = fetch(slackWebHookUrl, {
-    method: "POST",
-    body: JSON.stringify({
-      blocks: attachments
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-  return postPromise
-    .then(res => {
-      if (res.status > 399) console.log(res);
-    })
-    .catch(error =>
-      console.error(`Error occured during Slack event: ${error}`)
-    );
+  return postMessageToSlack(blocks, slackWebHookUrl);
 };
