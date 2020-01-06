@@ -1,6 +1,7 @@
 import * as ICAL from "ical.js";
 import { Ical } from "./getIcals";
 import { Event } from "./Event";
+import { DateTime } from "luxon";
 
 const getUpcomingEvents = (icals: Ical[]) => {
   const events: Event[] = [];
@@ -11,8 +12,12 @@ const getUpcomingEvents = (icals: Ical[]) => {
 
     subComponents.forEach(vevent => {
       const event = new ICAL.Event(vevent);
-      const startTime = event.startDate.toUnixTime() * 1000;
-      const endTime = event.endDate.toUnixTime() * 1000;
+
+      const startTime = getTimestampInCorrectUTCFromComponent(
+        vevent,
+        "dtstart"
+      );
+      const endTime = getTimestampInCorrectUTCFromComponent(vevent, "dtend");
       events.push({
         organizationId: ical.meetup.organizationId,
         url: vevent.getFirstPropertyValue("url"),
@@ -29,6 +34,22 @@ const getUpcomingEvents = (icals: Ical[]) => {
     });
   });
   return events;
+};
+
+// See bug https://github.com/mozilla-comm/ical.js/issues/102
+const getTimestampInCorrectUTCFromComponent = (
+  vevent: ICAL.Component,
+  propertyName: string
+): number => {
+  const date = vevent.getFirstPropertyValue(propertyName);
+  const vtimezone = vevent.getFirstSubcomponent("vtimezone");
+  if (vtimezone && DateTime.fromJSDate(date.toJSDate()).offset) {
+    //in microsoft, need to use timezone component, in gmail, no timezone, just UTC
+    date.zone = new ICAL.Timezone(vtimezone);
+  }
+  return DateTime.fromJSDate(date.toJSDate())
+    .toUTC(date.utcOffset() / 60)
+    .toMillis();
 };
 
 export default getUpcomingEvents;
