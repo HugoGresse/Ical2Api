@@ -14,10 +14,15 @@ const getUpcomingEvents = (icals: Ical[]) => {
       const event = new ICAL.Event(vevent);
 
       const startTime = getTimestampInCorrectUTCFromComponent(
+        comp,
         vevent,
         "dtstart"
       );
-      const endTime = getTimestampInCorrectUTCFromComponent(vevent, "dtend");
+      const endTime = getTimestampInCorrectUTCFromComponent(
+        comp,
+        vevent,
+        "dtend"
+      );
       events.push({
         organizationId: ical.meetup.organizationId,
         url: vevent.getFirstPropertyValue("url"),
@@ -38,12 +43,13 @@ const getUpcomingEvents = (icals: Ical[]) => {
 
 // See bug https://github.com/mozilla-comm/ical.js/issues/102
 const getTimestampInCorrectUTCFromComponent = (
+  jCal: ICAL.Component,
   vevent: ICAL.Component,
   propertyName: string
 ): number => {
   const date = vevent.getFirstPropertyValue(propertyName);
-  const vtimezone = vevent.getFirstSubcomponent("vtimezone");
-  if (vtimezone && DateTime.fromJSDate(date.toJSDate()).offset) {
+  const vtimezone = jCal.getFirstSubcomponent("vtimezone");
+  if (vtimezone) {
     //in microsoft, need to use timezone component, in gmail, no timezone, just UTC
     date.zone = new ICAL.Timezone(vtimezone);
   }
