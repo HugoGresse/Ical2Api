@@ -1,10 +1,6 @@
-import {
-  getReminders,
-  Reminder,
-  REMINDER_HOUR,
-  REMINDER_WEEKLY
-} from "./reminderUtils";
+import { getReminders, REMINDER_HOUR, REMINDER_WEEKLY } from "./reminderUtils";
 import { processWeeklyReminder } from "./processWeeklyReminder";
+import { processHourlyReminder } from "./processHourlyReminder";
 
 export const checkAndProcessReminders = async () => {
   console.log("> getRemindersToTrigger");
@@ -16,14 +12,10 @@ export const checkAndProcessReminders = async () => {
         await processWeeklyReminder(reminder);
         break;
       case REMINDER_HOUR:
-        await processDailyReminder(reminder);
+        await processHourlyReminder(reminder);
         break;
       default:
         console.error(`Reminder type ${reminder.type} not managed`);
     }
   }
-};
-
-const processDailyReminder = (reminder: Reminder): Promise<number> => {
-  return Promise.resolve(1);
 };
