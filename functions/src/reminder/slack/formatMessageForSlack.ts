@@ -96,5 +96,16 @@ export const formatMessageForSlack = (
         })
     })
 
+    blocks.push({
+        type: 'context',
+        elements: [
+            {
+                type: 'mrkdwn',
+                text:
+                    'Provided by <https://github.com/HugoGresse/Ical2Api|Ical2Api>',
+            },
+        ],
+    })
+
     return blocks
 }
