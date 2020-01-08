@@ -22,6 +22,12 @@ export interface Reminder {
 export interface Organization {
   id: string;
   name: string;
+  privateData: OrganizationPrivateData;
+}
+
+export interface OrganizationPrivateData {
+  id: string;
+  organizationId: string;
   slackWebHook: string;
 }
 
@@ -70,7 +76,11 @@ export const gatherEventsAndPostReminder = async (
 
   const organization = await getOrganization(reminder.organizationId);
   if (organization) {
-    return postReminder(events, reminder, organization.slackWebHook);
+    return postReminder(
+      events,
+      reminder,
+      organization.privateData.slackWebHook
+    );
   }
   return Promise.reject("Organization not found");
 };

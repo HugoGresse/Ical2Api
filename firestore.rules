@@ -13,5 +13,13 @@ service cloud.firestore {
     match /reminder/{reminderId} {
       allow read: if true;
     }
+
+    match /organizations/{organizationId} {
+      allow read: if true;
+    }
+
+    match /organizationsPrivateData/{orgPrivateDataId} {
+      allow read: if false;
+    }
   }
 }

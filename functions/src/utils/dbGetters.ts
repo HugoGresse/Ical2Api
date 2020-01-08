@@ -10,10 +10,26 @@ export const getOrganization = async (
     .get();
 
   if (doc.exists) {
+    const privateOrgDocs = await db
+      .collection("organizationsPrivateData")
+      .where("organizationId", "==", orgId)
+      .limit(1)
+      .get();
+
+    const privateOrgDoc = privateOrgDocs.docs.pop();
+
+    if (!privateOrgDoc) {
+      return undefined;
+    }
+
     return {
       id: doc.id,
-      ...doc.data()
-    } as any;
+      ...doc.data(),
+      privateData: {
+        id: privateOrgDoc.id,
+        ...privateOrgDoc.data()
+      }
+    } as Organization;
   }
   return undefined;
 };
