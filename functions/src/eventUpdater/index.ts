@@ -1,11 +1,11 @@
-import getMeetups from "./getMeetups";
-import getIcals from "./getIcals";
-import getUpcomingEvents from "./getUpcomingEvents";
-import updateEventInDb from "./updateEventsInDb";
+import geIcals from './geIcals'
+import getIcalFiles from './getIcalFiles'
+import getUpcomingEvents from './getUpcomingEvents'
+import updateEventInDb from './updateEventsInDb'
 
 export const updateDbFromMeetup = async () => {
-  const meetups = await getMeetups();
-  const icals = await getIcals(meetups);
-  const upcomingEvents = await getUpcomingEvents(icals);
-  return updateEventInDb(upcomingEvents);
-};
+    const meetups = await geIcals()
+    const icals = await getIcalFiles(meetups)
+    const upcomingEvents = await getUpcomingEvents(icals)
+    return updateEventInDb(upcomingEvents)
+}

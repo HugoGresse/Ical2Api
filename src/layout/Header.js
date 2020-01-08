@@ -21,14 +21,14 @@ const Header = () => {
                             fontFamily: 'sans-serif',
                             color: '#aaa',
                         }}>
-                        by Meetup2Api
+                        by Ical2Api
                     </Typography>
                 </Box>
             )
         }
         return (
             <Typography variant="h1" style={{ margin: '20px 0' }}>
-                Meetup2Api
+                Ical2Api
             </Typography>
         )
     }

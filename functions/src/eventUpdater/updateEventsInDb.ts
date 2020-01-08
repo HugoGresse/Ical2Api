@@ -1,32 +1,32 @@
-import { db, serverTimestamp } from "../utils/initFirebase";
-import { Event } from "./Event";
+import { db, serverTimestamp } from '../utils/initFirebase'
+import { Event } from './Event'
 
 const updateEventInDb = async (events: Event[]): Promise<void> => {
-  console.log(`> Adding ${events.length} events to the db`);
+    console.log(`> Adding ${events.length} events to the db`)
 
-  for (const event of events) {
-    await db
-      .collection("events")
-      .doc(generateIdFromEvent(event))
-      .set({
-        ...event,
-        crawldAt: serverTimestamp()
-      })
-      .catch(error =>
-        console.error(
-          `Failed to update ${event.title} - ${event.icalId} meetupId: ${event.meetupId}`,
-          error
-        )
-      );
-  }
+    for (const event of events) {
+        await db
+            .collection('events')
+            .doc(generateIdFromEvent(event))
+            .set({
+                ...event,
+                crawldAt: serverTimestamp(),
+            })
+            .catch(error =>
+                console.error(
+                    `Failed to update ${event.title} - ${event.icalName}(${event.icalId})`,
+                    error
+                )
+            )
+    }
 
-  console.log("> Update completed!");
+    console.log('> Update completed!')
 
-  return Promise.resolve();
-};
+    return Promise.resolve()
+}
 
 const generateIdFromEvent = (e: Event): string => {
-  return `${e.meetupId}+${e.icalId}`;
-};
+    return `${e.icalId}+${e.icalFileId}`
+}
 
-export default updateEventInDb;
+export default updateEventInDb
