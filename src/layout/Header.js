@@ -1,40 +1,43 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import styled from "styled-components";
-
-const List = styled.ul`
-  list-style: none;
-  display: flex;
-`;
+import React from 'react'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import { useStateValue } from '../state/state'
 
 const Header = () => {
-  return (
-    <Box display="flex" justifyContent="space-between">
-      <Typography variant="h1" style={{ margin: "20px 0" }}>
-        Meetup2Api
-      </Typography>
+    const [{ organization }] = useStateValue()
 
-      <Box alignSelf="center">
-        <nav>
-          <List>
-            <li>
-              <Button component={Link} to="/">
-                Upcoming Events
-              </Button>
-            </li>
-            <li>
-              <Button component={Link} to="/icals">
-                Icals
-              </Button>
-            </li>
-          </List>
-        </nav>
-      </Box>
-    </Box>
-  );
-};
+    const getTitle = organization => {
+        if (organization.name) {
+            return (
+                <Box>
+                    <Typography variant="h1" style={{ margin: '20px 0' }}>
+                        {organization.name}
+                    </Typography>
 
-export default Header;
+                    <Typography
+                        variant="h6"
+                        style={{
+                            margin: '20px 0',
+                            fontFamily: 'sans-serif',
+                            color: '#aaa',
+                        }}>
+                        by Meetup2Api
+                    </Typography>
+                </Box>
+            )
+        }
+        return (
+            <Typography variant="h1" style={{ margin: '20px 0' }}>
+                Meetup2Api
+            </Typography>
+        )
+    }
+
+    return (
+        <Box display="flex" justifyContent="space-between">
+            {getTitle(organization)}
+        </Box>
+    )
+}
+
+export default Header
