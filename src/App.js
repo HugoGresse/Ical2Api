@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppLayout from './layout/AppLayout'
 import { StateProvider } from './state/state'
 import OrganizationApp from './OrganizationApp'
+import Home from './home/Home'
 
 const App = () => {
     const initialState = {
@@ -40,6 +41,9 @@ const App = () => {
                     <Switch>
                         <Route path="/o/:organizationId">
                             <OrganizationApp />
+                        </Route>
+                        <Route exact path="/">
+                            <Home />
                         </Route>
                         <Route parth="*">
                             <div>404</div>
