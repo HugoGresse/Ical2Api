@@ -4,7 +4,18 @@ import * as admin from 'firebase-admin'
 import Query = admin.firestore.Query
 
 export default async (req: Request, res: Response) => {
-    const query: Query = db.collection('icals')
+    const { organizationId } = req.query
+
+    if (!organizationId || organizationId.length <= 0) {
+        res.status(400)
+            .send('invalid organizationId query parameter')
+            .end()
+        return
+    }
+
+    const query: Query = db
+        .collection('icals')
+        .where('organizationId', '==', organizationId)
 
     const result = await query.get()
     const events = result.docs.map(ref => ({ id: ref.id, ...ref.data() }))

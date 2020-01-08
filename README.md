@@ -8,7 +8,6 @@ Provide a read-only api for any ical feed.
 
 #### TODO List:
 
--   [ ] reformat the api to include organization
 -   [ ] Front end to manage the ical list and organization
 -   [ ] User management
 -   [ ] Translation for reminders
@@ -23,11 +22,11 @@ Parameters:
 
 -   `status=upcoming` = get only upcoming events
 -   `status=passed` = get only passed events
--   `meetups=<id1,id2, id3>` = query only events for those icals (max 10 id)
+-   `icals=<id1,id2, id3>` = query only events for those ical(s) (max 10 id, comma separated)
+-   `organizations=<id1,id2, id3>` = query only events parts of the given organisation(s) (max 10 id, comma separated)
 
-###### Get all icals
+##### Get all icals
 
 `https://ical2api.web.app/api/v1/icals/?organizationId=<orgId>`
 
 -   `organizationId=orgId` (required) the organization your icals are linked to
-    (TODO)

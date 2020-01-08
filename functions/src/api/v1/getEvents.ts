@@ -1,37 +1,37 @@
-import { Request, Response } from "express";
-import { db } from "../../utils/initFirebase";
-import * as admin from "firebase-admin";
-import Query = admin.firestore.Query;
+import { Request, Response } from 'express'
+import { db } from '../../utils/initFirebase'
+import * as admin from 'firebase-admin'
+import Query = admin.firestore.Query
 
 export default async (req: Request, res: Response) => {
-  const { meetups, status } = req.query;
+    const { icals, status } = req.query
 
-  let query: Query = db.collection("events");
+    let query: Query = db.collection('events')
 
-  if (meetups) {
-    query = query.where("meetupId", "in", meetups.split(","));
-  }
-
-  if (status) {
-    switch (status) {
-      case "upcoming":
-        query = query.where("startDate", ">", Date.now());
-        break;
-      case "passed":
-        query = query.where("startDate", "<", Date.now());
-        break;
-      default:
-        break;
+    if (icals) {
+        query = query.where('icalId', 'in', icals.split(','))
     }
-  }
 
-  const result = await query.get();
-  const events = result.docs.map(ref => ({ id: ref.id, ...ref.data() }));
+    if (status) {
+        switch (status) {
+            case 'upcoming':
+                query = query.where('startDate', '>', Date.now())
+                break
+            case 'passed':
+                query = query.where('startDate', '<', Date.now())
+                break
+            default:
+                break
+        }
+    }
 
-  try {
-    res.send(events);
-  } catch (error) {
-    console.error(error); // eslint-disable-line no-console
-    res.status(500).end();
-  }
-};
+    const result = await query.get()
+    const events = result.docs.map(ref => ({ id: ref.id, ...ref.data() }))
+
+    try {
+        res.send(events)
+    } catch (error) {
+        console.error(error) // eslint-disable-line no-console
+        res.status(500).end()
+    }
+}
