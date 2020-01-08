@@ -5,7 +5,7 @@ import Event from './Event'
 import { selectUpcomingEvents } from '../state/selectors'
 
 const UpcomingEvents = () => {
-    const [{ meetups, events }] = useStateValue()
+    const [{ icals, events }] = useStateValue()
 
     const upcomingEvents = selectUpcomingEvents(events)
 
@@ -14,11 +14,7 @@ const UpcomingEvents = () => {
             {upcomingEvents.map(event => (
                 <Event
                     key={event.id}
-                    meetup={
-                        meetups.filter(
-                            meetup => event.meetupId === meetup.id
-                        )[0]
-                    }
+                    ical={icals.filter(ical => event.icalId === ical.id)[0]}
                     event={event}
                 />
             ))}

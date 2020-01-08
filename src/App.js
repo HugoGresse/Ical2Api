@@ -6,17 +6,17 @@ import OrganizationApp from './OrganizationApp'
 
 const App = () => {
     const initialState = {
-        meetups: [],
+        icals: [],
         events: [],
         organization: {},
     }
 
     const reducer = (state, action) => {
         switch (action.type) {
-            case 'meetupsLoaded':
+            case 'icalsLoaded':
                 return {
                     ...state,
-                    meetups: action.payload,
+                    icals: action.payload,
                 }
             case 'eventsLoaded':
                 return {

@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
 
-const Event = ({ meetup, event }) => {
+const Event = ({ ical, event }) => {
     const date = new Date(event.startDate)
 
     return (
@@ -14,7 +14,7 @@ const Event = ({ meetup, event }) => {
             <Grid item xs={12} sm={8}>
                 <Box flex={1}>
                     <Typography variant="h5" style={{ color: 'red' }}>
-                        {meetup && meetup.name}
+                        {ical && ical.name}
                     </Typography>
                     <Typography variant="h4" style={{ fontFamily: 'Roboto' }}>
                         {event.title}

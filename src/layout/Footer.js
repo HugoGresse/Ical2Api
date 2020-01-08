@@ -8,7 +8,7 @@ const Footer = () => {
         <Box display="flex" justifyContent="space-between" margin="20px 0">
             <Typography variant="h6">
                 <Link
-                    href="https://github.com/HugoGresse/Meetup2Api"
+                    href="https://github.com/HugoGresse/Ical2Api"
                     color="inherit"
                     target="_blank">
                     Open Source Project on GitHub
@@ -17,7 +17,7 @@ const Footer = () => {
             <Box alignSelf="center">
                 <Typography variant="h6">
                     <Link
-                        href="https://github.com/HugoGresse/Meetup2Api"
+                        href="https://github.com/HugoGresse/Ical2Api"
                         color="inherit">
                         Made by Hugo Gresse
                     </Link>

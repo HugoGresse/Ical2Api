@@ -4,17 +4,15 @@ import Grid from '@material-ui/core/Grid'
 import { useStateValue } from '../state/state'
 
 const IcalList = () => {
-    const [{ meetups, events }] = useStateValue()
+    const [{ icals, events }] = useStateValue()
 
     return (
         <Grid container spacing={4}>
-            {meetups.map(meetup => (
+            {icals.map(ical => (
                 <Ical
-                    key={meetup.id}
-                    meetup={meetup}
-                    events={events.filter(
-                        event => event.meetupId === meetup.id
-                    )}
+                    key={ical.id}
+                    ical={ical}
+                    events={events.filter(event => event.icalId === ical.id)}
                 />
             ))}
         </Grid>

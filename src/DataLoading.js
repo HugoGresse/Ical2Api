@@ -28,7 +28,7 @@ const DataLoading = ({ children }) => {
             .where('organizationId', '==', organizationId)
             .onSnapshot(querySnapshot => {
                 dispatch({
-                    type: 'meetupsLoaded',
+                    type: 'icalsLoaded',
                     payload: querySnapshot.docs.map(ref => ({
                         id: ref.id,
                         ...ref.data(),
