@@ -6,15 +6,15 @@ Provide a read-only api for any ical feed.
 2. Events will be synced every 30 minutes.
 3. Query the API (see below)
 
-#### TODO List:
+### TODO List:
 
 -   [ ] Front end to manage the ical list and organization
 -   [ ] User management
 -   [ ] Translation for reminders
 
-#### API
+# API
 
-##### Get all Events
+#### Get all Events
 
 `https://ical2api.web.app/api/v1/events/`
 
@@ -25,7 +25,7 @@ Parameters:
 -   `icals=<id1,id2, id3>` = query only events for those ical(s) (max 10 id, comma separated)
 -   `organizations=<id1,id2, id3>` = query only events parts of the given organisation(s) (max 10 id, comma separated)
 
-##### Get all icals
+#### Get all icals
 
 `https://ical2api.web.app/api/v1/icals/?organizationId=<orgId>`
 
