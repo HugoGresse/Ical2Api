@@ -1,4 +1,9 @@
-import { Reminder, REMINDER_HOUR, REMINDER_WEEKLY } from '../reminderUtils'
+import {
+    Reminder,
+    REMINDER_CREATED,
+    REMINDER_HOUR,
+    REMINDER_WEEKLY,
+} from '../reminderUtils'
 import { DateTime } from 'luxon'
 import { Event } from '../../eventUpdater/Event'
 import { extractHostname } from '../../utils/extractHostname'
@@ -29,6 +34,15 @@ export const formatMessageForSlack = (
                     text: `:wave: Il y a *${events.length}* évènement${
                         events.length > 1 ? 's' : ''
                     } cette semaine:`,
+                },
+            })
+            break
+        case REMINDER_CREATED:
+            blocks.push({
+                type: 'section',
+                text: {
+                    type: 'mrkdwn',
+                    text: `:wave: Nouvel évènement créé:`,
                 },
             })
             break
