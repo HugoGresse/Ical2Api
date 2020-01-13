@@ -55,7 +55,8 @@ export const formatMessageForSlack = (
 
     events.forEach(event => {
         const formatedDate = DateTime.fromMillis(event.startDate)
-            .setLocale('fr')
+            .setLocale(reminder.language)
+            .setZone(reminder.timezone)
             .toLocaleString({
                 weekday: 'long',
                 month: 'long',

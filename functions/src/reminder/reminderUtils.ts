@@ -19,6 +19,7 @@ export interface Reminder {
     organizationId: string
     type: ReminderType
     timezone: string
+    language: string
     weekday?: number
     hours?: number
 }
