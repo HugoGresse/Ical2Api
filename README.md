@@ -6,6 +6,8 @@ Provide a read-only api for any ical feed.
 2. Events will be synced every 30 minutes.
 3. Query the API (see below)
 
+Interested by the service? Contact me at hugo.gresse@gmail.com
+
 ### TODO List:
 
 -   [ ] Front end to manage the ical list and organization
@@ -30,3 +32,4 @@ Parameters:
 `https://ical2api.web.app/api/v1/icals/?organizationId=<orgId>`
 
 -   `organizationId=orgId` (required) the organization your icals are linked to
+
