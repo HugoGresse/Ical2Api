@@ -47,6 +47,7 @@ const UserLayout = ({ user }) => {
 }
 
 const Header = () => {
+    const history = useHistory()
     const [
         {
             organization,
@@ -82,7 +83,10 @@ const Header = () => {
         }
         return (
             <>
-                <Typography variant="h1" style={{ margin: '20px 0' }}>
+                <Typography
+                    variant="h1"
+                    style={{ margin: '20px 0' }}
+                    onClick={() => history.push('/')}>
                     Ical2Api
                 </Typography>
                 <Box display="flex" justifyContent="flex-end">
