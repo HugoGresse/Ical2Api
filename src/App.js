@@ -28,7 +28,7 @@ const App = () => {
                             auth: {
                                 ...state.auth,
                                 loggedIn: true,
-                                user: action.user,
+                                user: action.payload.user,
                             },
                         }
                     case 'logout':
