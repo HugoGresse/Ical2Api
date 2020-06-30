@@ -5,7 +5,7 @@ import UpcomingEvents from './event/UpcomingEvents'
 import DataLoading from './DataLoading'
 
 const OrganizationApp = () => {
-    let { path } = useRouteMatch()
+    const { path } = useRouteMatch()
 
     return (
         <DataLoading>

@@ -63,8 +63,12 @@ node_modules/
 
 # dotenv environment variables file
 .env
+.env.local
 .env.production.local
 .env.test.local
 .env.development.local
 
-.DS_STORE
+# MISC
+*~
+*.DS_Store
+*.iml

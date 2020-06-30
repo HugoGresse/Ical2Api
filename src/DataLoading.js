@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 import { useStateValue } from './state/state'
-import { firestore } from './utils/firestore'
+import { firestore } from './utils/firebase'
 import { useParams } from 'react-router-dom'
 
 const DataLoading = ({ children }) => {
     // noinspection JSUnusedLocalSymbols
-    const [state, dispatch] = useStateValue()
+    const [, dispatch] = useStateValue()
     let { organizationId } = useParams()
 
     useEffect(() => {
