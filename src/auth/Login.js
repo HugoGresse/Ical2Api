@@ -50,7 +50,7 @@ const Login = () => {
 
     useEffect(() => {
         if (loggedIn) {
-            history.goBack()
+            history.push('/')
         }
     }, [loggedIn, history])
 

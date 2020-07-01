@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { useStateValue } from './state/state'
-import { firestore } from './utils/firebase'
+import { useStateValue } from '../../state/state'
+import { firestore } from '../../utils/firebase'
 import { useParams } from 'react-router-dom'
 
-const DataLoading = ({ children }) => {
+const IcalDataLoading = ({ children }) => {
     // noinspection JSUnusedLocalSymbols
     const [, dispatch] = useStateValue()
-    let { organizationId } = useParams()
+    const { organizationId } = useParams()
 
     useEffect(() => {
         firestore
@@ -57,4 +57,4 @@ const DataLoading = ({ children }) => {
     return children
 }
 
-export default DataLoading
+export default IcalDataLoading

@@ -1,6 +1,6 @@
 import Container from '@material-ui/core/Container'
 import React from 'react'
-import Header from './Header'
+import Header from '../organisations/layout/Header'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'

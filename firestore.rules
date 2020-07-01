@@ -1,25 +1,31 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{database}/documents {
+    match /databases/{database}/documents {
 
-    match /events/{eventId} {
-      allow read: if true;
-    }
+        function isAdmin(data) { return data.owner == request.auth.uid || request.auth.uid in data.members}
 
-    match /icals/{icalId} {
-      allow read: if true;
-    }
+        match /events/{eventId} {
+            allow read: if true;
+        }
 
-    match /reminder/{reminderId} {
-      allow read: if true;
-    }
+        match /icals/{icalId} {
+            allow read: if true;
+        }
 
-    match /organizations/{organizationId} {
-      allow read: if true;
-    }
+        match /reminder/{reminderId} {
+            allow read: if true;
+        }
 
-    match /organizationsPrivateData/{orgPrivateDataId} {
-      allow read: if false;
+        match /organizations/{organizationId} {
+            allow get: if true;
+            allow list: if authenticated() && isAdmin(resource.data) && isEmailVerified();
+            allow create: if authenticated();
+            allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();
+            allow delete: if authenticated() && isAdmin(resource.data) && isEmailVerified();
+        }
+
+        match /organizationsPrivateData/{orgPrivateDataId} {
+            allow read: if false;
+        }
     }
-  }
 }

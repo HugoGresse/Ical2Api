@@ -5,10 +5,15 @@ import Event from './Event'
 import { selectUpcomingEvents } from '../state/selectors'
 
 const UpcomingEvents = () => {
-    const [{ icals, events }] = useStateValue()
+    const [
+        {
+            selectedOrganization: { icals, events },
+        },
+    ] = useStateValue()
 
     const upcomingEvents = selectUpcomingEvents(events)
 
+    console.log(icals, events, upcomingEvents)
     return (
         <Grid container spacing={4}>
             {upcomingEvents.map(event => (

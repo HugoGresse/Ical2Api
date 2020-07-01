@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import { useStateValue } from '../state/state'
+import { useStateValue } from '../../state/state'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import Avatar from '@material-ui/core/Avatar'
@@ -50,13 +50,14 @@ const Header = () => {
     const history = useHistory()
     const [
         {
-            organization,
+            selectedOrganization: { id },
+            organizations,
             auth: { user },
         },
     ] = useStateValue()
 
     const getTitle = organization => {
-        if (organization.name) {
+        if (organization && organization.name) {
             return (
                 <>
                     <Box>
@@ -101,7 +102,7 @@ const Header = () => {
 
     return (
         <Box display="flex" justifyContent="space-between">
-            {getTitle(organization)}
+            {getTitle(organizations[id])}
         </Box>
     )
 }

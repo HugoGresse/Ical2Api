@@ -9,7 +9,7 @@ import {
 } from 'mdi-material-ui'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import { countPassedEvents, countUpcomingEvents } from '../state/selectors'
+import { countPassedEvents, countUpcomingEvents } from '../../state/selectors'
 
 const Ical = ({ ical, events }) => {
     const upcomingEvents = countUpcomingEvents(events)
