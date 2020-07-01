@@ -6,14 +6,14 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import Avatar from '@material-ui/core/Avatar'
 import MenuItem from '@material-ui/core/MenuItem'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const UserLayout = ({ user }) => {
     const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState(null)
 
     if (!user) {
-        return ''
+        return <Link to="/a/login">Login</Link>
     }
 
     const handleClick = event => {
@@ -89,7 +89,10 @@ const Header = () => {
                     onClick={() => history.push('/')}>
                     Ical2Api
                 </Typography>
-                <Box display="flex" justifyContent="flex-end">
+                <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    alignItems="center">
                     <UserLayout user={user} />
                 </Box>
             </>

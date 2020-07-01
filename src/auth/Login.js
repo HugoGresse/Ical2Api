@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyledFirebaseAuth } from 'react-firebaseui'
 import firebase from 'firebase/app'
 import { useStateValue } from '../state/state'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const uiConfig = {
     signInFlow: 'redirect',
@@ -45,6 +45,15 @@ const Login = () => {
             auth: { loggedIn },
         },
     ] = useStateValue()
+
+    const history = useHistory()
+
+    useEffect(() => {
+        if (loggedIn) {
+            history.goBack()
+        }
+    }, [loggedIn, history])
+
     if (loggedIn) {
         return (
             <>
