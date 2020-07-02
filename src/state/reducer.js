@@ -11,6 +11,7 @@ export const initialState = {
         loggedIn: false,
         user: null,
     },
+    error: null,
 }
 
 export const reducer = (state, action) => {
@@ -57,6 +58,23 @@ export const reducer = (state, action) => {
                             ...initialState,
                             id: action.payload.id,
                         },
+                    }
+                }
+                default:
+                    return state
+            }
+        case 'error':
+            switch (action.type) {
+                case 'new': {
+                    return {
+                        ...state,
+                        error: action.payload,
+                    }
+                }
+                case 'delete': {
+                    return {
+                        ...state,
+                        error: null,
                     }
                 }
                 default:

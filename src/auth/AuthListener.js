@@ -20,7 +20,12 @@ const AuthListener = ({ children }) => {
             dispatch({
                 domain: 'auth',
                 type: 'login',
-                payload: { user: user },
+                payload: {
+                    user: {
+                        ...user,
+                        name: user.displayName || user.email,
+                    },
+                },
             })
         })
     }, [dispatch])

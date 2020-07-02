@@ -7,14 +7,12 @@ import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 
 const IcalList = () => {
-    const { url, path } = useRouteMatch()
+    const { url } = useRouteMatch()
     const [
         {
             selectedOrganization: { icals, events },
         },
     ] = useStateValue()
-
-    // TODO : fixt on first click on org nothing displayed
 
     return (
         <Box>

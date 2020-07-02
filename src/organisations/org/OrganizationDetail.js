@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import IcalApp from './ical/IcalApp'
-import { useStateValue } from '../state/state'
+import IcalApp from '../ical/IcalApp'
+import { useStateValue } from '../../state/state'
 import { useParams } from 'react-router-dom'
 
 const OrganizationDetail = () => {

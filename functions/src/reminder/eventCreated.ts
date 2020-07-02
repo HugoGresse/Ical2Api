@@ -28,11 +28,7 @@ export const postCreatedEvent = async (event: Event) => {
 
     const organization = await getOrganization(reminder.organizationId)
     if (organization) {
-        return postReminder(
-            [event],
-            reminder,
-            organization.privateData.slackWebHook
-        )
+        return postReminder([event], reminder)
     }
     return Promise.reject('Organization not found')
 }
