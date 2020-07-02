@@ -1,7 +1,6 @@
 import { db } from '../utils/initFirebase'
 import { DateTime } from 'luxon'
 import { Event } from '../eventUpdater/Event'
-import { getOrganization } from '../utils/dbGetters'
 import { postMessageToSlack } from './slack/postMessageToSlack'
 import { formatMessageForSlack } from './slack/formatMessageForSlack'
 
@@ -17,6 +16,7 @@ export type ReminderType =
 export interface Reminder {
     id: string
     organizationId: string
+    slackWebHook: string
     type: ReminderType
     timezone: string
     language: string
@@ -78,29 +78,15 @@ export const gatherEventsAndPostReminder = async (
     if (events.length <= 0) {
         return Promise.resolve()
     }
-
-    const organization = await getOrganization(reminder.organizationId)
-    if (organization) {
-        return postReminder(
-            events,
-            reminder,
-            organization.privateData.slackWebHook
-        )
-    }
-    return Promise.reject('Organization not found')
+    return postReminder(events, reminder)
 }
 
 export const postReminder = async (
     events: Event[],
-    reminder: Reminder,
-    slackWebHookUrl: string
+    reminder: Reminder
 ): Promise<void> => {
-    if (!slackWebHookUrl) {
-        return Promise.reject('Slack webhook url is not configured')
-    }
-
     return postMessageToSlack(
         formatMessageForSlack(reminder, events),
-        slackWebHookUrl
+        reminder.slackWebHook
     )
 }
