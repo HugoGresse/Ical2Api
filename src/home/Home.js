@@ -15,7 +15,7 @@ const Home = () => {
         return (
             <>
                 <Button
-                    to="/o/"
+                    to="/o"
                     component={RouterLink}
                     variant="outlined"
                     color="primary">

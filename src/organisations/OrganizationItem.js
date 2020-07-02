@@ -9,7 +9,7 @@ const OrganizationItem = ({ organization }) => {
         <Grid item>
             <Link
                 component={RouterLink}
-                to={`/o/${organization.id}/`}
+                to={`/o/${organization.id}`}
                 style={{ textDecoration: 'none' }}>
                 <Button variant="outlined">{organization.name}</Button>
             </Link>
