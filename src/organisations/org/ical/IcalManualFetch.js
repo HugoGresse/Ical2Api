@@ -22,7 +22,7 @@ const IcalManualFetch = ({ ical, onCancel, open }) => {
                 icalId: ical.id,
             })
             setEvents(results.data)
-            console.log(results)
+            console.log('Fetched events: ', results)
         } catch (error) {
             console.warn('Fetching upcoming events failed', error)
             setError(error)

@@ -3,6 +3,7 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Typography from '@material-ui/core/Typography'
 import { useLocation, Link } from 'react-router-dom'
 import { useStateValue } from '../state/state'
+import { RoutingMap } from '../UseRoutingMap'
 
 const OrgBreadcrumb = () => {
     const location = useLocation()
@@ -20,12 +21,17 @@ const OrgBreadcrumb = () => {
 
     useEffect(() => {
         if (id && organizations[id]) {
+            const routing = RoutingMap(id)
             const orgName = organizations[id].name
             setBreadcrumbNameMap({
-                '/o': 'My Organizations',
-                [`/o/${id}`]: orgName,
-                [`/o/${id}/icals`]: 'iCal list',
-                [`/o/${id}/events`]: 'Events',
+                [routing.orgs.base.url]: 'My Organizations',
+                [routing.orgs.org.root.url]: orgName,
+                [routing.orgs.org.icals.url]: routing.orgs.org.icals.name,
+                [routing.orgs.org.upcomingEvents.url]:
+                    routing.orgs.org.upcomingEvents.name,
+                [routing.orgs.org.reminders.url]:
+                    routing.orgs.org.reminders.name,
+                [routing.orgs.org.settings.url]: routing.orgs.org.settings.name,
             })
         }
     }, [id, organizations])

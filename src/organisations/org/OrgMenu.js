@@ -3,20 +3,32 @@ import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { RoutingMap } from '../../RoutingMap'
+import { useRoutingMap } from '../../UseRoutingMap'
+import { useStateValue } from '../../state/state'
 
 const OrgMenu = () => {
-    const routing = RoutingMap()
-    const match = useRouteMatch(routing.orgs.org.icals.url)
-    const [value, setValue] = React.useState(match ? 1 : 0)
+    const [
+        {
+            auth: { loggedIn },
+        },
+    ] = useStateValue()
+    const routing = useRoutingMap()
+    const matchIcals = useRouteMatch(routing.orgs.org.icals.url)
+    const matchReminders = useRouteMatch(routing.orgs.org.reminders.url)
+    const matchSettings = useRouteMatch(routing.orgs.org.settings.url)
+    const [value, setValue] = React.useState(0)
 
     useEffect(() => {
-        if (match) {
+        if (matchIcals) {
             setValue(1)
+        } else if (matchReminders) {
+            setValue(2)
+        } else if (matchSettings) {
+            setValue(3)
         } else {
             setValue(0)
         }
-    }, [match])
+    }, [matchIcals, matchReminders, matchSettings])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -30,14 +42,27 @@ const OrgMenu = () => {
                 textColor="primary"
                 onChange={handleChange}>
                 <Tab
-                    label={routing.orgs.org.root.name}
                     component={Link}
-                    to={RoutingMap().orgs.org.root.url}
+                    label={routing.orgs.org.root.name}
+                    to={useRoutingMap().orgs.org.root.url}
                 />
                 <Tab
                     component={Link}
                     label={routing.orgs.org.icals.name}
-                    to={RoutingMap().orgs.org.icals.url}
+                    to={useRoutingMap().orgs.org.icals.url}
+                />
+
+                <Tab
+                    component={Link}
+                    label={routing.orgs.org.reminders.name}
+                    to={useRoutingMap().orgs.org.reminders.url}
+                    style={{ display: loggedIn ? 'inherit' : 'none' }}
+                />
+                <Tab
+                    component={Link}
+                    label={routing.orgs.org.settings.name}
+                    to={useRoutingMap().orgs.org.settings.url}
+                    style={{ display: loggedIn ? 'inherit' : 'none' }}
                 />
             </Tabs>
         </Paper>

@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppLayout from './layout/AppLayout'
 import { StateProvider } from './state/state'
-import OrganizationApp from './sharedComponents/OrganizationApp'
+import OrganizationsApp from './organisations/OrganizationsApp'
 import Home from './home/Home'
 import AuthApp from './auth/AuthApp'
 import AuthListener from './auth/AuthListener'
@@ -16,7 +16,7 @@ const App = () => {
                     <AuthListener>
                         <Switch>
                             <Route path="/o/">
-                                <OrganizationApp />
+                                <OrganizationsApp />
                             </Route>
                             <Route path="/a/">
                                 <AuthApp />

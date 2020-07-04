@@ -18,6 +18,21 @@ export const newOrganization = (org, dispatch) => {
         })
 }
 
+export const updateOrganization = (org, dispatch) => {
+    return firestore
+        .collection('organizations')
+        .doc(org.id)
+        .update(org)
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}
+
 export const newIcal = (ical, dispatch) => {
     return firestore
         .collection('icals')

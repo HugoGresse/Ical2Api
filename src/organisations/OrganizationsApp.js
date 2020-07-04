@@ -1,13 +1,13 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import OrganizationList from '../organisations/orgs/OrganizationList'
-import OrganizationsLoading from '../organisations/OrganizationsLoading'
+import OrganizationList from './orgs/OrganizationList'
+import OrganizationsLoading from './OrganizationsLoading'
 import { useStateValue } from '../state/state'
-import OrgBreadcrumb from '../organisations/OrgBreadcrumb'
-import OrganizationDetail from '../organisations/org/OrganizationDetail'
-import ErrorTrucificator from '../organisations/ErrorTrucificator'
+import OrgBreadcrumb from './OrgBreadcrumb'
+import OrganizationApp from './org/OrganizationApp'
+import ErrorTrucificator from './ErrorTrucificator'
 
-const OrganizationApp = () => {
+const OrganizationsApp = () => {
     const [
         {
             auth: { user },
@@ -24,11 +24,11 @@ const OrganizationApp = () => {
                     <OrganizationList />
                 </Route>
                 <Route path={`${url}/:organizationId/`}>
-                    <OrganizationDetail />
+                    <OrganizationApp />
                 </Route>
             </Switch>
         </OrganizationsLoading>
     )
 }
 
-export default OrganizationApp
+export default OrganizationsApp

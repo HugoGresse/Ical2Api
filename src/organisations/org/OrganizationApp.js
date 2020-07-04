@@ -11,8 +11,10 @@ import SingleOrgDataLoading from './SingleOrgDataLoading'
 import IcalList from './ical/IcalList'
 import UpcomingEvents from './event/UpcomingEvents'
 import OrgMenu from './OrgMenu'
+import Reminders from './reminders/Reminders'
+import OrgSettings from './settings/OrgSettings'
 
-const OrganizationDetail = () => {
+const OrganizationApp = () => {
     const { organizationId } = useParams()
     const [, dispatch] = useStateValue()
     const { url } = useRouteMatch('/o/:orgId')
@@ -36,9 +38,15 @@ const OrganizationDetail = () => {
                 <Route path={`${url}/events-upcoming`}>
                     <UpcomingEvents />
                 </Route>
+                <Route path={`${url}/reminders`}>
+                    <Reminders />
+                </Route>
+                <Route path={`${url}/settings`}>
+                    <OrgSettings />
+                </Route>
             </Switch>
         </SingleOrgDataLoading>
     )
 }
 
-export default OrganizationDetail
+export default OrganizationApp
