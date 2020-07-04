@@ -20,6 +20,12 @@ export const firestore = firebaseMain.firestore()
 export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
 export const nowTimestamp = firebase.firestore.Timestamp.now
 export const deleteField = firebase.firestore.FieldValue.delete
-export const functions = {}
+
+// firebase.functions().useFunctionsEmulator('http://localhost:5000')
+export const functions = {
+    getUpcomingEventManually: firebase
+        .functions()
+        .httpsCallable('getUpcomingEventManually'),
+}
 
 authProvider.useDeviceLanguage()

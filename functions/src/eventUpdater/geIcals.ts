@@ -21,4 +21,15 @@ const geIcals = async (): Promise<Ical[]> => {
     return Promise.resolve(icals)
 }
 
+export const getIcal = async (icalId: string): Promise<Ical> => {
+    const icalDoc = await db
+        .collection('icals')
+        .doc(icalId)
+        .get()
+    return Promise.resolve({
+        ...icalDoc.data(),
+        id: icalDoc.id,
+    } as Ical)
+}
+
 export default geIcals

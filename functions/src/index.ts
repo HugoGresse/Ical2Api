@@ -1,4 +1,5 @@
 export { scheduleUpdateEventFromMeetup } from './triggers/updateEventsFromMeetup'
 export { cronReminders } from './triggers/cronReminders'
 export { eventCreated } from './triggers/event.onCreate'
+export { getUpcomingEventManually } from './triggers/getUpcomingEventsManually'
 export { api } from './api'

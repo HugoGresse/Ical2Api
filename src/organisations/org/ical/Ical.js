@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
 import {
-    DatabaseRefresh,
+    FileFind,
     LeadPencil,
     CalendarCheck,
     CalendarClock,
@@ -13,10 +13,12 @@ import {
     countPassedEvents,
     countUpcomingEvents,
 } from '../../../state/selectors'
+import IcalManualFetch from './IcalManualFetch'
 
 const Ical = ({ ical, events }) => {
     const upcomingEvents = countUpcomingEvents(events)
     const passedEvents = countPassedEvents(events)
+    const [manualFetchOpen, setManualFetchOpen] = useState(false)
 
     return (
         <Grid item xs={12} sm={4} md={4} component={Box} display="flex">
@@ -46,13 +48,20 @@ const Ical = ({ ical, events }) => {
                 </Box>
             </Box>
             <Box display="flex" flexDirection="column">
-                <IconButton aria-label="refresh ical events">
-                    <DatabaseRefresh />
+                <IconButton
+                    aria-label="get upcoming events"
+                    onClick={() => setManualFetchOpen(true)}>
+                    <FileFind />
                 </IconButton>
                 <IconButton aria-label="edit ical">
                     <LeadPencil />
                 </IconButton>
             </Box>
+            <IcalManualFetch
+                ical={ical}
+                onCancel={() => setManualFetchOpen(false)}
+                open={manualFetchOpen}
+            />
         </Grid>
     )
 }
