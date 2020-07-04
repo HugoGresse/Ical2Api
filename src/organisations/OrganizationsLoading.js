@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { firestore } from '../utils/firebase'
 import { useStateValue } from '../state/state'
 
-const OrganizationLoading = ({ children, userId }) => {
+const OrganizationsLoading = ({ children, userId }) => {
     const [, dispatch] = useStateValue()
 
     useEffect(() => {
@@ -30,4 +30,4 @@ const OrganizationLoading = ({ children, userId }) => {
     return children
 }
 
-export default OrganizationLoading
+export default OrganizationsLoading

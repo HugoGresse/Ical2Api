@@ -7,6 +7,7 @@ import Menu from '@material-ui/core/Menu'
 import Avatar from '@material-ui/core/Avatar'
 import MenuItem from '@material-ui/core/MenuItem'
 import { Link, useHistory } from 'react-router-dom'
+import { COLORS } from '../../contants'
 
 const UserLayout = ({ user }) => {
     const history = useHistory()
@@ -61,7 +62,15 @@ const Header = () => {
             return (
                 <>
                     <Box>
-                        <Typography variant="h1" style={{ margin: '20px 0' }}>
+                        <Typography
+                            variant="h1"
+                            component={Link}
+                            to={`/o/${organization.id}`}
+                            style={{
+                                margin: '20px 0',
+                                textDecoration: 'none',
+                                color: COLORS.PRIMARY,
+                            }}>
                             {organization.name}
                         </Typography>
 

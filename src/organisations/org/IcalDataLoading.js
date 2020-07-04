@@ -9,25 +9,21 @@ const IcalDataLoading = ({ children }) => {
     const { organizationId } = useParams()
 
     useEffect(() => {
-        firestore
-            .collection('organizations')
-            .doc(organizationId)
-            .get()
-            .then(doc => {
-                if (!doc.exists) {
-                    return
-                }
-                dispatch({
-                    type: 'organizationLoaded',
-                    payload: { id: doc.id, ...doc.data() },
-                })
-            })
+        dispatch({
+            domain: 'org',
+            type: 'icalLoading',
+        })
+        dispatch({
+            domain: 'org',
+            type: 'eventsLoading',
+        })
 
         const icalsUnsubscribe = firestore
             .collection('icals')
             .where('organizationId', '==', organizationId)
             .onSnapshot(querySnapshot => {
                 dispatch({
+                    domain: 'org',
                     type: 'icalsLoaded',
                     payload: querySnapshot.docs.map(ref => ({
                         id: ref.id,
@@ -41,6 +37,7 @@ const IcalDataLoading = ({ children }) => {
             .orderBy('startDate')
             .onSnapshot(querySnapshot => {
                 dispatch({
+                    domain: 'org',
                     type: 'eventsLoaded',
                     payload: querySnapshot.docs.map(ref => ({
                         id: ref.id,

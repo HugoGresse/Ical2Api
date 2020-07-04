@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import OrganizationList from '../organisations/orgs/OrganizationList'
-import OrganizationLoading from '../organisations/OrganizationLoading'
+import OrganizationsLoading from '../organisations/OrganizationsLoading'
 import { useStateValue } from '../state/state'
 import RequireLogin from '../auth/RequireLogin'
 import OrgBreadcrumb from '../organisations/OrgBreadcrumb'
@@ -18,7 +18,7 @@ const OrganizationApp = () => {
 
     return (
         <RequireLogin>
-            <OrganizationLoading userId={user && user.uid}>
+            <OrganizationsLoading userId={user && user.uid}>
                 <OrgBreadcrumb />
                 <ErrorTrucificator />
                 <Switch>
@@ -29,7 +29,7 @@ const OrganizationApp = () => {
                         <OrganizationDetail />
                     </Route>
                 </Switch>
-            </OrganizationLoading>
+            </OrganizationsLoading>
         </RequireLogin>
     )
 }

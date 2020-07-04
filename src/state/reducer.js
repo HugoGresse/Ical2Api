@@ -3,6 +3,8 @@ export const initialState = {
     events: [],
     selectedOrganization: {
         id: null,
+        icalLoading: false,
+        eventsLoading: false,
         icals: [],
         events: [],
     },
@@ -60,6 +62,40 @@ export const reducer = (state, action) => {
                         },
                     }
                 }
+                case 'icalLoading':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            icalLoading: true,
+                        },
+                    }
+                case 'icalsLoaded':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            icals: action.payload,
+                            icalLoading: false,
+                        },
+                    }
+                case 'eventsLoading':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            eventsLoading: true,
+                        },
+                    }
+                case 'eventsLoaded':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            events: action.payload,
+                            eventsLoading: false,
+                        },
+                    }
                 default:
                     return state
             }
@@ -82,22 +118,6 @@ export const reducer = (state, action) => {
             }
         default:
             switch (action.type) {
-                case 'icalsLoaded':
-                    return {
-                        ...state,
-                        selectedOrganization: {
-                            ...state.selectedOrganization,
-                            icals: action.payload,
-                        },
-                    }
-                case 'eventsLoaded':
-                    return {
-                        ...state,
-                        selectedOrganization: {
-                            ...state.selectedOrganization,
-                            events: action.payload,
-                        },
-                    }
                 default:
                     return state
             }

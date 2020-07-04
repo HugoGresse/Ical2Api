@@ -1,11 +1,21 @@
 import React, { useEffect } from 'react'
-import IcalApp from '../ical/IcalApp'
 import { useStateValue } from '../../state/state'
-import { useParams } from 'react-router-dom'
+import {
+    Redirect,
+    Route,
+    Switch,
+    useParams,
+    useRouteMatch,
+} from 'react-router-dom'
+import IcalDataLoading from './IcalDataLoading'
+import IcalList from './ical/IcalList'
+import UpcomingEvents from './event/UpcomingEvents'
+import OrgMenu from './OrgMenu'
 
 const OrganizationDetail = () => {
     let { organizationId } = useParams()
     const [, dispatch] = useStateValue()
+    const { url } = useRouteMatch('/o/:orgId')
 
     useEffect(() => {
         dispatch({
@@ -15,7 +25,20 @@ const OrganizationDetail = () => {
         })
     }, [dispatch, organizationId])
 
-    return <IcalApp />
+    return (
+        <IcalDataLoading>
+            <OrgMenu />
+            <Switch>
+                <Redirect exact from={url} to={`${url}/events-upcoming`} />
+                <Route path={`${url}/icals`}>
+                    <IcalList />
+                </Route>
+                <Route path={`${url}/events-upcoming`}>
+                    <UpcomingEvents />
+                </Route>
+            </Switch>
+        </IcalDataLoading>
+    )
 }
 
 export default OrganizationDetail

@@ -1,29 +1,19 @@
 import React from 'react'
 import Ical from './Ical'
 import Grid from '@material-ui/core/Grid'
-import { useStateValue } from '../../state/state'
+import { useStateValue } from '../../../state/state'
 import Box from '@material-ui/core/Box'
-import { Link as RouterLink, useRouteMatch } from 'react-router-dom'
-import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
 const IcalList = () => {
-    const { url } = useRouteMatch()
     const [
         {
-            selectedOrganization: { icals, events },
+            selectedOrganization: { icals, events, icalsLoading },
         },
     ] = useStateValue()
 
     return (
         <Box>
-            <Button
-                to={url.replace('icals', 'events')}
-                component={RouterLink}
-                variant="outlined"
-                color="primary"
-                style={{ marginBottom: 16 }}>
-                See all events in the organization
-            </Button>
             <Grid container spacing={4}>
                 {icals.map(ical => (
                     <Ical
@@ -34,6 +24,14 @@ const IcalList = () => {
                         )}
                     />
                 ))}
+                {icals.length === 0 && (
+                    <Grid item>
+                        {icalsLoading && (
+                            <Typography>iCals loading...</Typography>
+                        )}
+                        {!icalsLoading && <Typography>No iCals</Typography>}
+                    </Grid>
+                )}
             </Grid>
         </Box>
     )

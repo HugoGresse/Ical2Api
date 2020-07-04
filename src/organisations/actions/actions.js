@@ -5,11 +5,7 @@ export const newOrganization = (org, dispatch) => {
         .collection('organizations')
         .add(org)
         .then(({ id }) => {
-            dispatch({
-                domain: 'orgs',
-                type: 'created',
-                payload: id,
-            })
+            // No need to dispatch, new org are already listening lived
             return id
         })
         .catch(error => {
