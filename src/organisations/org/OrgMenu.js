@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
@@ -9,6 +9,14 @@ const OrgMenu = () => {
     const routing = RoutingMap()
     const match = useRouteMatch(routing.orgs.org.icals.url)
     const [value, setValue] = React.useState(match ? 1 : 0)
+
+    useEffect(() => {
+        if (match) {
+            setValue(1)
+        } else {
+            setValue(0)
+        }
+    }, [match])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)

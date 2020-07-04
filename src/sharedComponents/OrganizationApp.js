@@ -3,7 +3,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import OrganizationList from '../organisations/orgs/OrganizationList'
 import OrganizationsLoading from '../organisations/OrganizationsLoading'
 import { useStateValue } from '../state/state'
-import RequireLogin from '../auth/RequireLogin'
 import OrgBreadcrumb from '../organisations/OrgBreadcrumb'
 import OrganizationDetail from '../organisations/org/OrganizationDetail'
 import ErrorTrucificator from '../organisations/ErrorTrucificator'
@@ -17,20 +16,18 @@ const OrganizationApp = () => {
     const { url } = useRouteMatch()
 
     return (
-        <RequireLogin>
-            <OrganizationsLoading userId={user && user.uid}>
-                <OrgBreadcrumb />
-                <ErrorTrucificator />
-                <Switch>
-                    <Route exact path={`${url}/`}>
-                        <OrganizationList />
-                    </Route>
-                    <Route path={`${url}/:organizationId/`}>
-                        <OrganizationDetail />
-                    </Route>
-                </Switch>
-            </OrganizationsLoading>
-        </RequireLogin>
+        <OrganizationsLoading userId={user && user.uid}>
+            <OrgBreadcrumb />
+            <ErrorTrucificator />
+            <Switch>
+                <Route exact path={`${url}/`}>
+                    <OrganizationList />
+                </Route>
+                <Route path={`${url}/:organizationId/`}>
+                    <OrganizationDetail />
+                </Route>
+            </Switch>
+        </OrganizationsLoading>
     )
 }
 

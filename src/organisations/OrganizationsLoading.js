@@ -6,6 +6,9 @@ const OrganizationsLoading = ({ children, userId }) => {
     const [, dispatch] = useStateValue()
 
     useEffect(() => {
+        if (!userId) {
+            return
+        }
         const unsubscribe = firestore
             .collection('organizations')
             .where('members', 'array-contains', userId)

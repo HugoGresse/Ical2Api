@@ -3,7 +3,7 @@ import { useStateValue } from '../../state/state'
 import { firestore } from '../../utils/firebase'
 import { useParams } from 'react-router-dom'
 
-const IcalDataLoading = ({ children }) => {
+const SingleOrgDataLoading = ({ children }) => {
     // noinspection JSUnusedLocalSymbols
     const [, dispatch] = useStateValue()
     const { organizationId } = useParams()
@@ -18,6 +18,21 @@ const IcalDataLoading = ({ children }) => {
             type: 'eventsLoading',
         })
 
+        const orgUnsubscribe = firestore
+            .collection('organizations')
+            .doc(organizationId)
+            .onSnapshot(snapshot => {
+                dispatch({
+                    domain: 'orgs',
+                    type: 'loaded',
+                    payload: {
+                        [snapshot.id]: {
+                            id: snapshot.id,
+                            ...snapshot.data(),
+                        },
+                    },
+                })
+            })
         const icalsUnsubscribe = firestore
             .collection('icals')
             .where('organizationId', '==', organizationId)
@@ -48,10 +63,11 @@ const IcalDataLoading = ({ children }) => {
         return () => {
             icalsUnsubscribe()
             eventsUnsubscribe()
+            orgUnsubscribe()
         }
     }, [dispatch, organizationId])
 
     return children
 }
 
-export default IcalDataLoading
+export default SingleOrgDataLoading

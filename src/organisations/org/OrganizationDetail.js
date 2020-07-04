@@ -7,7 +7,7 @@ import {
     useParams,
     useRouteMatch,
 } from 'react-router-dom'
-import IcalDataLoading from './IcalDataLoading'
+import SingleOrgDataLoading from './SingleOrgDataLoading'
 import IcalList from './ical/IcalList'
 import UpcomingEvents from './event/UpcomingEvents'
 import OrgMenu from './OrgMenu'
@@ -26,7 +26,7 @@ const OrganizationDetail = () => {
     }, [dispatch, organizationId])
 
     return (
-        <IcalDataLoading>
+        <SingleOrgDataLoading>
             <OrgMenu />
             <Switch>
                 <Redirect exact from={url} to={`${url}/events-upcoming`} />
@@ -37,7 +37,7 @@ const OrganizationDetail = () => {
                     <UpcomingEvents />
                 </Route>
             </Switch>
-        </IcalDataLoading>
+        </SingleOrgDataLoading>
     )
 }
 
