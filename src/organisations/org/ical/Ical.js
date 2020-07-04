@@ -19,7 +19,7 @@ const Ical = ({ ical, events }) => {
     const passedEvents = countPassedEvents(events)
 
     return (
-        <Grid item xs={12} sm={4} md={3} component={Box} display="flex">
+        <Grid item xs={12} sm={4} md={4} component={Box} display="flex">
             <Box flex={1}>
                 <Typography variant="h6">{ical.name}</Typography>
                 <Box>

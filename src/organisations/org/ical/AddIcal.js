@@ -6,7 +6,7 @@ import AddIcon from '@material-ui/icons/Add'
 
 const AddIcall = ({ onClick }) => {
     return (
-        <Grid item xs={12} sm={4} md={3} component={Box} display="flex">
+        <Grid item xs={12} sm={4} md={4} component={Box} display="flex">
             <Button
                 variant="contained"
                 color="secondary"

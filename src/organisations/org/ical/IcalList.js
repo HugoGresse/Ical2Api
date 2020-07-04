@@ -6,6 +6,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import AddIcall from './AddIcal'
 import NewIcalDialog from './NewIcalDialog'
+import InfoIcon from '@material-ui/icons/Info'
 
 const IcalList = () => {
     const [
@@ -35,11 +36,27 @@ const IcalList = () => {
                     </Grid>
                 )}
                 <AddIcall onClick={() => setDialogOpen(true)} />
-                <NewIcalDialog
-                    open={dialogOpen}
-                    onCancel={() => setDialogOpen(false)}
-                />
+
+                <Grid
+                    item
+                    xs={12}
+                    style={{ background: '#DDD', borderRadius: 6 }}>
+                    <Typography variant="body2">
+                        <InfoIcon
+                            style={{
+                                top: 6,
+                                marginRight: 6,
+                                position: 'relative',
+                            }}
+                        />
+                        iCal are fetched every 30 minutes
+                    </Typography>
+                </Grid>
             </Grid>
+            <NewIcalDialog
+                open={dialogOpen}
+                onCancel={() => setDialogOpen(false)}
+            />
         </Box>
     )
 }
