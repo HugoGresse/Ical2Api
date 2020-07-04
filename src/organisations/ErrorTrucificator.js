@@ -24,7 +24,7 @@ const ErrorTrucificator = () => {
             open={!!error}
             autoHideDuration={6000}
             onClose={onClose}
-            message={error}
+            message={error && error.toString()}
             action={
                 <IconButton
                     size="small"

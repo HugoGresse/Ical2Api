@@ -13,7 +13,7 @@ import UpcomingEvents from './event/UpcomingEvents'
 import OrgMenu from './OrgMenu'
 
 const OrganizationDetail = () => {
-    let { organizationId } = useParams()
+    const { organizationId } = useParams()
     const [, dispatch] = useStateValue()
     const { url } = useRouteMatch('/o/:orgId')
 

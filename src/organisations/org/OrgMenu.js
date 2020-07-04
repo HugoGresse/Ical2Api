@@ -2,17 +2,17 @@ import React from 'react'
 import Paper from '@material-ui/core/Paper'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { RoutingMap } from '../../RoutingMap'
 
 const OrgMenu = () => {
-    const [value, setValue] = React.useState(0)
+    const routing = RoutingMap()
+    const match = useRouteMatch(routing.orgs.org.icals.url)
+    const [value, setValue] = React.useState(match ? 1 : 0)
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
     }
-
-    const routing = RoutingMap()
 
     return (
         <Paper square style={{ marginBottom: 32 }}>

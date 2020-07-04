@@ -17,3 +17,21 @@ export const newOrganization = (org, dispatch) => {
             return Promise.resolve()
         })
 }
+
+export const newIcal = (ical, dispatch) => {
+    return firestore
+        .collection('icals')
+        .add(ical)
+        .then(({ id }) => {
+            // No need to dispatch, new org are already listening lived
+            return id
+        })
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}

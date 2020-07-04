@@ -2,7 +2,12 @@ rules_version = '2';
 service cloud.firestore {
     match /databases/{database}/documents {
 
+        function authenticated() { return request.auth.uid != null }
         function isAdmin(data) { return data.owner == request.auth.uid || request.auth.uid in data.members}
+        function isEmailVerified() { return request.auth.token.email_verified == true }
+
+        // DB Read
+        function organizationData(organizationId) { return get(/databases/$(database)/documents/organizations/$(organizationId)).data }
 
         match /events/{eventId} {
             allow read: if true;
@@ -10,6 +15,7 @@ service cloud.firestore {
 
         match /icals/{icalId} {
             allow read: if true;
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
         }
 
         match /reminder/{reminderId} {

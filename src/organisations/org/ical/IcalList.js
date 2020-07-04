@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Ical from './Ical'
 import Grid from '@material-ui/core/Grid'
 import { useStateValue } from '../../../state/state'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
+import AddIcall from './AddIcal'
+import NewIcalDialog from './NewIcalDialog'
 
 const IcalList = () => {
     const [
@@ -11,6 +13,7 @@ const IcalList = () => {
             selectedOrganization: { icals, events, icalsLoading },
         },
     ] = useStateValue()
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     return (
         <Box>
@@ -29,9 +32,13 @@ const IcalList = () => {
                         {icalsLoading && (
                             <Typography>iCals loading...</Typography>
                         )}
-                        {!icalsLoading && <Typography>No iCals</Typography>}
                     </Grid>
                 )}
+                <AddIcall onClick={() => setDialogOpen(true)} />
+                <NewIcalDialog
+                    open={dialogOpen}
+                    onCancel={() => setDialogOpen(false)}
+                />
             </Grid>
         </Box>
     )
