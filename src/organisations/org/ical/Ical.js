@@ -14,6 +14,7 @@ import {
     countUpcomingEvents,
 } from '../../../state/selectors'
 import IcalManualFetch from './IcalManualFetch'
+import RequireLogin from '../../../auth/RequireLogin'
 
 const Ical = ({ ical, events }) => {
     const upcomingEvents = countUpcomingEvents(events)
@@ -47,21 +48,23 @@ const Ical = ({ ical, events }) => {
                     </Box>
                 </Box>
             </Box>
-            <Box display="flex" flexDirection="column">
-                <IconButton
-                    aria-label="get upcoming events"
-                    onClick={() => setManualFetchOpen(true)}>
-                    <FileFind />
-                </IconButton>
-                <IconButton aria-label="edit ical">
-                    <LeadPencil />
-                </IconButton>
-            </Box>
-            <IcalManualFetch
-                ical={ical}
-                onCancel={() => setManualFetchOpen(false)}
-                open={manualFetchOpen}
-            />
+            <RequireLogin>
+                <Box display="flex" flexDirection="column">
+                    <IconButton
+                        aria-label="get upcoming events"
+                        onClick={() => setManualFetchOpen(true)}>
+                        <FileFind />
+                    </IconButton>
+                    <IconButton aria-label="edit ical">
+                        <LeadPencil />
+                    </IconButton>
+                </Box>
+                <IcalManualFetch
+                    ical={ical}
+                    onCancel={() => setManualFetchOpen(false)}
+                    open={manualFetchOpen}
+                />
+            </RequireLogin>
         </Grid>
     )
 }

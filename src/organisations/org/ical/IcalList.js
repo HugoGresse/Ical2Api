@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import AddIcall from './AddIcal'
 import NewIcalDialog from './NewIcalDialog'
 import InfoIcon from '@material-ui/icons/Info'
+import RequireLogin from '../../../auth/RequireLogin'
 
 const IcalList = () => {
     const [
@@ -35,7 +36,14 @@ const IcalList = () => {
                         )}
                     </Grid>
                 )}
-                <AddIcall onClick={() => setDialogOpen(true)} />
+
+                <RequireLogin>
+                    <AddIcall onClick={() => setDialogOpen(true)} />
+                    <NewIcalDialog
+                        open={dialogOpen}
+                        onCancel={() => setDialogOpen(false)}
+                    />
+                </RequireLogin>
 
                 <Grid
                     item
@@ -53,10 +61,6 @@ const IcalList = () => {
                     </Typography>
                 </Grid>
             </Grid>
-            <NewIcalDialog
-                open={dialogOpen}
-                onCancel={() => setDialogOpen(false)}
-            />
         </Box>
     )
 }

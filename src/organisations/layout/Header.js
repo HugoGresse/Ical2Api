@@ -85,7 +85,10 @@ const Header = () => {
                         </Typography>
                     </Box>
 
-                    <Box display="flex" justifyContent="flex-end">
+                    <Box
+                        display="flex"
+                        justifyContent="flex-end"
+                        alignItems="center">
                         <UserLayout user={user} />
                     </Box>
                 </>

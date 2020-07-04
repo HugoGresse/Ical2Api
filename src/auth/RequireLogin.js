@@ -22,7 +22,7 @@ const RequireLogin = ({ children, displayLoginMessage = false }) => {
         )
     }
 
-    return 'Need login'
+    return ''
 }
 
 export default RequireLogin
