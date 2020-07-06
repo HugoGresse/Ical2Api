@@ -4,11 +4,20 @@ import React from 'react'
 import { DialogContent } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 
-export function SimpleDialog({ onCancel, open, title, children }) {
+export function SimpleDialog({
+    onCancel,
+    open,
+    title,
+    children,
+    maxWidth = 'sm',
+    fullWidth = false,
+}) {
     return (
         <Dialog
             onClose={onCancel}
             aria-labelledby="simple-dialog-title"
+            maxWidth={maxWidth}
+            fullWidth={fullWidth}
             open={open}>
             <DialogTitle id="simple-dialog-title" disableTypography={true}>
                 <Typography variant="h4">{title}</Typography>

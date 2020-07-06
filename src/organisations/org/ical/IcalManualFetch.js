@@ -34,6 +34,8 @@ const IcalManualFetch = ({ ical, onCancel, open }) => {
         <SimpleDialog
             title="Get upcoming events"
             onCancel={onCancel}
+            maxWidth="md"
+            fullWidth={true}
             open={open}>
             <Typography>
                 Do you want to fetch upcoming events on {ical.name}? (this will

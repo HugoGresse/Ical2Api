@@ -15,11 +15,13 @@ import {
 } from '../../../state/selectors'
 import IcalManualFetch from './IcalManualFetch'
 import RequireLogin from '../../../auth/RequireLogin'
+import AddEditIcalDialog from './AddEditIcalDialog'
 
 const Ical = ({ ical, events }) => {
     const upcomingEvents = countUpcomingEvents(events)
     const passedEvents = countPassedEvents(events)
     const [manualFetchOpen, setManualFetchOpen] = useState(false)
+    const [editingIcal, setEditingIcal] = useState(null)
 
     return (
         <Grid item xs={12} sm={4} md={4} component={Box} display="flex">
@@ -55,7 +57,9 @@ const Ical = ({ ical, events }) => {
                         onClick={() => setManualFetchOpen(true)}>
                         <FileFind />
                     </IconButton>
-                    <IconButton aria-label="edit ical">
+                    <IconButton
+                        aria-label="edit ical"
+                        onClick={() => setEditingIcal(ical)}>
                         <LeadPencil />
                     </IconButton>
                 </Box>
@@ -63,6 +67,11 @@ const Ical = ({ ical, events }) => {
                     ical={ical}
                     onCancel={() => setManualFetchOpen(false)}
                     open={manualFetchOpen}
+                />
+                <AddEditIcalDialog
+                    onCancel={() => setEditingIcal(null)}
+                    open={!!editingIcal}
+                    ical={ical}
                 />
             </RequireLogin>
         </Grid>

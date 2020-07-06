@@ -50,3 +50,18 @@ export const newIcal = (ical, dispatch) => {
             return Promise.resolve()
         })
 }
+
+export const editIcal = (ical, dispatch) => {
+    return firestore
+        .collection('icals')
+        .doc(ical.id)
+        .set(ical)
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}

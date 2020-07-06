@@ -5,7 +5,7 @@ import { useStateValue } from '../../../state/state'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import AddIcall from './AddIcal'
-import NewIcalDialog from './NewIcalDialog'
+import AddEditIcalDialog from './AddEditIcalDialog'
 import InfoIcon from '@material-ui/icons/Info'
 import RequireLogin from '../../../auth/RequireLogin'
 
@@ -39,7 +39,7 @@ const IcalList = () => {
 
                 <RequireLogin>
                     <AddIcall onClick={() => setDialogOpen(true)} />
-                    <NewIcalDialog
+                    <AddEditIcalDialog
                         open={dialogOpen}
                         onCancel={() => setDialogOpen(false)}
                     />

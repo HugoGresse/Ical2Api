@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import OrganizationItem from './OrganizationItem'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import NewOrganization from './NewOrganization'
+import NewOrganizationDialog from './NewOrganizationDialog'
 import RequireLogin from '../../auth/RequireLogin'
 import AddIcon from '@material-ui/icons/Add'
 
@@ -27,9 +27,9 @@ const OrganizationList = () => {
                             <AddIcon />
                             Create a new organization
                         </Button>
-                        <NewOrganization
+                        <NewOrganizationDialog
                             open={isAddDialogOpen}
-                            onClose={() => setAddDialogOpen(false)}
+                            onCancel={() => setAddDialogOpen(false)}
                         />
                     </RequireLogin>
                 </Grid>

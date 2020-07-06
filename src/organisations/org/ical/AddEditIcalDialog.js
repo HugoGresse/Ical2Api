@@ -4,11 +4,11 @@ import { Field, Form, Formik } from 'formik'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { TextField } from 'formik-material-ui'
-import { newIcal } from '../../actions/actions'
+import { editIcal, newIcal } from '../../actions/actions'
 import { useStateValue } from '../../../state/state'
 import { SimpleDialog } from '../../../sharedComponents/SimpleDialog'
 
-const NewIcalDialog = ({ onCancel, open }) => {
+const AddEditIcalDialog = ({ onCancel, open, ical }) => {
     const [
         {
             selectedOrganization: { id },
@@ -17,7 +17,12 @@ const NewIcalDialog = ({ onCancel, open }) => {
     ] = useStateValue()
 
     return (
-        <SimpleDialog title="New iCal" onCancel={onCancel} open={open}>
+        <SimpleDialog
+            title={ical ? 'Editing ical' : 'New ical'}
+            onCancel={onCancel}
+            open={open}
+            maxWidth="md"
+            fullWidth={true}>
             <Formik
                 validationSchema={object().shape({
                     name: string().required(
@@ -29,20 +34,37 @@ const NewIcalDialog = ({ onCancel, open }) => {
                             `Without any iCal to fetch, what can I do? 🤔`
                         ),
                 })}
-                initialValues={{ name: '', url: '' }}
-                onSubmit={(values, { setSubmitting }) =>
-                    newIcal(
-                        {
-                            name: values.name.trim(),
-                            url: values.url.trim(),
-                            organizationId: id,
-                        },
-                        dispatch
-                    ).then(id => {
-                        setSubmitting(false)
-                        onCancel()
-                    })
-                }>
+                initialValues={ical || { name: '', url: '' }}
+                onSubmit={(values, { setSubmitting }) => {
+                    const name = values.name.trim()
+                    const url = values.url.trim()
+                    if (ical) {
+                        // Editing it
+                        editIcal(
+                            {
+                                ...ical,
+                                name: name,
+                                url: url,
+                            },
+                            dispatch
+                        ).then(() => {
+                            setSubmitting(false)
+                            onCancel()
+                        })
+                    } else {
+                        newIcal(
+                            {
+                                name: name,
+                                url: url,
+                                organizationId: id,
+                            },
+                            dispatch
+                        ).then(id => {
+                            setSubmitting(false)
+                            onCancel()
+                        })
+                    }
+                }}>
                 {({ isSubmitting }) => (
                     <Form method="POST">
                         <Field
@@ -65,7 +87,7 @@ const NewIcalDialog = ({ onCancel, open }) => {
 
                         <Box textAlign="right" marginTop={1}>
                             <Button disabled={isSubmitting} type="submit">
-                                Add iCal
+                                {ical ? 'Save ical' : 'Add iCal'}
                             </Button>
                         </Box>
                     </Form>
@@ -75,4 +97,4 @@ const NewIcalDialog = ({ onCancel, open }) => {
     )
 }
 
-export default NewIcalDialog
+export default AddEditIcalDialog

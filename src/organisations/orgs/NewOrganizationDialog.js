@@ -9,7 +9,7 @@ import { TextField } from 'formik-material-ui'
 import { newOrganization } from '../actions/actions'
 import { Redirect } from 'react-router-dom'
 
-const NewOrganization = ({ onCancel, open }) => {
+const NewOrganizationDialog = ({ onCancel, open }) => {
     const [
         {
             auth: { user },
@@ -65,4 +65,4 @@ const NewOrganization = ({ onCancel, open }) => {
     )
 }
 
-export default NewOrganization
+export default NewOrganizationDialog
