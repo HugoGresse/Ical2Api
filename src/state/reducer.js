@@ -5,8 +5,10 @@ export const initialState = {
         id: null,
         icalLoading: false,
         eventsLoading: false,
+        remindersLoading: false,
         icals: [],
         events: [],
+        reminders: [],
     },
     organizations: {},
     auth: {
@@ -30,14 +32,7 @@ export const reducer = (state, action) => {
                         },
                     }
                 case 'logout':
-                    return {
-                        ...state,
-                        auth: {
-                            ...state.auth,
-                            loggedIn: false,
-                            user: null,
-                        },
-                    }
+                    return initialState
                 default:
                     return state
             }
@@ -46,7 +41,10 @@ export const reducer = (state, action) => {
                 case 'loaded':
                     return {
                         ...state,
-                        organizations: action.payload,
+                        organizations: {
+                            ...state.organizations,
+                            ...action.payload,
+                        },
                     }
                 default:
                     return state
@@ -57,7 +55,7 @@ export const reducer = (state, action) => {
                     return {
                         ...state,
                         selectedOrganization: {
-                            ...initialState,
+                            ...initialState.selectedOrganization,
                             id: action.payload.id,
                         },
                     }
@@ -94,6 +92,23 @@ export const reducer = (state, action) => {
                             ...state.selectedOrganization,
                             events: action.payload,
                             eventsLoading: false,
+                        },
+                    }
+                case 'remindersLoading':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            remindersLoading: true,
+                        },
+                    }
+                case 'remindersLoaded':
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            remindersLoading: false,
+                            reminders: action.payload,
                         },
                     }
                 default:
