@@ -9,7 +9,7 @@ const AddIcall = ({ onClick }) => {
         <Grid item xs={12} sm={4} md={4} component={Box} display="flex">
             <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 startIcon={<AddIcon />}
                 onClick={onClick}>
                 Add iCal
