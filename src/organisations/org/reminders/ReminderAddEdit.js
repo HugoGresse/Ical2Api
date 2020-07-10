@@ -6,17 +6,21 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import Typography from '@material-ui/core/Typography'
 import { number, object, string } from 'yup'
 import { Field, Form, Formik } from 'formik'
-import { Select, TextField } from 'formik-material-ui'
+import { TextField } from 'formik-material-ui'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { ReminderType } from './remindersConstants'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Link from '@material-ui/core/Link'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import { DAYS } from '../../../utils/date'
+import { DAYS, defaultLang, defaultTimezone } from '../../../utils/date'
 import MenuItem from '@material-ui/core/MenuItem'
 
-const ReminderAddEdit = ({ reminderType, reminder, onSubmit }) => {
+const ReminderAddEdit = ({
+    reminderType,
+    reminder,
+    defaultSlackWebHook,
+    onSubmit,
+}) => {
     const [expanded, setExpanded] = useState(true)
 
     const editMode = !!reminder
@@ -32,7 +36,7 @@ const ReminderAddEdit = ({ reminderType, reminder, onSubmit }) => {
                     setSubmitting(false)
                 })
             }}>
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue }) => (
                 <Form
                     method="POST"
                     style={{ display: 'flex', flexDirection: 'column' }}>
@@ -47,11 +51,26 @@ const ReminderAddEdit = ({ reminderType, reminder, onSubmit }) => {
                     />
                     <FormHelperText id="slackWebHook-helper">
                         Follow the 3 steps of the{' '}
-                        <Link href="https://api.slack.com/incoming-webhooks">
+                        <Link
+                            href="https://api.slack.com/incoming-webhooks"
+                            target="_blank">
                             Slack documentation
                         </Link>{' '}
                         to get the Incoming Web Hook URL and choose the channel.
                     </FormHelperText>
+
+                    {defaultSlackWebHook && !editMode && (
+                        <Button
+                            size="small"
+                            onClick={() =>
+                                setFieldValue(
+                                    'slackWebHook',
+                                    defaultSlackWebHook
+                                )
+                            }>
+                            Fill with another webhook from your organization
+                        </Button>
+                    )}
 
                     <Accordion
                         expanded={expanded}
@@ -106,9 +125,11 @@ const getFormSchema = reminderType => {
         timezone: string().required(
             `Timezone at used to sent the reminder at the correct time from your position or a custom one. Kind of useful so!`
         ),
-        slackWebHook: string().required(
-            `Adding a reminder without something to notify is useless, isn't it? 🤔`
-        ),
+        slackWebHook: string()
+            .url("This doesn't look like an URL, it should begin by https://")
+            .required(
+                `Adding a reminder without something to notify is useless, isn't it? 🤔`
+            ),
     }
     switch (reminderType) {
         case ReminderType.hour.id:
@@ -156,10 +177,12 @@ const getFields = reminderType => {
                         name="weekday"
                         type="text"
                         margin="normal"
-                        label="On day do you want the sum up of the week?"
+                        label="Day you want the sum up of the week"
                         select={true}>
                         {DAYS.map((day, index) => (
-                            <MenuItem value={index + 1}>{day}</MenuItem>
+                            <MenuItem key={day} value={index + 1}>
+                                {day}
+                            </MenuItem>
                         ))}
                     </Field>
                     <Field
@@ -182,22 +205,22 @@ const getFields = reminderType => {
 const getInitialValue = (reminderType, editMode, reminder) => {
     const baseValues = {
         type: reminderType,
-        language: editMode ? reminder.language : 'TOOD',
-        timezone: editMode ? reminder.timezone : 'TOOD',
-        slackWebHook: editMode ? reminder.slackWebHook : 'TOOD',
+        language: editMode ? reminder.language : defaultLang(),
+        timezone: editMode ? reminder.timezone : defaultTimezone(),
+        slackWebHook: editMode ? reminder.slackWebHook : '',
     }
 
     switch (reminderType) {
         case ReminderType.hour.id:
             return {
                 ...baseValues,
-                hours: editMode ? reminder.hours : null,
+                hours: editMode ? reminder.hours : '',
             }
         case ReminderType.weekly.id:
             return {
                 ...baseValues,
                 weekday: editMode ? reminder.weekday : 1,
-                hours: editMode ? reminder.hours : null,
+                hours: editMode ? reminder.hours : '',
             }
         case ReminderType.created.id:
             return baseValues

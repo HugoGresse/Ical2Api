@@ -42,15 +42,18 @@ const OrgBreadcrumb = () => {
             {pathNames.map((value, index) => {
                 const last = index === pathNames.length - 1
                 const to = `/${pathNames.slice(0, index + 1).join('/')}`
+                const nameMap = breadcrumbNameMap[to]
 
                 return last ? (
                     <Typography color="textPrimary" key={to}>
-                        {breadcrumbNameMap[to]}
+                        {nameMap}
                     </Typography>
                 ) : (
-                    <Link component={RouterLink} to={to} key={to}>
-                        {breadcrumbNameMap[to]}
-                    </Link>
+                    nameMap && (
+                        <Link component={RouterLink} to={to} key={to}>
+                            {nameMap}
+                        </Link>
+                    )
                 )
             })}
         </Breadcrumbs>

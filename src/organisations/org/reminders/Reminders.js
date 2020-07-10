@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import RemindersLoading from './RemindersLoading'
 import { useStateValue } from '../../../state/state'
 import { CircularProgress } from '@material-ui/core'
@@ -7,16 +7,22 @@ import RemindersInnerTabs from './RemindersInnerTabs'
 const Reminders = () => {
     const [
         {
-            selectedOrganization: { reminders, remindersLoading },
+            selectedOrganization: {
+                reminders,
+                remindersLoading,
+                lastUseSlackWebHook,
+            },
         },
     ] = useStateValue()
-    const [dialogOpen, setDialogOpen] = useState(false)
 
     return (
         <RemindersLoading>
             {remindersLoading && <CircularProgress />}
 
-            <RemindersInnerTabs reminders={reminders} />
+            <RemindersInnerTabs
+                reminders={reminders}
+                defaultSlackWebHook={lastUseSlackWebHook}
+            />
         </RemindersLoading>
     )
 }

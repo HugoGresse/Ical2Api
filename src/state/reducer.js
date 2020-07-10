@@ -6,6 +6,7 @@ export const initialState = {
         icalLoading: false,
         eventsLoading: false,
         remindersLoading: false,
+        lastUseSlackWebHook: null,
         icals: [],
         events: [],
         reminders: [],
@@ -102,15 +103,21 @@ export const reducer = (state, action) => {
                             remindersLoading: true,
                         },
                     }
-                case 'remindersLoaded':
+                case 'remindersLoaded': {
+                    let lastUseSlackWebHook = null
+                    if (action.payload && action.payload.length > 0) {
+                        lastUseSlackWebHook = action.payload[0].slackWebHook
+                    }
                     return {
                         ...state,
                         selectedOrganization: {
                             ...state.selectedOrganization,
                             remindersLoading: false,
                             reminders: action.payload,
+                            lastUseSlackWebHook: lastUseSlackWebHook,
                         },
                     }
+                }
                 default:
                     return state
             }

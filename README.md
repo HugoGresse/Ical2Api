@@ -10,6 +10,7 @@ Interested by the service? Contact me at hugo.gresse@gmail.com
 
 ### TODO List:
 
+-   [ ] Add slack webhook within iCal2Api using a Slack App
 -   [ ] User management
 -   [ ] Translation for reminders
 
