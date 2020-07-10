@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Breadcrumbs from '@material-ui/core/Breadcrumbs'
 import Typography from '@material-ui/core/Typography'
-import { useLocation, Link } from 'react-router-dom'
+import { useLocation, Link as RouterLink } from 'react-router-dom'
 import { useStateValue } from '../state/state'
 import { RoutingMap } from '../UseRoutingMap'
+import Link from '@material-ui/core/Link'
 
 const OrgBreadcrumb = () => {
     const location = useLocation()
@@ -47,7 +48,7 @@ const OrgBreadcrumb = () => {
                         {breadcrumbNameMap[to]}
                     </Typography>
                 ) : (
-                    <Link color="inherit" to={to} key={to}>
+                    <Link component={RouterLink} to={to} key={to}>
                         {breadcrumbNameMap[to]}
                     </Link>
                 )
