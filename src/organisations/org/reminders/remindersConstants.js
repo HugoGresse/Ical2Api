@@ -1,9 +1,9 @@
-export const type = {
+export const ReminderType = {
     hour: {
         id: 'hour',
         name: 'Hourly',
         desc:
-            'Send a reminder X hour(s) before any event (you can set 24h for a next day reminder)',
+            'Send a reminder X hour(s) before any event (you can set 24h to be reminded of an event happening the next day)',
     },
     weekly: {
         id: 'weekly',
@@ -14,6 +14,6 @@ export const type = {
         id: 'created',
         name: 'Creation',
         desc:
-            'Reminder when a new event is added from the crawler (within 15-30 min delay)',
+            'Reminder when a new event is added by the crawler (every 15-30 min)',
     },
 }

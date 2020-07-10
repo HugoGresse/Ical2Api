@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import ReminderList from './ReminderList'
 import RemindersLoading from './RemindersLoading'
 import { useStateValue } from '../../../state/state'
 import { CircularProgress } from '@material-ui/core'
+import RemindersInnerTabs from './RemindersInnerTabs'
 
 const Reminders = () => {
     const [
@@ -15,7 +15,8 @@ const Reminders = () => {
     return (
         <RemindersLoading>
             {remindersLoading && <CircularProgress />}
-            <ReminderList reminders={reminders} />
+
+            <RemindersInnerTabs reminders={reminders} />
         </RemindersLoading>
     )
 }
