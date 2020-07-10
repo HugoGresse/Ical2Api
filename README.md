@@ -10,7 +10,6 @@ Interested by the service? Contact me at hugo.gresse@gmail.com
 
 ### TODO List:
 
--   [ ] Front end to manage the ical list and organization
 -   [ ] User management
 -   [ ] Translation for reminders
 
@@ -32,4 +31,3 @@ Parameters:
 `https://ical2api.web.app/api/v1/icals/?organizationId=<orgId>`
 
 -   `organizationId=orgId` (required) the organization your icals are linked to
-
