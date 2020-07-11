@@ -66,6 +66,21 @@ export const editIcal = (ical, dispatch) => {
         })
 }
 
+export const deleteIcal = (ical, dispatch) => {
+    return firestore
+        .collection('icals')
+        .doc(ical.id)
+        .delete()
+        .then(() => true)
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}
 export const newReminder = (reminder, dispatch) => {
     return firestore
         .collection('reminders')
@@ -104,6 +119,7 @@ export const deleteReminder = (reminder, dispatch) => {
         .collection('reminders')
         .doc(reminder.id)
         .delete()
+        .then(() => true)
         .catch(error => {
             dispatch({
                 domain: 'error',

@@ -27,9 +27,13 @@ const RemindersInnerTabs = ({
         setFirstMenuValue(value)
     }
 
-    const onDeleteReminder = reminder => {
-        onDelete(reminder)
+    const onDeleteReminder = async reminder => {
+        const tempSelectedReminder = secondMenuValue
         setSecondMenuValue(false)
+        const success = await onDelete(reminder)
+        if (!success) {
+            setSecondMenuValue(tempSelectedReminder)
+        }
     }
 
     useEffect(() => {

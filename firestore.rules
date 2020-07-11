@@ -14,13 +14,15 @@ service cloud.firestore {
         }
 
         match /icals/{icalId} {
-            allow read: if  authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow read: if isAdmin(organizationData(resource.data.organizationId));
             allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
         match /reminders/{reminderId} {
             allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
             allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
         match /organizations/{organizationId} {

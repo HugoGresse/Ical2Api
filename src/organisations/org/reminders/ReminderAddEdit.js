@@ -110,7 +110,9 @@ const ReminderAddEdit = ({
                     <Box
                         display="flex"
                         marginTop={1}
-                        justifyContent="space-between">
+                        justifyContent={
+                            editMode ? 'space-between' : 'flex-end'
+                        }>
                         {editMode && (
                             <Button
                                 disabled={isSubmitting}

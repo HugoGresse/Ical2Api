@@ -4,9 +4,10 @@ import { Field, Form, Formik } from 'formik'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { TextField } from 'formik-material-ui'
-import { editIcal, newIcal } from '../../actions/actions'
+import { deleteIcal, editIcal, newIcal } from '../../actions/actions'
 import { useStateValue } from '../../../state/state'
 import { SimpleDialog } from '../../../sharedComponents/SimpleDialog'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const AddEditIcalDialog = ({ onCancel, open, ical }) => {
     const [
@@ -15,6 +16,11 @@ const AddEditIcalDialog = ({ onCancel, open, ical }) => {
         },
         dispatch,
     ] = useStateValue()
+
+    const onDeleteIcal = async () => {
+        await deleteIcal(ical, dispatch)
+        onCancel()
+    }
 
     return (
         <SimpleDialog
@@ -85,7 +91,23 @@ const AddEditIcalDialog = ({ onCancel, open, ical }) => {
                             fullWidth={true}
                         />
 
-                        <Box textAlign="right" marginTop={1}>
+                        <Box
+                            display="flex"
+                            marginTop={1}
+                            justifyContent={
+                                ical ? 'space-between' : 'flex-end'
+                            }>
+                            {ical && (
+                                <Button
+                                    disabled={isSubmitting}
+                                    onClick={onDeleteIcal}
+                                    variant="outlined"
+                                    color="secondary"
+                                    startIcon={<DeleteIcon />}>
+                                    Delete
+                                </Button>
+                            )}
+
                             <Button disabled={isSubmitting} type="submit">
                                 {ical ? 'Save ical' : 'Add iCal'}
                             </Button>
