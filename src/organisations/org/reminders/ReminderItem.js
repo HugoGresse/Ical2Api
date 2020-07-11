@@ -5,13 +5,14 @@ const ReminderItem = ({
     reminder,
     reminderType,
     defaultSlackWebHook,
-    onReminderEdit,
+    onSubmit,
 }) => {
     return (
         <ReminderAddEdit
             reminder={reminder}
             reminderType={reminderType || reminder.type}
             defaultSlackWebHook={defaultSlackWebHook}
+            onSubmit={onSubmit}
         />
     )
 }

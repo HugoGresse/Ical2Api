@@ -29,11 +29,15 @@ const ReminderAddEdit = ({
         <Formik
             validationSchema={getFormSchema(reminderType)}
             initialValues={getInitialValue(reminderType, editMode, reminder)}
-            onSubmit={(values, { setSubmitting }) => {
-                console.log('values', values)
-
-                return onSubmit().then(id => {
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+                return onSubmit({
+                    ...reminder,
+                    ...values,
+                }).then(() => {
                     setSubmitting(false)
+                    if (!editMode) {
+                        resetForm()
+                    }
                 })
             }}>
             {({ isSubmitting, setFieldValue }) => (

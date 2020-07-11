@@ -65,3 +65,36 @@ export const editIcal = (ical, dispatch) => {
             return Promise.resolve()
         })
 }
+
+export const newReminder = (reminder, dispatch) => {
+    return firestore
+        .collection('reminders')
+        .add(reminder)
+        .then(({ id }) => {
+            // No need to dispatch, reminders are already listening live
+            return id
+        })
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}
+
+export const editReminder = (reminder, dispatch) => {
+    return firestore
+        .collection('reminders')
+        .doc(reminder.id)
+        .set(reminder)
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}

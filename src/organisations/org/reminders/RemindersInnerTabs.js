@@ -8,10 +8,16 @@ import { selectRemindersByType } from '../../../state/selectors'
 import ReminderTypeNotice from './ReminderTypeNotice'
 import { DAYS } from '../../../utils/date'
 import ReminderItem from './ReminderItem'
+import { newReminder } from '../../actions/actions'
 
 const NEW_ITEM_VALUE = 'new'
 
-const RemindersInnerTabs = ({ reminders, defaultSlackWebHook }) => {
+const RemindersInnerTabs = ({
+    reminders,
+    defaultSlackWebHook,
+    onNewReminder,
+    onEditReminder,
+}) => {
     const [firstMenuValue, setFirstMenuValue] = useState(ReminderType.hour.id)
     const [secondMenuValue, setSecondMenuValue] = useState(false)
     const [selectedReminders, setReminders] = useState([])
@@ -80,10 +86,11 @@ const RemindersInnerTabs = ({ reminders, defaultSlackWebHook }) => {
                             <TabPanel
                                 value={secondMenuValue}
                                 index={reminder.id}
-                                key={key}>
+                                key={reminder.id}>
                                 <ReminderItem
                                     reminder={reminder}
                                     reminderType={firstMenuValue}
+                                    onSubmit={onEditReminder}
                                 />
                             </TabPanel>
                         ))}
@@ -94,6 +101,7 @@ const RemindersInnerTabs = ({ reminders, defaultSlackWebHook }) => {
                             <ReminderItem
                                 reminderType={firstMenuValue}
                                 defaultSlackWebHook={defaultSlackWebHook}
+                                onSubmit={onNewReminder}
                             />
                         </TabPanel>
                     </TabPanel>
