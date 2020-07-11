@@ -3,7 +3,11 @@ import RemindersLoading from './RemindersLoading'
 import { useStateValue } from '../../../state/state'
 import { CircularProgress } from '@material-ui/core'
 import RemindersInnerTabs from './RemindersInnerTabs'
-import { editReminder, newReminder } from '../../actions/actions'
+import {
+    deleteReminder,
+    editReminder,
+    newReminder,
+} from '../../actions/actions'
 
 const Reminders = () => {
     const [
@@ -35,6 +39,7 @@ const Reminders = () => {
                     )
                 }
                 onEditReminder={values => editReminder(values, dispatch)}
+                onDelete={reminder => deleteReminder(reminder, dispatch)}
             />
         </RemindersLoading>
     )

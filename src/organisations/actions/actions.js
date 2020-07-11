@@ -98,3 +98,18 @@ export const editReminder = (reminder, dispatch) => {
             return Promise.resolve()
         })
 }
+
+export const deleteReminder = (reminder, dispatch) => {
+    return firestore
+        .collection('reminders')
+        .doc(reminder.id)
+        .delete()
+        .catch(error => {
+            dispatch({
+                domain: 'error',
+                type: 'new',
+                payload: error,
+            })
+            return Promise.resolve()
+        })
+}

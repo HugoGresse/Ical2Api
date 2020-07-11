@@ -14,12 +14,14 @@ import FormHelperText from '@material-ui/core/FormHelperText'
 import Link from '@material-ui/core/Link'
 import { DAYS, defaultLang, defaultTimezone } from '../../../utils/date'
 import MenuItem from '@material-ui/core/MenuItem'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 const ReminderAddEdit = ({
     reminderType,
     reminder,
     defaultSlackWebHook,
     onSubmit,
+    onDelete,
 }) => {
     const [expanded, setExpanded] = useState(true)
 
@@ -105,7 +107,20 @@ const ReminderAddEdit = ({
                         </AccordionDetails>
                     </Accordion>
 
-                    <Box textAlign="right" marginTop={1}>
+                    <Box
+                        display="flex"
+                        marginTop={1}
+                        justifyContent="space-between">
+                        {editMode && (
+                            <Button
+                                disabled={isSubmitting}
+                                onClick={() => onDelete(reminder)}
+                                variant="outlined"
+                                color="secondary"
+                                startIcon={<DeleteIcon />}>
+                                Delete
+                            </Button>
+                        )}
                         <Button
                             disabled={isSubmitting}
                             type="submit"

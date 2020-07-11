@@ -8,7 +8,6 @@ import { selectRemindersByType } from '../../../state/selectors'
 import ReminderTypeNotice from './ReminderTypeNotice'
 import { DAYS } from '../../../utils/date'
 import ReminderItem from './ReminderItem'
-import { newReminder } from '../../actions/actions'
 
 const NEW_ITEM_VALUE = 'new'
 
@@ -17,6 +16,7 @@ const RemindersInnerTabs = ({
     defaultSlackWebHook,
     onNewReminder,
     onEditReminder,
+    onDelete,
 }) => {
     const [firstMenuValue, setFirstMenuValue] = useState(ReminderType.hour.id)
     const [secondMenuValue, setSecondMenuValue] = useState(false)
@@ -25,6 +25,11 @@ const RemindersInnerTabs = ({
     const onFirstMenuChange = (e, value) => {
         setSecondMenuValue(false)
         setFirstMenuValue(value)
+    }
+
+    const onDeleteReminder = reminder => {
+        onDelete(reminder)
+        setSecondMenuValue(false)
     }
 
     useEffect(() => {
@@ -91,6 +96,7 @@ const RemindersInnerTabs = ({
                                     reminder={reminder}
                                     reminderType={firstMenuValue}
                                     onSubmit={onEditReminder}
+                                    onDelete={onDeleteReminder}
                                 />
                             </TabPanel>
                         ))}
