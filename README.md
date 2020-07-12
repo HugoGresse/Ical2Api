@@ -10,6 +10,7 @@ Interested by the service? Contact me at hugo.gresse@gmail.com
 
 ### TODO List:
 
+-   [ ] Secure event pages for be either publci readable or password protected / token
 -   [ ] Add slack webhook within iCal2Api using a Slack App
 -   [ ] User management
 -   [ ] Translation for reminders
