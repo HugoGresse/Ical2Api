@@ -1,9 +1,13 @@
-import { firestore, functions } from '../../utils/firebase'
+import { firestore, functions, serverTimestamp } from '../../utils/firebase'
 
 export const newOrganization = (org, dispatch) => {
     return firestore
         .collection('organizations')
-        .add(org)
+        .add({
+            ...org,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        })
         .then(({ id }) => {
             // No need to dispatch, new org are already listening lived
             return id
@@ -22,7 +26,10 @@ export const updateOrganization = (org, dispatch) => {
     return firestore
         .collection('organizations')
         .doc(org.id)
-        .update(org)
+        .update({
+            ...org,
+            updatedAt: serverTimestamp(),
+        })
         .catch(error => {
             dispatch({
                 domain: 'error',
@@ -53,7 +60,11 @@ export const deleteOrganization = (id, dispatch) => {
 export const newIcal = (ical, dispatch) => {
     return firestore
         .collection('icals')
-        .add(ical)
+        .add({
+            ...ical,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        })
         .then(({ id }) => {
             // No need to dispatch, new org are already listening lived
             return id
@@ -72,7 +83,10 @@ export const editIcal = (ical, dispatch) => {
     return firestore
         .collection('icals')
         .doc(ical.id)
-        .set(ical)
+        .set({
+            ...ical,
+            updatedAt: serverTimestamp(),
+        })
         .catch(error => {
             dispatch({
                 domain: 'error',
@@ -101,7 +115,11 @@ export const deleteIcal = (ical, dispatch) => {
 export const newReminder = (reminder, dispatch) => {
     return firestore
         .collection('reminders')
-        .add(reminder)
+        .add({
+            ...reminder,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+        })
         .then(({ id }) => {
             // No need to dispatch, reminders are already listening live
             return id
@@ -120,7 +138,10 @@ export const editReminder = (reminder, dispatch) => {
     return firestore
         .collection('reminders')
         .doc(reminder.id)
-        .set(reminder)
+        .set({
+            ...reminder,
+            updatedAt: serverTimestamp(),
+        })
         .catch(error => {
             dispatch({
                 domain: 'error',
