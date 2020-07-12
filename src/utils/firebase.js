@@ -26,6 +26,9 @@ export const functions = {
     getUpcomingEventManually: firebase
         .functions()
         .httpsCallable('getUpcomingEventManually'),
+    deleteOrganization: firebase
+        .functions()
+        .httpsCallable('deleteOrganization'),
 }
 
 authProvider.useDeviceLanguage()

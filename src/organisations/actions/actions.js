@@ -1,4 +1,4 @@
-import { firestore } from '../../utils/firebase'
+import { firestore, functions } from '../../utils/firebase'
 
 export const newOrganization = (org, dispatch) => {
     return firestore
@@ -31,6 +31,23 @@ export const updateOrganization = (org, dispatch) => {
             })
             return Promise.resolve()
         })
+}
+
+export const deleteOrganization = (id, dispatch) => {
+    try {
+        return functions
+            .deleteOrganization({
+                organizationId: id,
+            })
+            .then(result => result.data.success)
+    } catch (error) {
+        dispatch({
+            domain: 'error',
+            type: 'new',
+            payload: error,
+        })
+        return Promise.resolve()
+    }
 }
 
 export const newIcal = (ical, dispatch) => {

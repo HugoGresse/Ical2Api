@@ -11,6 +11,8 @@ service cloud.firestore {
 
         match /events/{eventId} {
             allow read: if true;
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
         match /icals/{icalId} {
@@ -30,7 +32,7 @@ service cloud.firestore {
             allow list: if authenticated() && isAdmin(resource.data) && isEmailVerified();
             allow create: if authenticated();
             allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();
-            allow delete: if authenticated() && isAdmin(resource.data) && isEmailVerified();
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
         match /organizationsPrivateData/{orgPrivateDataId} {
