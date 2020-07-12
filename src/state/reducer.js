@@ -12,6 +12,7 @@ export const initialState = {
         reminders: [],
     },
     organizations: {},
+    organizationsLoading: false,
     auth: {
         loggedIn: false,
         user: null,
@@ -42,10 +43,15 @@ export const reducer = (state, action) => {
                 case 'loaded':
                     return {
                         ...state,
+                        organizationsLoading: false,
                         organizations: {
-                            ...state.organizations,
                             ...action.payload,
                         },
+                    }
+                case 'loading':
+                    return {
+                        ...state,
+                        organizationsLoading: true,
                     }
                 default:
                     return state

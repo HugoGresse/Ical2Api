@@ -6,11 +6,13 @@ import { useStateValue } from '../state/state'
 import OrgBreadcrumb from './OrgBreadcrumb'
 import OrganizationApp from './org/OrganizationApp'
 import ErrorTrucificator from './ErrorTrucificator'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const OrganizationsApp = () => {
     const [
         {
             auth: { user },
+            organizationsLoading,
         },
     ] = useStateValue()
     const { url } = useRouteMatch()
@@ -19,6 +21,7 @@ const OrganizationsApp = () => {
         <OrganizationsLoading userId={user && user.uid}>
             <OrgBreadcrumb />
             <ErrorTrucificator />
+            {organizationsLoading && <CircularProgress />}
             <Switch>
                 <Route exact path={`${url}/`}>
                     <OrganizationList />

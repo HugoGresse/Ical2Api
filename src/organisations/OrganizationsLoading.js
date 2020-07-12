@@ -9,6 +9,11 @@ const OrganizationsLoading = ({ children, userId }) => {
         if (!userId) {
             return
         }
+        dispatch({
+            domain: 'orgs',
+            type: 'loading',
+            payload: true,
+        })
         const unsubscribe = firestore
             .collection('organizations')
             .where('members', 'array-contains', userId)
