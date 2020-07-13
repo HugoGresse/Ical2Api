@@ -57,7 +57,7 @@ const IcalList = () => {
                                 position: 'relative',
                             }}
                         />
-                        iCal are fetched every 30 minutes
+                        iCal are fetched every 30 minutes, at minutes 15 and 45.
                     </Typography>
                 </Grid>
             </Grid>

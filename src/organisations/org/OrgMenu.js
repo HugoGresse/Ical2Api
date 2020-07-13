@@ -13,18 +13,21 @@ const OrgMenu = () => {
         },
     ] = useStateValue()
     const routing = useRoutingMap()
+    const matchPassedEvents = useRouteMatch(routing.orgs.org.passedEvents.url)
     const matchIcals = useRouteMatch(routing.orgs.org.icals.url)
     const matchReminders = useRouteMatch(routing.orgs.org.reminders.url)
     const matchSettings = useRouteMatch(routing.orgs.org.settings.url)
     const [value, setValue] = React.useState(0)
 
     useEffect(() => {
-        if (matchIcals) {
+        if (matchPassedEvents) {
             setValue(1)
-        } else if (matchReminders) {
+        } else if (matchIcals) {
             setValue(2)
-        } else if (matchSettings) {
+        } else if (matchReminders) {
             setValue(3)
+        } else if (matchSettings) {
+            setValue(4)
         } else {
             setValue(0)
         }
@@ -48,11 +51,16 @@ const OrgMenu = () => {
                 />
                 <Tab
                     component={Link}
+                    label={routing.orgs.org.passedEvents.name}
+                    to={useRoutingMap().orgs.org.passedEvents.url}
+                />
+
+                <Tab
+                    component={Link}
                     label={routing.orgs.org.icals.name}
                     to={useRoutingMap().orgs.org.icals.url}
                     style={{ display: loggedIn ? 'inherit' : 'none' }}
                 />
-
                 <Tab
                     component={Link}
                     label={routing.orgs.org.reminders.name}

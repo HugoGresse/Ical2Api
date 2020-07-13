@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { StyledFirebaseAuth } from 'react-firebaseui'
 import firebase from 'firebase/app'
 import { useStateValue } from '../state/state'
-import { Link, useHistory } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 
 const uiConfig = {
     signInFlow: 'redirect',
@@ -25,7 +26,6 @@ const uiConfig = {
             // the link in a mobile app if it is installed.
             emailLinkSignIn: function() {
                 return {
-                    url: process.env.REACT_APP_DOMAIN,
                     // Custom FDL domain.
                     dynamicLinkDomain: process.env.REACT_APP_LOGIN_EMAIL_FDL,
                     // Always true for email link sign-in.
@@ -58,7 +58,10 @@ const Login = () => {
         return (
             <>
                 You are already logged in. Do you want to{' '}
-                <Link to="/a/logout">log out</Link>?
+                <Link component={RouterLink} to="/a/logout">
+                    log out
+                </Link>
+                ?
             </>
         )
     }

@@ -8,6 +8,8 @@ import {
     editReminder,
     newReminder,
 } from '../../actions/actions'
+import InfoIcon from '@material-ui/icons/Info'
+import Typography from '@material-ui/core/Typography'
 
 const Reminders = () => {
     const [
@@ -41,6 +43,11 @@ const Reminders = () => {
                 onEditReminder={values => editReminder(values, dispatch)}
                 onDelete={reminder => deleteReminder(reminder, dispatch)}
             />
+
+            <Typography variant="body2" style={{ marginTop: 16 }}>
+                Reminders are sent at o'clock sharp, creation reminder at
+                minutes 15 and 45.
+            </Typography>
         </RemindersLoading>
     )
 }

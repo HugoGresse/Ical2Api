@@ -20,6 +20,10 @@ export const RoutingMap = orgId => ({
                 name: 'Upcoming events',
                 url: `/o/${orgId}/events-upcoming`,
             },
+            passedEvents: {
+                name: 'Passed events',
+                url: `/o/${orgId}/events-passed`,
+            },
             icals: {
                 name: 'iCal list',
                 url: `/o/${orgId}/icals`,

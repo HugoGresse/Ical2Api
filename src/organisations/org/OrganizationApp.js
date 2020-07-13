@@ -13,6 +13,7 @@ import UpcomingEvents from './event/UpcomingEvents'
 import OrgMenu from './OrgMenu'
 import Reminders from './reminders/Reminders'
 import OrgSettings from './settings/OrgSettings'
+import PassedEvents from './event/PassedEvents'
 
 const OrganizationApp = () => {
     const { organizationId } = useParams()
@@ -37,6 +38,9 @@ const OrganizationApp = () => {
                 </Route>
                 <Route path={`${url}/events-upcoming`}>
                     <UpcomingEvents />
+                </Route>
+                <Route path={`${url}/events-passed`}>
+                    <PassedEvents />
                 </Route>
                 <Route path={`${url}/reminders`}>
                     <Reminders />

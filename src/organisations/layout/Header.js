@@ -6,15 +6,20 @@ import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import Avatar from '@material-ui/core/Avatar'
 import MenuItem from '@material-ui/core/MenuItem'
-import { Link, useHistory } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
 import { COLORS } from '../../contants'
+import Link from '@material-ui/core/Link'
 
 const UserLayout = ({ user }) => {
     const history = useHistory()
     const [anchorEl, setAnchorEl] = React.useState(null)
 
     if (!user) {
-        return <Link to="/a/login">Login</Link>
+        return (
+            <Link component={RouterLink} to="/a/login">
+                Login
+            </Link>
+        )
     }
 
     const handleClick = event => {
