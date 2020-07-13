@@ -9,7 +9,9 @@ export const selectPassedEvents = events => {
     if (!events) return []
 
     const now = Date.now()
-    return events.filter(event => event.startDate < now)
+    return events
+        .filter(event => event.startDate < now)
+        .sort((a, b) => (a.startDate > b.startDate ? -1 : 1))
 }
 
 export const countUpcomingEvents = events => selectUpcomingEvents(events).length
