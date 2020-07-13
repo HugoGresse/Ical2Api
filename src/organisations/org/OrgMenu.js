@@ -31,7 +31,7 @@ const OrgMenu = () => {
         } else {
             setValue(0)
         }
-    }, [matchIcals, matchReminders, matchSettings])
+    }, [matchPassedEvents, matchIcals, matchReminders, matchSettings])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
