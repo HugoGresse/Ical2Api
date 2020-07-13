@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { StyledFirebaseAuth } from 'react-firebaseui'
 import firebase from 'firebase/app'
 import { useStateValue } from '../state/state'
-import { Link, useHistory } from 'react-router-dom'
+import { Link as RouterLink, useHistory } from 'react-router-dom'
+import Link from '@material-ui/core/Link'
 
 const uiConfig = {
     signInFlow: 'redirect',
@@ -58,7 +59,10 @@ const Login = () => {
         return (
             <>
                 You are already logged in. Do you want to{' '}
-                <Link to="/a/logout">log out</Link>?
+                <Link component={RouterLink} to="/a/logout">
+                    log out
+                </Link>
+                ?
             </>
         )
     }
