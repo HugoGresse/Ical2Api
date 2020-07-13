@@ -50,6 +50,7 @@ const OrgMenu = () => {
                     component={Link}
                     label={routing.orgs.org.icals.name}
                     to={useRoutingMap().orgs.org.icals.url}
+                    style={{ display: loggedIn ? 'inherit' : 'none' }}
                 />
 
                 <Tab

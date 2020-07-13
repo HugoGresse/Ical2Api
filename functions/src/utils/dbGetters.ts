@@ -1,35 +1,20 @@
-import { Organization } from "../reminder/reminderUtils";
-import { db } from "./initFirebase";
+import { Organization } from '../reminder/reminderUtils'
+import { db } from './initFirebase'
 
 export const getOrganization = async (
-  orgId: string
+    orgId: string
 ): Promise<Organization | undefined> => {
-  const doc = await db
-    .collection("organizations")
-    .doc(orgId)
-    .get();
+    const doc = await db
+        .collection('organizations')
+        .doc(orgId)
+        .get()
 
-  if (doc.exists) {
-    const privateOrgDocs = await db
-      .collection("organizationsPrivateData")
-      .where("organizationId", "==", orgId)
-      .limit(1)
-      .get();
-
-    const privateOrgDoc = privateOrgDocs.docs.pop();
-
-    if (!privateOrgDoc) {
-      return undefined;
+    if (doc.exists) {
+        return {
+            id: doc.id,
+            ...doc.data(),
+        } as Organization
     }
-
-    return {
-      id: doc.id,
-      ...doc.data(),
-      privateData: {
-        id: privateOrgDoc.id,
-        ...privateOrgDoc.data()
-      }
-    } as Organization;
-  }
-  return undefined;
-};
+    console.warn('Org not found')
+    return undefined
+}
