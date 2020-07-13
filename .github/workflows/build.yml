@@ -1,4 +1,4 @@
-name: Build project + unit test
+name: Build project & functions
 
 on: [push]
 
