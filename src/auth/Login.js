@@ -26,7 +26,6 @@ const uiConfig = {
             // the link in a mobile app if it is installed.
             emailLinkSignIn: function() {
                 return {
-                    url: process.env.REACT_APP_DOMAIN,
                     // Custom FDL domain.
                     dynamicLinkDomain: process.env.REACT_APP_LOGIN_EMAIL_FDL,
                     // Always true for email link sign-in.
