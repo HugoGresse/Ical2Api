@@ -8,7 +8,6 @@ import {
     editReminder,
     newReminder,
 } from '../../actions/actions'
-import InfoIcon from '@material-ui/icons/Info'
 import Typography from '@material-ui/core/Typography'
 
 const Reminders = () => {
