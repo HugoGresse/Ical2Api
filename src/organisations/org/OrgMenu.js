@@ -21,7 +21,7 @@ const OrgMenu = () => {
 
     useEffect(() => {
         if (matchPassedEvents) {
-            setValue(1)
+            setValue(0)
         } else if (matchIcals) {
             setValue(2)
         } else if (matchReminders) {
@@ -48,11 +48,6 @@ const OrgMenu = () => {
                     component={Link}
                     label={routing.orgs.org.root.name}
                     to={useRoutingMap().orgs.org.root.url}
-                />
-                <Tab
-                    component={Link}
-                    label={routing.orgs.org.passedEvents.name}
-                    to={useRoutingMap().orgs.org.passedEvents.url}
                 />
 
                 <Tab

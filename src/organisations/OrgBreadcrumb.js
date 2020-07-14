@@ -30,6 +30,8 @@ const OrgBreadcrumb = () => {
                 [routing.orgs.org.icals.url]: routing.orgs.org.icals.name,
                 [routing.orgs.org.upcomingEvents.url]:
                     routing.orgs.org.upcomingEvents.name,
+                [routing.orgs.org.passedEvents.url]:
+                    routing.orgs.org.passedEvents.name,
                 [routing.orgs.org.reminders.url]:
                     routing.orgs.org.reminders.name,
                 [routing.orgs.org.settings.url]: routing.orgs.org.settings.name,

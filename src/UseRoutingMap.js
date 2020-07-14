@@ -13,7 +13,7 @@ export const RoutingMap = orgId => ({
         },
         org: {
             root: {
-                name: 'Upcoming events',
+                name: 'Events',
                 url: `/o/${orgId}`,
             },
             upcomingEvents: {
