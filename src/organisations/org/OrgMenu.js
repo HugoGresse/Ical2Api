@@ -23,11 +23,11 @@ const OrgMenu = () => {
         if (matchPassedEvents) {
             setValue(0)
         } else if (matchIcals) {
-            setValue(2)
+            setValue(1)
         } else if (matchReminders) {
-            setValue(3)
+            setValue(2)
         } else if (matchSettings) {
-            setValue(4)
+            setValue(3)
         } else {
             setValue(0)
         }

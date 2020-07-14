@@ -33,7 +33,7 @@ export const RoutingMap = orgId => ({
                 url: `/o/${orgId}/reminders`,
             },
             settings: {
-                name: 'Organization settings',
+                name: 'Organization settings & APIs',
                 url: `/o/${orgId}/settings`,
             },
         },
