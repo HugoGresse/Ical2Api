@@ -21,6 +21,7 @@
         "yup": "^0.29.1"
     },
     "devDependencies": {
+        "@firebase/testing": "^0.20.6",
         "husky": "^3.1.0",
         "lint-staged": "^9.5.0",
         "prettier": "^1.19.1"
@@ -30,7 +31,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "deploy": "npm run build && firebase deploy"
+        "deploy": "npm run build && firebase deploy",
+        "test:emulator": "jest firestore.rules.spec.js"
     },
     "eslintConfig": {
         "extends": "react-app"

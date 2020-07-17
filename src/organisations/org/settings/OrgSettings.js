@@ -3,6 +3,7 @@ import { useStateValue } from '../../../state/state'
 import { CircularProgress } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid'
 import OrgSettingsForm from './OrgSettingsForm'
+import AccessControl from './AccessControl'
 
 const OrgSettings = () => {
     const [
@@ -27,7 +28,9 @@ const OrgSettings = () => {
                 </Grid>
             </Grid>
             <Grid container>
-                <Grid item xs={12} sm={6}></Grid>
+                <Grid item xs={12} sm={6}>
+                    <AccessControl org={org} />
+                </Grid>
             </Grid>
         </>
     )

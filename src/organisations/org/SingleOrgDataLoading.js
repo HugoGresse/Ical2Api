@@ -18,39 +18,19 @@ const SingleOrgDataLoading = ({ children }) => {
             type: 'eventsLoading',
         })
 
-        const orgUnsubscribe = firestore
-            .collection('organizations')
-            .doc(organizationId)
-            .onSnapshot(snapshot => {
-                dispatch({
-                    domain: 'orgs',
-                    type: 'loaded',
-                    payload: {
-                        [snapshot.id]: {
-                            id: snapshot.id,
-                            ...snapshot.data(),
-                        },
-                    },
-                })
-            })
-        const icalsUnsubscribe = firestore
-            .collection('icals')
-            .where('organizationId', '==', organizationId)
-            .onSnapshot(querySnapshot => {
-                dispatch({
-                    domain: 'org',
-                    type: 'icalsLoaded',
-                    payload: querySnapshot.docs.map(ref => ({
-                        id: ref.id,
-                        ...ref.data(),
-                    })),
-                })
-            })
         const eventsUnsubscribe = firestore
             .collection('events')
             .where('organizationId', '==', organizationId)
+            .where('token', 'in', ['', 'azerty'])
             .orderBy('startDate')
             .onSnapshot(querySnapshot => {
+                console.log(
+                    'ok',
+                    querySnapshot.docs.map(ref => ({
+                        id: ref.id,
+                        ...ref.data(),
+                    }))
+                )
                 dispatch({
                     domain: 'org',
                     type: 'eventsLoaded',
@@ -61,9 +41,7 @@ const SingleOrgDataLoading = ({ children }) => {
                 })
             })
         return () => {
-            icalsUnsubscribe()
             eventsUnsubscribe()
-            orgUnsubscribe()
         }
     }, [dispatch, organizationId])
 

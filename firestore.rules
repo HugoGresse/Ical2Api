@@ -2,15 +2,28 @@ rules_version = '2';
 service cloud.firestore {
     match /databases/{database}/documents {
 
+        // DB Read
+        function organizationData(organizationId) { return get(/databases/$(database)/documents/organizations/$(organizationId)).data }
+        function organizationPrivateData(organizationId) { return get(/databases/$(database)/documents/organizationsPrivateData/$(organizationId)).data }
+
+        // Auth management
         function authenticated() { return request.auth.uid != null }
         function isAdmin(data) { return data.owner == request.auth.uid || request.auth.uid in data.members}
         function isEmailVerified() { return request.auth.token.email_verified == true }
 
-        // DB Read
-        function organizationData(organizationId) { return get(/databases/$(database)/documents/organizations/$(organizationId)).data }
+        // Tokens management
+        function isOrganizationReadAccepted (organizationId, readToken) {
+            let organization =  organizationData(organizationId);
+
+            //return isOrganizationPublic(organization) ? true : ['azerty', ''].hasAny([readToken]);
+            return isOrganizationPublic(organization) ? true : isReadTokenValid(organizationId, readToken);
+        }
+
+        function isOrganizationPublic (organization) { return organization.public == true }
+        function isReadTokenValid (organizationId, token) { return organizationPrivateData(organizationId).readToken == token }
 
         match /events/{eventId} {
-            allow read: if true;
+            allow read: if isOrganizationReadAccepted(resource.data.organizationId, debug(resource.data.token));
             allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
             allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
@@ -28,15 +41,17 @@ service cloud.firestore {
         }
 
         match /organizations/{organizationId} {
-            allow get: if true;
+            allow get: if isOrganizationReadAccepted(organizationId, request.resource.data.token);
             allow list: if authenticated() && isAdmin(resource.data) && isEmailVerified();
             allow create: if authenticated();
             allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();
             allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
-        match /organizationsPrivateData/{orgPrivateDataId} {
-            allow read: if false;
+        match /organizationsPrivateData/{orgId} {
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
     }
 }
