@@ -8,7 +8,13 @@ export const newOrganization = (org, dispatch) => {
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
         })
-        .then(({ id }) => {
+        .then(async ({ id }) => {
+            await firestore
+                .collection('organizations')
+                .doc(id)
+                .update({
+                    organizationId: id,
+                })
             // No need to dispatch, new org are already listening lived
             return id
         })
