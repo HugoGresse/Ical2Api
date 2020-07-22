@@ -9,9 +9,7 @@ service cloud.firestore {
         // Auth management
         function authenticated() { return request.auth.uid != null }
         function isAdmin(data) {
-            return data.keys().hasAny(['owner']) ? data.owner == request.auth.uid :
-                    data.keys().hasAny(['members']) ? request.auth.uid in data.members :
-                    false
+            return data.keys().hasAny(['members']) ? request.auth.uid in data.members : false
         }
         function isEmailVerified() { return request.auth.token.email_verified == true }
 
@@ -56,9 +54,9 @@ service cloud.firestore {
 
         match /organizations/{organizationId} {
             allow read: if isOrganizationReadAccepted(organizationId, request.resource.data.readToken);
-            allow list: if (authenticated() && isAdmin(resource.data)) || isOrganizationListTokenAccepted();
+            allow list: if (authenticated() && isAdmin(resource.data)) || (isOrganizationListTokenAccepted() && limitOne());
             allow create: if authenticated();
-            allow update: if authenticated() && isAdmin(resource) && isEmailVerified();
+            allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();
             allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
 
