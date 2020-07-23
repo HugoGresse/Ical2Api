@@ -216,6 +216,10 @@ describe('Firestore rules', () => {
 
         it('Create a private org and fail to read it (no token)', async () => {
             const app = createApp()
+            const appWithoutAdmin = createApp({
+                uid: 'notme',
+                email_verified: true,
+            })
 
             const create = await createOrg(app, 'org1', {
                 public: false,
@@ -225,7 +229,7 @@ describe('Firestore rules', () => {
             })
             firebase.assertSucceeds(create)
 
-            const get = app
+            const get = appWithoutAdmin
                 .collection('organizations')
                 .doc('org1')
                 .get()
@@ -233,7 +237,7 @@ describe('Firestore rules', () => {
             await firebase.assertFails(get)
         })
 
-        it('Create a private org and fail to read it (no token, from list)', async () => {
+        it('Create a private org and fail to read it (no token, no members, from list)', async () => {
             const app = createApp()
 
             const create = await createOrg(app, 'org1', {
@@ -252,7 +256,7 @@ describe('Firestore rules', () => {
             await firebase.assertFails(get)
         })
 
-        it('Create a private org and succeed to read it (with token, from list)', async () => {
+        it('Create a private org and succeed to read it as admin', async () => {
             const app = createApp()
 
             const orgId = 'org1'
@@ -271,6 +275,73 @@ describe('Firestore rules', () => {
             firebase.assertSucceeds(create)
 
             const get = await app
+                .collection('organizations')
+                .where('members', 'array-contains', uid)
+                .limit(1)
+                .get()
+
+            const result = await firebase.assertSucceeds(get)
+            expect(result.docs.length).toEqual(1)
+            const data = result.docs[0].data()
+            expect(data.public).toEqual(false)
+            expect(data.name).toEqual('ORG Tartiflette')
+        })
+
+        it('Create a private org and succeed to read it as admin with the id', async () => {
+            const app = createApp()
+
+            const orgId = 'org1'
+            const create = await createOrg(app, orgId, {
+                public: false,
+                name: 'ORG Tartiflette',
+                organizationId: orgId,
+                owner: uid,
+                members: [uid],
+                readToken: 'myToken',
+            })
+            await createOrgPrivate(app, {
+                organizationId: orgId,
+                readToken: 'myToken',
+            })
+            firebase.assertSucceeds(create)
+
+            const get = await app
+                .collection('organizations')
+                .where('members', 'array-contains', uid)
+                .where('organizationId', '==', orgId)
+                .limit(1)
+                .get()
+
+            const result = await firebase.assertSucceeds(get)
+            expect(result.docs.length).toEqual(1)
+            const data = result.docs[0].data()
+            expect(data.public).toEqual(false)
+            expect(data.name).toEqual('ORG Tartiflette')
+        })
+
+        it('Create a private org and succeed to read it (with token, from list)', async () => {
+            const app = createApp()
+            const appWithoutAdmin = createApp({
+                uid: 'notme',
+                email_verified: true,
+            })
+
+            const orgId = 'org1'
+            const create = await createOrg(app, orgId, {
+                public: false,
+                name: 'ORG Tartiflette',
+                organizationId: orgId,
+                owner: uid,
+                members: [uid],
+                readToken: 'myToken',
+            })
+            await createOrgPrivate(app, {
+                organizationId: orgId,
+                readToken: 'myToken',
+            })
+            firebase.assertSucceeds(create)
+
+            const get = await appWithoutAdmin
                 .collection('organizations')
                 .where('readToken', '==', 'myToken')
                 .where('organizationId', '==', orgId)
@@ -449,35 +520,6 @@ describe('Firestore rules', () => {
 
             const result = await firebase.assertSucceeds(get)
             expect(result.docs.length).toEqual(2)
-        })
-
-        it('Create a private org and fail to read it (read, not list)', async () => {
-            const app = createApp()
-            const appWithoutAdmin = createApp({
-                uid: 'notme',
-                email_verified: true,
-            })
-
-            const orgId = 'org1'
-            await createOrg(app, orgId, {
-                public: false,
-                name: 'ORG Tartiflette',
-                organizationId: orgId,
-                owner: uid,
-                members: [uid],
-                readToken: 'myToken',
-            })
-            await createOrgPrivate(app, {
-                organizationId: orgId,
-                readToken: 'myToken',
-            })
-
-            const get = app
-                .collection('organizations')
-                .doc(orgId)
-                .get()
-
-            await firebase.assertFails(get)
         })
 
         it('Create a private org and update it with admin with success', async () => {

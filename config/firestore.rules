@@ -53,7 +53,7 @@ service cloud.firestore {
         }
 
         match /organizations/{organizationId} {
-            allow read: if isOrganizationReadAccepted(organizationId, request.resource.data.readToken);
+            allow read: if (authenticated() && isAdmin(resource.data)) || isOrganizationReadAccepted(organizationId, request.resource.data.readToken);
             allow list: if (authenticated() && isAdmin(resource.data)) || (isOrganizationListTokenAccepted() && limitOne());
             allow create: if authenticated();
             allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();

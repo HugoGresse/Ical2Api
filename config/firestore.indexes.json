@@ -37,7 +37,7 @@
                     "order": "ASCENDING"
                 },
                 {
-                    "fieldPath": "token",
+                    "fieldPath": "readToken",
                     "order": "ASCENDING"
                 },
                 {
