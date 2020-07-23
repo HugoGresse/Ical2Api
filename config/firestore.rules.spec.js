@@ -127,6 +127,38 @@ describe('Firestore rules', () => {
             expect(result.docs.length).toEqual(0)
         })
 
+        it('Read all event for a private org as admin', async () => {
+            const app = createApp()
+
+            await createOrg(app, 'org1', {
+                public: false,
+                name: 'ORG 1111',
+                owner: uid,
+                members: [uid],
+            })
+            await createEvent(app, {
+                organizationId: 'org1',
+                title: 'Event 1',
+            })
+            await createEvent(app, {
+                organizationId: 'org1',
+                title: 'Event 1',
+                readToken: 'azerty',
+            })
+            await createOrgPrivate(app, {
+                organizationId: 'org1',
+                readToken: 'not-used-for-event',
+            })
+
+            const eventsGet = await app
+                .collection('events')
+                .where('organizationId', '==', 'org1')
+                .get()
+
+            const result = await firebase.assertSucceeds(eventsGet)
+            expect(result.docs.length).toEqual(2)
+        })
+
         it('Fails to reads event for a private org without token', async () => {
             const app = createApp()
 
