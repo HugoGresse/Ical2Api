@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useStateValue } from '../../state/state'
+import { useSelectedOrganization, useStateValue } from '../../state/state'
 import {
     Redirect,
     Route,
@@ -15,13 +15,17 @@ import Reminders from './reminders/Reminders'
 import OrgSettings from './settings/OrgSettings'
 import PassedEvents from './event/PassedEvents'
 import { useQuery } from '../../utils/router'
+import ErrorInfo, { TYPE_ERROR } from '../../sharedComponents/ErrorInfo'
 
 const OrganizationApp = () => {
     const { organizationId } = useParams()
     const [, dispatch] = useStateValue()
+    const organization = useSelectedOrganization()
     const { url } = useRouteMatch('/o/:orgId')
     const query = useQuery()
     const token = query.get('token')
+
+    const hasError = organization && !!organization.loadError
 
     useEffect(() => {
         dispatch({
@@ -33,6 +37,21 @@ const OrganizationApp = () => {
 
     return (
         <SingleOrgDataLoading token={token}>
+            {hasError ? (
+                <ErrorInfo
+                    errorMessage={organization && organization.loadError}
+                    type={TYPE_ERROR}
+                />
+            ) : (
+                getOrgContent(url, token)
+            )}
+        </SingleOrgDataLoading>
+    )
+}
+
+const getOrgContent = (url, token) => {
+    return (
+        <>
             <OrgMenu />
             <Switch>
                 <Redirect exact from={url} to={`${url}/events-upcoming`} />
@@ -52,7 +71,7 @@ const OrganizationApp = () => {
                     <OrgSettings />
                 </Route>
             </Switch>
-        </SingleOrgDataLoading>
+        </>
     )
 }
 

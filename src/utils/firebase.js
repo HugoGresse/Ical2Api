@@ -41,3 +41,23 @@ if (
 ) {
     firebase.analytics()
 }
+
+export const FirebaseErrorCode = {
+    ok: 'ok',
+    cancelled: 'cancelled',
+    unknown: 'unknown',
+    'invalid-argument': 'invalid-argument',
+    'deadline-exceeded': 'deadline-exceeded',
+    'not-found': 'not-found',
+    'already-exists': 'already-exists',
+    'permission-denied': 'permission-denied',
+    'resource-exhausted': 'resource-exhausted',
+    'failed-precondition': 'failed-precondition',
+    aborted: 'aborted',
+    'out-of-range': 'out-of-range',
+    unimplemented: 'unimplemented',
+    internal: 'internal',
+    unavailable: 'unavailable',
+    'data-loss': 'data-loss',
+    unauthenticated: 'unauthenticated',
+}

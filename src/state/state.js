@@ -18,3 +18,8 @@ export const useUser = () => {
     ] = useStateValue()
     return [loggedIn, user]
 }
+
+export const useSelectedOrganization = () => {
+    const [{ selectedOrganization }] = useStateValue()
+    return selectedOrganization
+}

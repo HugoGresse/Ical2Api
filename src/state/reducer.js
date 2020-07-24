@@ -7,6 +7,7 @@ export const initialState = {
         eventsLoading: false,
         remindersLoading: false,
         lastUseSlackWebHook: null,
+        loadError: null,
         icals: [],
         events: [],
         reminders: [],
@@ -70,6 +71,15 @@ export const reducer = (state, action) => {
                         selectedOrganization: {
                             ...initialState.selectedOrganization,
                             id: action.payload.id,
+                        },
+                    }
+                }
+                case 'loadError': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            loadError: action.payload,
                         },
                     }
                 }
