@@ -47,6 +47,7 @@ export const reducer = (state, action) => {
                 case 'loaded': {
                     const tempState = {
                         ...state,
+                        organizations: {},
                         organizationsLoading: false,
                     }
                     Object.keys(action.payload).forEach(orgId => {

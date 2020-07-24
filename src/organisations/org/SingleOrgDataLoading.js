@@ -58,7 +58,6 @@ const SingleOrgDataLoading = ({ children, token }) => {
             type: 'eventsLoading',
         })
 
-        // TODO : reuse token when changing token page
         const eventsUnsubscribe = listenToEvents(dispatch, organization, token)
 
         return () => {
