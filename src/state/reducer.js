@@ -34,20 +34,26 @@ export const reducer = (state, action) => {
                         },
                     }
                 case 'logout':
+                    if (!state.auth.loggedIn) {
+                        return state
+                    }
                     return initialState
                 default:
                     return state
             }
         case 'orgs':
             switch (action.type) {
-                case 'loaded':
-                    return {
+                case 'loaded': {
+                    const tempState = {
                         ...state,
                         organizationsLoading: false,
-                        organizations: {
-                            ...action.payload,
-                        },
                     }
+                    Object.keys(action.payload).forEach(orgId => {
+                        tempState.organizations[orgId] = action.payload[orgId]
+                    })
+
+                    return tempState
+                }
                 case 'loading':
                     return {
                         ...state,
