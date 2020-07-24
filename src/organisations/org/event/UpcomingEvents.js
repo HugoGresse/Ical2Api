@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button'
 import { Link as RouterLink } from 'react-router-dom'
 import { RoutingMap } from '../../../UseRoutingMap'
 
-const UpcomingEvents = () => {
+const UpcomingEvents = ({ token }) => {
     const [
         {
             selectedOrganization: { id, icals, events, eventsLoading },
@@ -17,17 +17,18 @@ const UpcomingEvents = () => {
 
     const upcomingEvents = selectUpcomingEvents(events)
     const routing = RoutingMap(id).orgs.org.passedEvents
+    const passedUrl = token ? `${routing.url}?token=${token}` : routing.url
 
     return (
         <Grid container spacing={4}>
             {id && (
                 <Grid item xs={12} style={{ textAlign: 'right' }}>
                     <Button
-                        to={routing.url}
+                        to={passedUrl}
                         component={RouterLink}
                         variant="outlined"
                         color="primary">
-                        {routing.name}
+                        See {routing.name}
                     </Button>
                 </Grid>
             )}

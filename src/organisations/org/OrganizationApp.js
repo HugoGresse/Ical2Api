@@ -14,11 +14,14 @@ import OrgMenu from './OrgMenu'
 import Reminders from './reminders/Reminders'
 import OrgSettings from './settings/OrgSettings'
 import PassedEvents from './event/PassedEvents'
+import { useQuery } from '../../utils/router'
 
 const OrganizationApp = () => {
     const { organizationId } = useParams()
     const [, dispatch] = useStateValue()
     const { url } = useRouteMatch('/o/:orgId')
+    const query = useQuery()
+    const token = query.get('token')
 
     useEffect(() => {
         dispatch({
@@ -29,7 +32,7 @@ const OrganizationApp = () => {
     }, [dispatch, organizationId])
 
     return (
-        <SingleOrgDataLoading>
+        <SingleOrgDataLoading token={token}>
             <OrgMenu />
             <Switch>
                 <Redirect exact from={url} to={`${url}/events-upcoming`} />
@@ -37,10 +40,10 @@ const OrganizationApp = () => {
                     <IcalList />
                 </Route>
                 <Route path={`${url}/events-upcoming`}>
-                    <UpcomingEvents />
+                    <UpcomingEvents token={token} />
                 </Route>
                 <Route path={`${url}/events-passed`}>
-                    <PassedEvents />
+                    <PassedEvents token={token} />
                 </Route>
                 <Route path={`${url}/reminders`}>
                     <Reminders />
