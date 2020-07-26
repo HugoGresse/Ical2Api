@@ -33,6 +33,8 @@ export const deleteOrganization = functions
                 return snapshot.data() as Organization
             })
 
+        organization.id = orgId
+
         console.warn(
             `User ${context.auth &&
                 context.auth

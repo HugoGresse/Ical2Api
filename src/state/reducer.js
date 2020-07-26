@@ -7,9 +7,12 @@ export const initialState = {
         eventsLoading: false,
         remindersLoading: false,
         lastUseSlackWebHook: null,
+        loadError: null,
         icals: [],
         events: [],
         reminders: [],
+        organizationPrivateDataLoading: false,
+        organizationPrivateData: null,
     },
     organizations: {},
     organizationsLoading: false,
@@ -34,20 +37,27 @@ export const reducer = (state, action) => {
                         },
                     }
                 case 'logout':
+                    if (!state.auth.loggedIn) {
+                        return state
+                    }
                     return initialState
                 default:
                     return state
             }
         case 'orgs':
             switch (action.type) {
-                case 'loaded':
-                    return {
+                case 'loaded': {
+                    const tempState = {
                         ...state,
+                        organizations: {},
                         organizationsLoading: false,
-                        organizations: {
-                            ...action.payload,
-                        },
                     }
+                    Object.keys(action.payload).forEach(orgId => {
+                        tempState.organizations[orgId] = action.payload[orgId]
+                    })
+
+                    return tempState
+                }
                 case 'loading':
                     return {
                         ...state,
@@ -64,6 +74,15 @@ export const reducer = (state, action) => {
                         selectedOrganization: {
                             ...initialState.selectedOrganization,
                             id: action.payload.id,
+                        },
+                    }
+                }
+                case 'loadError': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            loadError: action.payload,
                         },
                     }
                 }
@@ -121,6 +140,25 @@ export const reducer = (state, action) => {
                             remindersLoading: false,
                             reminders: action.payload,
                             lastUseSlackWebHook: lastUseSlackWebHook,
+                        },
+                    }
+                }
+                case 'privateDataLoading': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            organizationPrivateDataLoading: true,
+                        },
+                    }
+                }
+                case 'privateDataLoaded': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            organizationPrivateDataLoading: false,
+                            organizationPrivateData: action.payload,
                         },
                     }
                 }

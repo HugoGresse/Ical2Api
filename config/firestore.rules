@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+    match /databases/{database}/documents {
+
+        // DB Read
+        function organizationData(organizationId) { return get(/databases/$(database)/documents/organizations/$(organizationId)).data }
+        function organizationPrivateData(organizationId) { return get(/databases/$(database)/documents/organizationsPrivateData/$(organizationId)).data }
+
+        // Auth management
+        function authenticated() { return request.auth.uid != null }
+        function isAdmin(data) {
+            return data.keys().hasAny(['members']) ? request.auth.uid in data.members : false
+        }
+        function isEmailVerified() { return request.auth.token.email_verified == true }
+
+        // Tokens management
+        function isOrganizationReadAccepted (organizationId, readToken) {
+            let organization =  organizationData(organizationId);
+            return isOrganizationPublic(organization) ? true : readToken == organizationPrivateData(organizationId).readToken;
+        }
+        function isOrganizationListTokenAccepted () {
+            return resource.data.keys().hasAny(['organizationId']) ?
+                        isOrganizationPublic(organizationData(resource.data.organizationId)) ? true :
+                        resource.data.readToken == organizationPrivateData(resource.data.organizationId).readToken :
+                        false
+        }
+        function isEventReadAccepted (event, readToken) {
+            let organization =  organizationData(event.organizationId);
+            return isOrganizationPublic(organization) ? true : readToken == event.readToken;
+        }
+        function isOrganizationPublic (organization) { return organization.public == true }
+
+        // Utils
+        function limitOne() { return request.query.limit <= 1 }
+
+        // Match
+        match /events/{eventId} {
+            allow read: if (authenticated() && isAdmin(organizationData(resource.data.organizationId))) || isEventReadAccepted(resource.data, resource.data.readToken);
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
+
+        match /icals/{icalId} {
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
+
+        match /reminders/{reminderId} {
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
+
+        match /organizations/{organizationId} {
+            allow read: if (authenticated() && isAdmin(resource.data)) || isOrganizationReadAccepted(organizationId, request.resource.data.readToken);
+            allow list: if (authenticated() && isAdmin(resource.data)) || (isOrganizationListTokenAccepted() && limitOne());
+            allow create: if authenticated();
+            allow update: if authenticated() && isAdmin(resource.data) && isEmailVerified();
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
+
+        match /organizationsPrivateData/{orgId} {
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
+    }
+}

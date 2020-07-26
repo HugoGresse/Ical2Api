@@ -13,7 +13,7 @@ export const RoutingMap = orgId => ({
         },
         org: {
             root: {
-                name: 'Upcoming events',
+                name: 'Events',
                 url: `/o/${orgId}`,
             },
             upcomingEvents: {
@@ -33,9 +33,19 @@ export const RoutingMap = orgId => ({
                 url: `/o/${orgId}/reminders`,
             },
             settings: {
-                name: 'Organization settings',
+                name: 'Organization settings & APIs',
                 url: `/o/${orgId}/settings`,
             },
         },
     },
 })
+
+export const getShareableEventUrl = (organization, organizationPrivateData) => {
+    const baseUrl = `https://${process.env.REACT_APP_HOSTING_FDL}${
+        RoutingMap(organization.id).orgs.org.upcomingEvents.url
+    }`
+    if (organization.public) {
+        return baseUrl
+    }
+    return `${baseUrl}?token=${organizationPrivateData.readToken}`
+}
