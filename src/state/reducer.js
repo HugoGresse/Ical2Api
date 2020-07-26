@@ -11,6 +11,8 @@ export const initialState = {
         icals: [],
         events: [],
         reminders: [],
+        organizationPrivateDataLoading: false,
+        organizationPrivateData: null,
     },
     organizations: {},
     organizationsLoading: false,
@@ -138,6 +140,25 @@ export const reducer = (state, action) => {
                             remindersLoading: false,
                             reminders: action.payload,
                             lastUseSlackWebHook: lastUseSlackWebHook,
+                        },
+                    }
+                }
+                case 'privateDataLoading': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            organizationPrivateDataLoading: true,
+                        },
+                    }
+                }
+                case 'privateDataLoaded': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            organizationPrivateDataLoading: false,
+                            organizationPrivateData: action.payload,
                         },
                     }
                 }

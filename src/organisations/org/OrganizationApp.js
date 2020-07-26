@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSelectedOrganization, useStateValue } from '../../state/state'
+import { useStateValue } from '../../state/state'
 import {
     Redirect,
     Route,
@@ -16,6 +16,7 @@ import OrgSettings from './settings/OrgSettings'
 import PassedEvents from './event/PassedEvents'
 import { useQuery } from '../../utils/router'
 import ErrorInfo, { TYPE_ERROR } from '../../sharedComponents/ErrorInfo'
+import { useSelectedOrganization } from '../../state/stateHooks'
 
 const OrganizationApp = () => {
     const { organizationId } = useParams()

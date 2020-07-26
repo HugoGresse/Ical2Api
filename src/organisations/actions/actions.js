@@ -1,10 +1,12 @@
 import { firestore, functions, serverTimestamp } from '../../utils/firebase'
+import { createDefaultOrganizationPrivateData } from './organization.actions'
 
 export const newOrganization = (org, dispatch) => {
     return firestore
         .collection('organizations')
         .add({
             ...org,
+            public: true,
             createdAt: serverTimestamp(),
             updatedAt: serverTimestamp(),
         })
@@ -15,6 +17,7 @@ export const newOrganization = (org, dispatch) => {
                 .update({
                     organizationId: id,
                 })
+            await createDefaultOrganizationPrivateData(id)
             // No need to dispatch, new org are already listening lived
             return id
         })

@@ -6,14 +6,14 @@ Provide a read-only api for any ical feed.
 2. Events will be synced every 30 minutes.
 3. Query the API (see below)
 
-Interested by the service? Contact me at hugo.gresse@gmail.com
-
 ### TODO List:
 
--   [ ] Secure event pages for be either publci readable or password protected / token
+-   [ ] update all read token on token change
+-   [ ] update API for token
 -   [ ] Add slack webhook within iCal2Api using a Slack App
 -   [ ] User management
 -   [ ] Translation for reminders
+-   [ ] Add to calendar
 
 # API
 
@@ -33,3 +33,12 @@ Parameters:
 `https://ical2api.web.app/api/v1/icals/?organizationId=<orgId>`
 
 -   `organizationId=orgId` (required) the organization your icals are linked to
+
+#### Add/Edit organization, icals & events
+
+The API to write on iCal2Api is not yet made. While you can use the website to do this, you can also vote on those issues if you want this prioritized:
+
+-   [organization edit](https://github.com/HugoGresse/Ical2Api/issues/8)
+-   [icals add/edit](https://github.com/HugoGresse/Ical2Api/issues/10)
+-   [reminders add/edit/read](https://github.com/HugoGresse/Ical2Api/issues/9)
+-   [events manual add/edit](https://github.com/HugoGresse/Ical2Api/issues/11)

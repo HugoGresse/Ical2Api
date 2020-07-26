@@ -9,17 +9,3 @@ export const StateProvider = ({ reducer, initialState, children }) => (
 )
 
 export const useStateValue = () => useContext(StateContext)
-
-export const useUser = () => {
-    const [
-        {
-            auth: { loggedIn, user },
-        },
-    ] = useStateValue()
-    return [loggedIn, user]
-}
-
-export const useSelectedOrganization = () => {
-    const [{ selectedOrganization }] = useStateValue()
-    return selectedOrganization
-}

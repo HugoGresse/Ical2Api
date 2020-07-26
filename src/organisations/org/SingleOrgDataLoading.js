@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
-import { useStateValue, useUser } from '../../state/state'
+import { useStateValue } from '../../state/state'
 import { firestore } from '../../utils/firebase'
 import { useParams } from 'react-router-dom'
 import { listenToEvents } from '../actions/events.actions'
-import { listenToSingleOrganization } from '../actions/organizations.actions'
+import { listenToSingleOrganization } from '../actions/listenToSingleOrganization.actions'
+import { useUser } from '../../state/stateHooks'
 
 const SingleOrgDataLoading = ({ children, token }) => {
     const [{ organizations }, dispatch] = useStateValue()
