@@ -21,7 +21,6 @@ const DeleteOrg = ({ org, isSubmitting, dispatch }) => {
     const onDeleteOrg = async () => {
         setDeleteInProgress(true)
         try {
-            console.log(org)
             const success = await deleteOrganization(org.id, dispatch)
             if (success) {
                 history.push('/')
