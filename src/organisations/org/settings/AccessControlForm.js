@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { bool, object, string } from 'yup'
 import { Field, Form, Formik } from 'formik'
 import { Switch } from 'formik-material-ui'
