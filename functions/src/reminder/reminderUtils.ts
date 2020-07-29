@@ -33,7 +33,8 @@ export interface Organization {
 export interface OrganizationPrivateData {
     id: string
     organizationId: string
-    slackWebHook: string
+    readToken: string
+    writeToken: string
 }
 
 export const getReminders = async (): Promise<Reminder[]> => {
