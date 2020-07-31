@@ -1,8 +1,9 @@
 import * as functions from 'firebase-functions'
-import { getIcal, Ical } from '../eventUpdater/geIcals'
 import getIcalFiles from '../eventUpdater/getIcalFiles'
 import getUpcomingEvents from '../eventUpdater/getUpcomingEvents'
-import { assertOrganizationAdmins } from '../utils/assertOrganizationAdmins'
+import { assertOrganizationAdmins } from '../security/assertOrganizationAdmins'
+import { Ical } from '../types/Ical'
+import { getIcal } from '../dbGetters/getIcal'
 
 export const getUpcomingEventManually = functions.https.onCall(
     async (data, context) => {
@@ -16,7 +17,10 @@ export const getUpcomingEventManually = functions.https.onCall(
         await assertOrganizationAdmins(context, data.organizationId)
 
         const icals: Ical[] = []
-        icals.push(await getIcal(data.icalId))
+        const ical = await getIcal(data.icalId)
+        if (ical) {
+            icals.push()
+        }
         const icalsDatas = await getIcalFiles(icals)
         return getUpcomingEvents(icalsDatas)
     }

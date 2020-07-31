@@ -1,9 +1,8 @@
 import * as express from 'express'
 import * as cors from 'cors'
-import getEvents from './getEvents'
+import getEvents from './getAPIEvents'
 import getIcals from './getIcals'
 
-// router
 const router = express.Router()
 
 router.use(cors({ origin: true }))

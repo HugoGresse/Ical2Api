@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
-import { assertOrganizationAdmins } from '../utils/assertOrganizationAdmins'
+import { assertOrganizationAdmins } from '../security/assertOrganizationAdmins'
 import { db } from '../utils/initFirebase'
-import { Organization } from '../reminder/reminderUtils'
+import { Organization } from '../types/Organization'
 
 export const deleteOrganization = functions
     .runWith({

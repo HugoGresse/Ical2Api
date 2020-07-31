@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import { postCreatedEvent } from '../reminder/eventCreated'
-import { Event } from '../eventUpdater/Event'
+import { Event } from '../types/Event'
 
 export const eventCreated = functions.firestore
     .document('/events/{eventId}')
