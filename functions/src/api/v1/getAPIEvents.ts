@@ -6,8 +6,9 @@ import {
 } from '../../security/getGrantedOrganizations'
 import { Organization } from '../../types/Organization'
 import { getIcal } from '../../dbGetters/getIcal'
-import { Ical } from '../../types/Ical'
+import { Ical, IcalId } from '../../types/Ical'
 import { getOrganization } from '../../dbGetters/getOrganization'
+import { ReadToken } from '../../types/Token'
 
 export default async (req: Request, res: Response) => {
     const { icals, status, organizations, readToken } = req.query
@@ -16,7 +17,7 @@ export default async (req: Request, res: Response) => {
     let grantedOrganizationIds = undefined
 
     if (icals) {
-        const grantedIcals = await getGrantedIcals(icals.split(','))
+        const grantedIcals = await getGrantedIcals(icals.split(','), readToken)
         grantedIcalsIds = grantedIcals.map(ical => ical.id)
     }
 
@@ -55,7 +56,10 @@ const getIcals = async (icalIds: string[]): Promise<Ical[]> => {
     return icals
 }
 
-const getGrantedIcals = async (icalIds: string[]): Promise<Ical[]> => {
+const getGrantedIcals = async (
+    icalIds: IcalId[],
+    token: ReadToken
+): Promise<Ical[]> => {
     const icals = await getIcals(icalIds)
 
     const grantedIcals = []
@@ -63,7 +67,10 @@ const getGrantedIcals = async (icalIds: string[]): Promise<Ical[]> => {
         const organization: Organization | undefined = await getOrganization(
             ical.organizationId
         )
-        if (organization && (await isOrganizationReadAccepted(organization))) {
+        if (
+            organization &&
+            (await isOrganizationReadAccepted(organization, token))
+        ) {
             grantedIcals.push(ical)
         }
     }

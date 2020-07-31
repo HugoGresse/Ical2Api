@@ -67,12 +67,10 @@ const deleteIcals = async (organization: Organization): Promise<boolean> => {
 
     const icalsDocs = icalsSnapshotToDelete.docs
 
-    for (let i = 0; i < icalsDocs.length; i++) {
-        console.log('delete ' + icalsDocs[i].id)
-
+    for (const icalDoc of icalsDocs) {
         await db
             .collection('icals')
-            .doc(icalsDocs[i].id)
+            .doc(icalDoc.id)
             .delete()
             .then(() => true)
     }
@@ -88,12 +86,12 @@ const deleteEvents = async (organization: Organization): Promise<boolean> => {
 
     const eventsDocs = eventsSnapshotToDelete.docs
 
-    for (let i = 0; i < eventsDocs.length; i++) {
-        console.log('delete e:' + eventsDocs[i].id)
+    for (const eventDoc of eventsDocs) {
+        console.log('delete e:' + eventDoc.id)
 
         await db
             .collection('events')
-            .doc(eventsDocs[i].id)
+            .doc(eventDoc.id)
             .delete()
             .then(() => true)
     }
@@ -111,12 +109,12 @@ const deleteReminders = async (
 
     const remindersDocs = remindersSnapshotToDelete.docs
 
-    for (let i = 0; i < remindersDocs.length; i++) {
-        console.log('delete r:' + remindersDocs[i].id)
+    for (const reminder of remindersDocs) {
+        console.log('delete r:' + reminder.id)
 
         await db
             .collection('reminders')
-            .doc(remindersDocs[i].id)
+            .doc(reminder.id)
             .delete()
             .then(() => true)
     }
@@ -134,12 +132,12 @@ const deleteOrgPrivateData = async (
 
     const orgDocs = snapshotToDelete.docs
 
-    for (let i = 0; i < orgDocs.length; i++) {
-        console.log('delete ' + orgDocs[i].id)
+    for (const org of orgDocs) {
+        console.log('delete opd:' + org.id)
 
         await db
             .collection('organizationsPrivateData')
-            .doc(orgDocs[i].id)
+            .doc(org.id)
             .delete()
             .then(() => true)
     }

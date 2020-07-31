@@ -16,17 +16,22 @@ export const getEvents = async (
     organizationId?: OrganizationId,
     status?: Status
 ): Promise<Event[]> => {
-    if (!icals && !organizations && !organizationId) {
+    const wantedIcals = icals && icals.length > 0 ? icals : undefined
+    const wantedOrganizations =
+        organizations && organizations.length > 0 ? organizations : undefined
+
+    // We need at list one of the three field below
+    if (!wantedIcals && !wantedOrganizations && !organizationId) {
         return []
     }
 
     let query: Query = db.collection('events')
 
-    if (icals) {
+    if (icals && icals.length > 0) {
         query = query.where('icalId', 'in', icals)
     }
 
-    if (organizations) {
+    if (organizations && organizations.length > 0) {
         query = query.where('organizationId', 'in', organizations)
     } else if (organizationId) {
         query = query.where('organizationId', '==', organizationId)
