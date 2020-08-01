@@ -25,7 +25,7 @@ export const getEvents = async (
         return []
     }
 
-    let query: Query = db.collection('events')
+    let query: Query = db.collection('events').orderBy('startDate')
 
     if (icals && icals.length > 0) {
         query = query.where('icalId', 'in', icals)

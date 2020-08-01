@@ -31,6 +31,7 @@ export const functions = {
     deleteOrganization: firebase
         .functions()
         .httpsCallable('deleteOrganization'),
+    getCallableEvents: firebase.functions().httpsCallable('getCallableEvents'),
 }
 
 authProvider.useDeviceLanguage()
