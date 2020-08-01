@@ -45,7 +45,7 @@ const AppLayout = ({ children }) => {
         <>
             <CssBaseline />
             <ThemeProvider theme={theme}>
-                <Container maxWidth="md">
+                <Container maxWidth="lg">
                     <Header />
                     <Box bgcolor="#eee" borderRadius={10} padding={3}>
                         {children}
