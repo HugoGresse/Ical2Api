@@ -10,7 +10,6 @@ export const getOrganizationEvent = (
     }
 
     try {
-        console.log('totot', token)
         functions
             .getCallableEvents({
                 organizationId: organization.id,
