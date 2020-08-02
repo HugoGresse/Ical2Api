@@ -9,7 +9,6 @@ Provide a read-only api for any ical feed.
 ### TODO List:
 
 -   [ ] update all read token on token change
--   [ ] update API for token
 -   [ ] Add slack webhook within iCal2Api using a Slack App
 -   [ ] User management
 -   [ ] Translation for reminders

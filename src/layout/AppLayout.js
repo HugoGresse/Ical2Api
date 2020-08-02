@@ -18,23 +18,27 @@ const theme = createMuiTheme({
     },
     typography: {
         h1: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
             fontSize: '3rem',
+            fontWeight: 800,
         },
         h2: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
+            fontWeight: 800,
         },
         h3: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
+            fontWeight: 800,
         },
         h4: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
+            fontWeight: 800,
         },
         h5: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
         },
         h6: {
-            fontFamily: 'Pacifico, cursive, sans-serif',
+            fontFamily: 'Handlee, cursive, sans-serif',
             fontSize: '1rem',
         },
     },

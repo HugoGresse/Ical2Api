@@ -76,14 +76,14 @@ export const updateOrganizationPrivateData = (
         .collection('organizationsPrivateData')
         .doc(organizationId)
         .set(orgPrivateData, { merge: true })
-        .then(result => {
-            return updateOrganization(
-                {
-                    id: organizationId,
-                    public: formValues.public,
-                },
-                dispatch
-            )
+        .then(() => {
+            const orgData = {
+                id: organizationId,
+                public: formValues.public,
+                readToken: orgPrivateData.readToken,
+                writeToken: orgPrivateData.writeToken,
+            }
+            return updateOrganization(orgData, dispatch)
         })
         .catch(error => {
             dispatch({
