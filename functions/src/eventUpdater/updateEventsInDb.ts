@@ -1,5 +1,5 @@
 import { db, serverTimestamp } from '../utils/initFirebase'
-import { Event } from './Event'
+import { Event } from '../types/Event'
 
 const updateEventInDb = async (events: Event[]): Promise<void> => {
     console.log(`> Adding ${events.length} events to the db`)

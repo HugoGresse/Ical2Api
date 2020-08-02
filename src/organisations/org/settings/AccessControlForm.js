@@ -37,12 +37,14 @@ const AccessControlForm = ({
                     public: bool().required(
                         `You need to choose either the organization is public or private`
                     ),
-                    readToken: string().required(
-                        `We are missing some 🔑🗝🔐🔒 read token!`
-                    ),
-                    writeToken: string().required(
-                        `Write token are soooo important, did you forgot to add one? `
-                    ),
+                    readToken: string()
+                        .required(`We are missing some 🔑🗝🔐🔒 read token!`)
+                        .min(3, 'The token should be at least 3 characters'),
+                    writeToken: string()
+                        .required(
+                            `Write token are soooo important, did you forgot to add one? `
+                        )
+                        .min(3, 'The token should be at least 3 characters'),
                 })}
                 initialValues={{
                     public: organization.public,

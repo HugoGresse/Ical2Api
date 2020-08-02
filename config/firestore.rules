@@ -24,10 +24,6 @@ service cloud.firestore {
                         resource.data.readToken == organizationPrivateData(resource.data.organizationId).readToken :
                         false
         }
-        function isEventReadAccepted (event, readToken) {
-            let organization =  organizationData(event.organizationId);
-            return isOrganizationPublic(organization) ? true : readToken == event.readToken;
-        }
         function isOrganizationPublic (organization) { return organization.public == true }
 
         // Utils
@@ -35,7 +31,7 @@ service cloud.firestore {
 
         // Match
         match /events/{eventId} {
-            allow read: if (authenticated() && isAdmin(organizationData(resource.data.organizationId))) || isEventReadAccepted(resource.data, resource.data.readToken);
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
             allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
             allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }

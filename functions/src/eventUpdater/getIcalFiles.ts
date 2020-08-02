@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { Ical } from './geIcals'
+import { Ical } from '../types/Ical'
 
 export interface IcalFile {
     data: string

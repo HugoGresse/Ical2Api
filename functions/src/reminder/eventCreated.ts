@@ -1,7 +1,8 @@
-import { getOrganization } from '../utils/dbGetters'
-import { postReminder, Reminder, REMINDER_CREATED } from './reminderUtils'
-import { Event } from '../eventUpdater/Event'
+import { getOrganization } from '../dbGetters/getOrganization'
+import { postReminder } from './reminderUtils'
+import { Event } from '../types/Event'
 import { db } from '../utils/initFirebase'
+import { Reminder, REMINDER_CREATED } from '../types/Reminder'
 
 export const postCreatedEvent = async (event: Event) => {
     const reminderSnapshot = await db

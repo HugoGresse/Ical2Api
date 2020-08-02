@@ -1,12 +1,12 @@
+import { DateTime } from 'luxon'
+import { Event } from '../../types/Event'
+import { extractHostname } from '../../utils/extractHostname'
 import {
     Reminder,
     REMINDER_CREATED,
     REMINDER_HOUR,
     REMINDER_WEEKLY,
-} from '../reminderUtils'
-import { DateTime } from 'luxon'
-import { Event } from '../../eventUpdater/Event'
-import { extractHostname } from '../../utils/extractHostname'
+} from '../../types/Reminder'
 
 export const formatMessageForSlack = (
     reminder: Reminder,

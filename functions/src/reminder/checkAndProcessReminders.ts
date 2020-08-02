@@ -1,11 +1,11 @@
+import { processWeeklyReminder } from './processWeeklyReminder'
+import { processHourlyReminder } from './processHourlyReminder'
 import {
-    getReminders,
     REMINDER_CREATED,
     REMINDER_HOUR,
     REMINDER_WEEKLY,
-} from './reminderUtils'
-import { processWeeklyReminder } from './processWeeklyReminder'
-import { processHourlyReminder } from './processHourlyReminder'
+} from '../types/Reminder'
+import { getReminders } from '../dbGetters/getReminders'
 
 export const checkAndProcessReminders = async () => {
     console.log('> getRemindersToTrigger')

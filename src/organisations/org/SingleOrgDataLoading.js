@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useStateValue } from '../../state/state'
 import { firestore } from '../../utils/firebase'
 import { useParams } from 'react-router-dom'
-import { listenToEvents } from '../actions/events.actions'
+import { getOrganizationEvent } from '../actions/events.actions'
 import { listenToSingleOrganization } from '../actions/listenToSingleOrganization.actions'
 import { useUser } from '../../state/stateHooks'
 
@@ -11,6 +11,7 @@ const SingleOrgDataLoading = ({ children, token }) => {
     const { organizationId } = useParams()
 
     const [loggedIn, user] = useUser()
+
     const organization = organizations && organizations[organizationId]
 
     useEffect(() => {
@@ -59,12 +60,16 @@ const SingleOrgDataLoading = ({ children, token }) => {
             type: 'eventsLoading',
         })
 
-        const eventsUnsubscribe = listenToEvents(dispatch, organization, token)
+        const eventsUnsubscribe = getOrganizationEvent(
+            dispatch,
+            organization,
+            token
+        )
 
         return () => {
             eventsUnsubscribe()
         }
-    }, [dispatch, organization, token])
+    }, [dispatch, organization, token, loggedIn])
 
     return children
 }

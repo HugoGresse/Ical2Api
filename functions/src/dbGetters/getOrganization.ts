@@ -1,5 +1,5 @@
-import { Organization } from '../reminder/reminderUtils'
-import { db } from './initFirebase'
+import { db } from '../utils/initFirebase'
+import { Organization } from '../types/Organization'
 
 export const getOrganization = async (
     orgId: string

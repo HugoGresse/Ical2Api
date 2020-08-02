@@ -1,49 +1,56 @@
-import { FirebaseErrorCode, firestore } from '../../utils/firebase'
+import { FirebaseErrorCode, functions } from '../../utils/firebase'
 
-export const listenToEvents = (dispatch, organization = null, token = null) => {
+export const getOrganizationEvent = (
+    dispatch,
+    organization = null,
+    token = null
+) => {
     if (!organization) {
         return () => {}
     }
 
-    let query = firestore
-        .collection('events')
-        .where('organizationId', '==', organization.organizationId)
-
-    if (!organization.public && token) {
-        query = query.where('readToken', '==', token)
-    }
-
-    return query.orderBy('startDate').onSnapshot(
-        querySnapshot => {
-            dispatch({
-                domain: 'org',
-                type: 'eventsLoaded',
-                payload: querySnapshot.docs.map(ref => ({
-                    id: ref.id,
-                    ...ref.data(),
-                })),
+    try {
+        console.log('totot', token)
+        functions
+            .getCallableEvents({
+                organizationId: organization.id,
+                readToken: token,
             })
-        },
-        error => {
-            switch (error.code) {
-                case FirebaseErrorCode['permission-denied']:
+            .then(result => {
+                if (result.error) {
+                    if (
+                        result.error === FirebaseErrorCode['permission-denied']
+                    ) {
+                        dispatch({
+                            domain: 'org',
+                            type: 'loadError',
+                            payload:
+                                'No permission to load some events. Do you need a token or should you log in?',
+                        })
+                    } else {
+                        dispatch({
+                            domain: 'org',
+                            type: 'loadError',
+                            payload: `Error while loading the events: ${result.error}`,
+                        })
+                    }
+                } else {
                     dispatch({
                         domain: 'org',
-                        type: 'loadError',
-                        payload:
-                            'No permission to load some events. Do you need a token or should you log in?',
+                        type: 'eventsLoaded',
+                        payload: result.data.events,
                     })
-                    break
+                }
 
-                default:
-                    console.error(error)
-                    dispatch({
-                        domain: 'org',
-                        type: 'loadError',
-                        payload: `Error while loading the events: ${error.message}`,
-                    })
-                    break
-            }
-        }
-    )
+                return () => {}
+            })
+    } catch (error) {
+        console.log(error)
+        dispatch({
+            domain: 'org',
+            type: 'loadError',
+            payload: `Error while loading the events: ${error.message}`,
+        })
+    }
+    return () => {}
 }

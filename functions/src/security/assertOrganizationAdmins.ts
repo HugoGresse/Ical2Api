@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions'
 import { CallableContext } from 'firebase-functions/lib/providers/https'
-import { db } from './initFirebase'
+import { db } from '../utils/initFirebase'
+import { Organization } from '../types/Organization'
+import { UserId } from '../types/UserId'
 
 export const assertOrganizationAdmins = async (
     context: CallableContext,
@@ -41,13 +43,23 @@ export const assertOrganizationAdmins = async (
         )
     }
 
-    if (
-        organization.owner !== context.auth.uid &&
-        !organization.members.includes(context.auth.uid)
-    ) {
+    if (!isUserAdmin(organization as Organization, context.auth.uid)) {
         throw new functions.https.HttpsError(
             'permission-denied',
             'Only the organization members & owner can edit a organization.'
         )
     }
+}
+
+export const isUserAdmin = (
+    organization: Organization,
+    userId: UserId
+): boolean => {
+    if (
+        organization.owner !== userId &&
+        !organization.members.includes(userId)
+    ) {
+        return false
+    }
+    return true
 }

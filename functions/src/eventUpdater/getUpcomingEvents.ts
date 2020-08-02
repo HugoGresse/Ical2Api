@@ -1,6 +1,6 @@
 import * as ICAL from 'ical.js'
 import { IcalFile } from './getIcalFiles'
-import { Event } from './Event'
+import { Event } from '../types/Event'
 import { DateTime } from 'luxon'
 
 const getUpcomingEvents = (icalFiles: IcalFile[]) => {

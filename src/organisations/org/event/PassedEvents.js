@@ -2,7 +2,10 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { useStateValue } from '../../../state/state'
 import Event from './Event'
-import { selectPassedEvents } from '../../../state/selectors'
+import {
+    selectPassedEvents,
+    selectUpcomingEvents,
+} from '../../../state/selectors'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { Link as RouterLink } from 'react-router-dom'
@@ -15,6 +18,7 @@ const PassedEvents = ({ token }) => {
         },
     ] = useStateValue()
 
+    const upcomingEvents = selectUpcomingEvents(events)
     const passedEvents = selectPassedEvents(events)
     const routing = RoutingMap(id).orgs.org.upcomingEvents
     const upcomingUrl = token ? `${routing.url}?token=${token}` : routing.url
@@ -28,7 +32,8 @@ const PassedEvents = ({ token }) => {
                         component={RouterLink}
                         variant="outlined"
                         color="primary">
-                        See {routing.name}
+                        See {routing.name}{' '}
+                        {upcomingEvents && `(${upcomingEvents.length})`}
                     </Button>
                 </Grid>
             )}
