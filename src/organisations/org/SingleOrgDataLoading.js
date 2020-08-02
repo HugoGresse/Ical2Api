@@ -52,7 +52,6 @@ const SingleOrgDataLoading = ({ children, token }) => {
 
     useEffect(() => {
         if (!organization) {
-            console.log('no org')
             return
         }
 

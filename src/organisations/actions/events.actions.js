@@ -6,7 +6,6 @@ export const getOrganizationEvent = (
     token = null
 ) => {
     if (!organization) {
-        console.log('no org')
         return () => {}
     }
 
