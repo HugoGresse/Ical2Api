@@ -8,6 +8,7 @@ import { selectRemindersByType } from '../../../state/selectors'
 import ReminderTypeNotice from './ReminderTypeNotice'
 import { DAYS } from '../../../utils/date'
 import ReminderItem from './ReminderItem'
+import { makeStyles } from '@material-ui/styles'
 
 const NEW_ITEM_VALUE = 'new'
 
@@ -63,8 +64,7 @@ const RemindersInnerTabs = ({
                         value={firstMenuValue}
                         index={key}
                         key={key}
-                        padding={0}
-                        style={{ display: 'flex' }}>
+                        padding={0}>
                         <Tabs
                             orientation="vertical"
                             value={secondMenuValue}
@@ -135,19 +135,21 @@ const getTabLabel = reminder => {
 }
 
 function TabPanel({ children, value, index, padding = 3, ...other }) {
+    const isHidden = value !== index
     return (
-        <div
+        <Box
+            style={isHidden ? {} : { flexGrow: 1, display: 'flex' }}
             role="tabpanel"
-            hidden={value !== index}
+            hidden={isHidden}
             id={`vertical-tabpanel-${index}`}
             aria-labelledby={`vertical-tab-${index}`}
             {...other}>
             {value === index && (
-                <Box p={padding} display="flex">
+                <Box p={padding} display="flex" flexGrow={1}>
                     {children}
                 </Box>
             )}
-        </div>
+        </Box>
     )
 }
 
