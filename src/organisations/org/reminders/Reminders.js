@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import RemindersLoading from './RemindersLoading'
 import { useStateValue } from '../../../state/state'
 import { CircularProgress } from '@material-ui/core'
@@ -9,19 +9,18 @@ import {
     newReminder,
 } from '../../actions/actions'
 import Typography from '@material-ui/core/Typography'
+import { useQuery } from '../../../utils/router'
 
 const Reminders = () => {
     const [
         {
-            selectedOrganization: {
-                id,
-                reminders,
-                remindersLoading,
-                lastUseSlackWebHook,
-            },
+            selectedOrganization: { id, reminders, remindersLoading },
         },
         dispatch,
     ] = useStateValue()
+
+    const query = useQuery()
+    const slackInstallId = query.get('slackInstallId')
 
     return (
         <RemindersLoading>
@@ -29,8 +28,9 @@ const Reminders = () => {
 
             <RemindersInnerTabs
                 reminders={reminders}
-                defaultSlackWebHook={lastUseSlackWebHook}
+                slackInstall={slackInstall}
                 onNewReminder={values =>
+                    // TODO : remove query
                     newReminder(
                         {
                             ...values,

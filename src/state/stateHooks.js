@@ -25,3 +25,9 @@ export const useOrganizationPrivateData = () => {
     ] = useStateValue()
     return [organizationPrivateDataLoading, organizationPrivateData]
 }
+
+export const useSlackInstalls = () => {
+    const org = useSelectedOrganization()
+
+    return org.slackInstalls
+}

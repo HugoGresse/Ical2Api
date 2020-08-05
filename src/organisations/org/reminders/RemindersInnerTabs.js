@@ -8,13 +8,11 @@ import { selectRemindersByType } from '../../../state/selectors'
 import ReminderTypeNotice from './ReminderTypeNotice'
 import { DAYS } from '../../../utils/date'
 import ReminderItem from './ReminderItem'
-import { makeStyles } from '@material-ui/styles'
 
-const NEW_ITEM_VALUE = 'new'
+export const NEW_ITEM_VALUE = 'new'
 
 const RemindersInnerTabs = ({
     reminders,
-    defaultSlackWebHook,
     onNewReminder,
     onEditReminder,
     onDelete,
@@ -50,7 +48,7 @@ const RemindersInnerTabs = ({
                     onChange={onFirstMenuChange}
                     aria-label="Reminder type"
                     style={{ minWidth: 170, borderRight: '1px solid #BBB' }}>
-                    {Object.keys(ReminderType).map((key, index) => (
+                    {Object.keys(ReminderType).map(key => (
                         <Tab
                             label={ReminderType[key].name}
                             value={key}
@@ -59,7 +57,7 @@ const RemindersInnerTabs = ({
                     ))}
                 </Tabs>
 
-                {Object.keys(ReminderType).map((key, index) => (
+                {Object.keys(ReminderType).map(key => (
                     <TabPanel
                         value={firstMenuValue}
                         index={key}
@@ -110,7 +108,6 @@ const RemindersInnerTabs = ({
                             key={key}>
                             <ReminderItem
                                 reminderType={firstMenuValue}
-                                defaultSlackWebHook={defaultSlackWebHook}
                                 onSubmit={onNewReminder}
                             />
                         </TabPanel>
