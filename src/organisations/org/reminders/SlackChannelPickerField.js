@@ -67,9 +67,7 @@ const SlackChannelPickerField = ({ organizationId, setFieldValue }) => {
                 open={addDialogDisplayed}
                 title="New Slack channel">
                 <Box display="flex" alignItems="center">
-                    {addDialogDisplayed && (
-                        <NewWindow url={slackUrl}></NewWindow>
-                    )}
+                    {addDialogDisplayed && <NewWindow url={slackUrl} />}
                     Waiting for a new Slack channel...
                     <CircularProgress
                         style={{
