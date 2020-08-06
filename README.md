@@ -6,6 +6,18 @@ Provide a read-only api for any ical feed.
 2. Events will be synced every 30 minutes.
 3. Query the API (see below)
 
+#### Use it: [ical2api.web.app](https://ical2api.web.app/)  
+#### Event demo: [🖥 here](https://ical2api.web.app/o/9Y6UMiuKiWTyu12Sjetn/events-upcoming)
+#### API: [here](https://github.com/HugoGresse/Ical2Api#api)
+
+----
+
+[<img alt="website" src="https://raw.githubusercontent.com/HugoGresse/Ical2Api/master/public/screenshot-website.png" width="500">](https://github.com/HugoGresse/Ical2Api/raw/master/public/screenshot-website.png)
+
+Slack reminders (upon creation, before X hours, weekly sumup)
+
+[<img alt="Slack reminder" src="https://raw.githubusercontent.com/HugoGresse/Ical2Api/master/public/screenshot-reminder.png" width="500" height="300">](https://github.com/HugoGresse/Ical2Api/raw/master/public/screenshot-website.png)
+
 # API
 
 #### Get all Events
