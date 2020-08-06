@@ -73,7 +73,7 @@ export const formatMessageForSlack = (
             type: 'section',
             text: {
                 type: 'mrkdwn',
-                text: `:arrow_right: *${event.title}*\ndu meetup *${event.icalName}*.\n`,
+                text: `:arrow_right: *${event.title}*\nde *${event.icalName}*.\n`,
             },
             accessory: {
                 type: 'button',
