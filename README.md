@@ -8,9 +8,7 @@ Provide a read-only api for any ical feed.
 
 ### TODO List:
 
--   [ ] update all read token on token change
 -   [ ] Add to calendar
--   [ ] Improve loader on events
 -   [ ] User management
 -   [ ] Translation for reminders
 
