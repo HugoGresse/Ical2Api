@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { Link as RouterLink } from 'react-router-dom'
 import { RoutingMap } from '../../../UseRoutingMap'
+import Box from '@material-ui/core/Box'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const UpcomingEvents = ({ token }) => {
     const [
@@ -47,7 +49,10 @@ const UpcomingEvents = ({ token }) => {
             {upcomingEvents.length === 0 && (
                 <Grid item>
                     {eventsLoading && (
-                        <Typography>Events loading...</Typography>
+                        <Box display="flex" alignItems="center">
+                            <CircularProgress style={{ marginRight: 16 }} />
+                            <Typography>Events loading...</Typography>
+                        </Box>
                     )}
                     {!eventsLoading && (
                         <Typography>No upcoming events</Typography>
