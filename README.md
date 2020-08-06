@@ -6,12 +6,6 @@ Provide a read-only api for any ical feed.
 2. Events will be synced every 30 minutes.
 3. Query the API (see below)
 
-### TODO List:
-
--   [ ] Add to calendar
--   [ ] User management
--   [ ] Translation for reminders
-
 # API
 
 #### Get all Events
