@@ -5,9 +5,13 @@ import { MapMarker, CalendarClock } from 'mdi-material-ui'
 import Typography from '@material-ui/core/Typography'
 import Link from '@material-ui/core/Link'
 import Button from '@material-ui/core/Button'
+import AddToCalendar from '@culturehq/add-to-calendar'
+import './AddToCalendar.css'
 
 const Event = ({ ical, event }) => {
     const date = new Date(event.startDate)
+
+    const exportedEvent = getEventForExport(ical, event)
 
     return (
         <>
@@ -33,6 +37,11 @@ const Event = ({ ical, event }) => {
                         target="_blank">
                         View event
                     </Button>
+
+                    <AddToCalendar
+                        children="Add to my calendar"
+                        event={exportedEvent}
+                    />
                 </Box>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -80,9 +89,25 @@ const Event = ({ ical, event }) => {
                     </Box>
                 )}
             </Grid>
-            <Grid item xs={12}></Grid>
         </>
     )
+}
+
+const getEventForExport = (ical, event) => {
+    const startDate = new Date(event.startDate)
+    const endDate = new Date(event.endDate)
+
+    const data = {
+        name: `${event.title} - ${ical.name}`,
+        details: `${event.title} - ${ical.name}`,
+        startsAt: startDate.toISOString(),
+        endsAt: endDate.toISOString(),
+    }
+
+    if (event.location) {
+        data.location = event.location
+    }
+    return data
 }
 
 export default Event
