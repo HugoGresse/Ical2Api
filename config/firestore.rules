@@ -61,5 +61,12 @@ service cloud.firestore {
             allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
             allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
         }
+
+        match /slackInstallations/{installId} {
+            allow read: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+            allow list: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow write: if authenticated() && isAdmin(organizationData(request.resource.data.organizationId));
+            allow delete: if authenticated() && isAdmin(organizationData(resource.data.organizationId));
+        }
     }
 }

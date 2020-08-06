@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { firestore } from '../../../utils/firebase'
 import { useStateValue } from '../../../state/state'
+import { listenForSlackInstalls } from '../../actions/slack.actions'
 
 const RemindersLoading = ({ children }) => {
     const [
@@ -36,6 +37,10 @@ const RemindersLoading = ({ children }) => {
         return () => {
             remindersUnsubscribe()
         }
+    }, [dispatch, id])
+
+    useEffect(() => {
+        return listenForSlackInstalls(id, dispatch)
     }, [dispatch, id])
 
     return children

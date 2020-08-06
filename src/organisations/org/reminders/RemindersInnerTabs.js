@@ -9,11 +9,10 @@ import ReminderTypeNotice from './ReminderTypeNotice'
 import { DAYS } from '../../../utils/date'
 import ReminderItem from './ReminderItem'
 
-const NEW_ITEM_VALUE = 'new'
+export const NEW_ITEM_VALUE = 'new'
 
 const RemindersInnerTabs = ({
     reminders,
-    defaultSlackWebHook,
     onNewReminder,
     onEditReminder,
     onDelete,
@@ -49,7 +48,7 @@ const RemindersInnerTabs = ({
                     onChange={onFirstMenuChange}
                     aria-label="Reminder type"
                     style={{ minWidth: 170, borderRight: '1px solid #BBB' }}>
-                    {Object.keys(ReminderType).map((key, index) => (
+                    {Object.keys(ReminderType).map(key => (
                         <Tab
                             label={ReminderType[key].name}
                             value={key}
@@ -58,13 +57,12 @@ const RemindersInnerTabs = ({
                     ))}
                 </Tabs>
 
-                {Object.keys(ReminderType).map((key, index) => (
+                {Object.keys(ReminderType).map(key => (
                     <TabPanel
                         value={firstMenuValue}
                         index={key}
                         key={key}
-                        padding={0}
-                        style={{ display: 'flex' }}>
+                        padding={0}>
                         <Tabs
                             orientation="vertical"
                             value={secondMenuValue}
@@ -110,7 +108,6 @@ const RemindersInnerTabs = ({
                             key={key}>
                             <ReminderItem
                                 reminderType={firstMenuValue}
-                                defaultSlackWebHook={defaultSlackWebHook}
                                 onSubmit={onNewReminder}
                             />
                         </TabPanel>
@@ -135,19 +132,21 @@ const getTabLabel = reminder => {
 }
 
 function TabPanel({ children, value, index, padding = 3, ...other }) {
+    const isHidden = value !== index
     return (
-        <div
+        <Box
+            style={isHidden ? {} : { flexGrow: 1, display: 'flex' }}
             role="tabpanel"
-            hidden={value !== index}
+            hidden={isHidden}
             id={`vertical-tabpanel-${index}`}
             aria-labelledby={`vertical-tab-${index}`}
             {...other}>
             {value === index && (
-                <Box p={padding} display="flex">
+                <Box p={padding} display="flex" flexGrow={1}>
                     {children}
                 </Box>
             )}
-        </div>
+        </Box>
     )
 }
 
