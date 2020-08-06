@@ -8,17 +8,17 @@ import Button from '@material-ui/core/Button'
 import AddToCalendar from '@culturehq/add-to-calendar'
 import './AddToCalendar.css'
 
-const Event = ({ ical, event }) => {
+const Event = ({ event }) => {
     const date = new Date(event.startDate)
 
-    const exportedEvent = getEventForExport(ical, event)
+    const exportedEvent = getEventForExport(event)
 
     return (
         <>
             <Grid item xs={12} sm={8}>
                 <Box flex={1}>
                     <Typography variant="h5" style={{ color: 'red' }}>
-                        {ical && ical.name}
+                        {event.icalName}
                     </Typography>
                     <Typography variant="h4" style={{ fontFamily: 'Roboto' }}>
                         {event.title}
@@ -93,13 +93,13 @@ const Event = ({ ical, event }) => {
     )
 }
 
-const getEventForExport = (ical, event) => {
+const getEventForExport = event => {
     const startDate = new Date(event.startDate)
     const endDate = new Date(event.endDate)
 
     const data = {
-        name: `${event.title} - ${ical.name}`,
-        details: `${event.title} - ${ical.name}`,
+        name: `${event.title} - ${event.icalName}`,
+        details: `${event.title} - ${event.icalName}`,
         startsAt: startDate.toISOString(),
         endsAt: endDate.toISOString(),
     }

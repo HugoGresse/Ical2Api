@@ -16,7 +16,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 const UpcomingEvents = ({ token }) => {
     const [
         {
-            selectedOrganization: { id, icals, events, eventsLoading },
+            selectedOrganization: { id, events, eventsLoading },
         },
     ] = useStateValue()
 
@@ -40,11 +40,7 @@ const UpcomingEvents = ({ token }) => {
                 </Grid>
             )}
             {upcomingEvents.map(event => (
-                <Event
-                    key={event.id}
-                    ical={icals.filter(ical => event.icalId === ical.id)[0]}
-                    event={event}
-                />
+                <Event key={event.id} event={event} />
             ))}
             {upcomingEvents.length === 0 && (
                 <Grid item>
