@@ -16,7 +16,7 @@ import Box from '@material-ui/core/Box'
 const PassedEvents = ({ token }) => {
     const [
         {
-            selectedOrganization: { id, icals, events, eventsLoading },
+            selectedOrganization: { id, events, eventsLoading },
         },
     ] = useStateValue()
 
@@ -40,11 +40,7 @@ const PassedEvents = ({ token }) => {
                 </Grid>
             )}
             {passedEvents.map(event => (
-                <Event
-                    key={event.id}
-                    ical={icals.filter(ical => event.icalId === ical.id)[0]}
-                    event={event}
-                />
+                <Event key={event.id} event={event} />
             ))}
             {passedEvents.length === 0 && (
                 <Grid item>
