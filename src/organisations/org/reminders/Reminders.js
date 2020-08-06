@@ -13,12 +13,7 @@ import Typography from '@material-ui/core/Typography'
 const Reminders = () => {
     const [
         {
-            selectedOrganization: {
-                id,
-                reminders,
-                remindersLoading,
-                lastUseSlackWebHook,
-            },
+            selectedOrganization: { id, reminders, remindersLoading },
         },
         dispatch,
     ] = useStateValue()
@@ -29,7 +24,6 @@ const Reminders = () => {
 
             <RemindersInnerTabs
                 reminders={reminders}
-                defaultSlackWebHook={lastUseSlackWebHook}
                 onNewReminder={values =>
                     newReminder(
                         {

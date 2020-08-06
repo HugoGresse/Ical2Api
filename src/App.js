@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import AppLayout from './layout/AppLayout'
 import { StateProvider } from './state/state'
 import OrganizationsApp from './organisations/OrganizationsApp'
-import Home from './home/Home'
+import Home from './pages/Home'
 import AuthApp from './auth/AuthApp'
 import AuthListener from './auth/AuthListener'
 import { initialState, reducer } from './state/reducer'
+import SlackResult from './pages/SlackResult'
 
 const App = () => {
     return (
@@ -20,6 +21,9 @@ const App = () => {
                             </Route>
                             <Route path="/a/">
                                 <AuthApp />
+                            </Route>
+                            <Route exact path="/slackResult/">
+                                <SlackResult />
                             </Route>
                             <Route exact path="/">
                                 <Home />

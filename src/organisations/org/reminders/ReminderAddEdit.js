@@ -10,19 +10,14 @@ import { TextField } from 'formik-material-ui'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import { ReminderType } from './remindersConstants'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Link from '@material-ui/core/Link'
 import { DAYS, defaultLang, defaultTimezone } from '../../../utils/date'
 import MenuItem from '@material-ui/core/MenuItem'
 import DeleteIcon from '@material-ui/icons/Delete'
+import { useSelectedOrganization } from '../../../state/stateHooks'
+import SlackChannelPickerField from './SlackChannelPickerField'
 
-const ReminderAddEdit = ({
-    reminderType,
-    reminder,
-    defaultSlackWebHook,
-    onSubmit,
-    onDelete,
-}) => {
+const ReminderAddEdit = ({ reminderType, reminder, onSubmit, onDelete }) => {
+    const selectedOrganization = useSelectedOrganization()
     const [expanded, setExpanded] = useState(true)
 
     const editMode = !!reminder
@@ -45,38 +40,17 @@ const ReminderAddEdit = ({
             {({ isSubmitting, setFieldValue }) => (
                 <Form
                     method="POST"
-                    style={{ display: 'flex', flexDirection: 'column' }}>
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        flexGrow: 1,
+                    }}>
                     {getFields(reminderType)}
 
-                    <Field
-                        component={TextField}
-                        name="slackWebHook"
-                        type="text"
-                        margin="normal"
-                        label="Slack WebHook URL"
+                    <SlackChannelPickerField
+                        organizationId={selectedOrganization.id}
+                        setFieldValue={setFieldValue}
                     />
-                    <FormHelperText id="slackWebHook-helper">
-                        Follow the 3 steps of the{' '}
-                        <Link
-                            href="https://api.slack.com/incoming-webhooks"
-                            target="_blank">
-                            Slack documentation
-                        </Link>{' '}
-                        to get the Incoming Web Hook URL and choose the channel.
-                    </FormHelperText>
-
-                    {defaultSlackWebHook && !editMode && (
-                        <Button
-                            size="small"
-                            onClick={() =>
-                                setFieldValue(
-                                    'slackWebHook',
-                                    defaultSlackWebHook
-                                )
-                            }>
-                            Fill with another webhook from your organization
-                        </Button>
-                    )}
 
                     <Accordion
                         expanded={expanded}

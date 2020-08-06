@@ -6,13 +6,13 @@ export const initialState = {
         icalLoading: false,
         eventsLoading: false,
         remindersLoading: false,
-        lastUseSlackWebHook: null,
         loadError: null,
         icals: [],
         events: [],
         reminders: [],
         organizationPrivateDataLoading: false,
         organizationPrivateData: null,
+        slackInstalls: [],
     },
     organizations: {},
     organizationsLoading: false,
@@ -129,17 +129,12 @@ export const reducer = (state, action) => {
                         },
                     }
                 case 'remindersLoaded': {
-                    let lastUseSlackWebHook = null
-                    if (action.payload && action.payload.length > 0) {
-                        lastUseSlackWebHook = action.payload[0].slackWebHook
-                    }
                     return {
                         ...state,
                         selectedOrganization: {
                             ...state.selectedOrganization,
                             remindersLoading: false,
                             reminders: action.payload,
-                            lastUseSlackWebHook: lastUseSlackWebHook,
                         },
                     }
                 }
@@ -159,6 +154,15 @@ export const reducer = (state, action) => {
                             ...state.selectedOrganization,
                             organizationPrivateDataLoading: false,
                             organizationPrivateData: action.payload,
+                        },
+                    }
+                }
+                case 'slackInstallsLoaded': {
+                    return {
+                        ...state,
+                        selectedOrganization: {
+                            ...state.selectedOrganization,
+                            slackInstalls: action.payload,
                         },
                     }
                 }
