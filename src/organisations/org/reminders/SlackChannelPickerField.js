@@ -14,7 +14,7 @@ const SlackChannelPickerField = ({ organizationId, setFieldValue }) => {
     const [addDialogDisplayed, setAddDialogDisplayed] = useState(false)
     const slackInstalls = useSlackInstalls()
 
-    const slackUrl = `https://slack.com/oauth/v2/authorize?client_id=89232678994.876587029090&scope=incoming-webhook&user_scope&state=${organizationId}`
+    const slackUrl = `${process.env.REACT_APP_SLACK_URL}&state=${organizationId}`
 
     useEffect(() => {
         window.slackResult = installId => {

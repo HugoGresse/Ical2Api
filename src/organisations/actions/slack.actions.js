@@ -26,7 +26,7 @@ export const listenForSlackInstalls = (organizationId, dispatch) => {
                             domain: 'org',
                             type: 'loadError',
                             payload:
-                                'No permission to to the available Slack channels.',
+                                'No permission to load the Slack channels.',
                         })
                         break
 
