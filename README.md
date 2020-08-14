@@ -48,7 +48,7 @@ The API to write on iCal2Api is not yet made. While you can use the website to d
 
 
 # About
-Open source demo/sample made by [Hugo Gresse](https://hugo.gresse.io)  
+Open source project made by [Hugo Gresse](https://hugo.gresse.io)  
 My other open source projects:
 - [Open Feedback (speaker/conference/meetup event feedback SASS)](https://openfeedback.io/)
 - [Fill My Slides (Google Slide as template for generating thumbnail using .json data)](https://github.com/HugoGresse/Fill-My-Slides)
