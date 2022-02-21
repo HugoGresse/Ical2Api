@@ -19,7 +19,7 @@ export const getUpcomingEventManually = functions.https.onCall(
         const icals: Ical[] = []
         const ical = await getIcal(data.icalId)
         if (ical) {
-            icals.push()
+            icals.push(ical)
         }
         const icalsDatas = await getIcalFiles(icals)
         return getUpcomingEvents(icalsDatas)
