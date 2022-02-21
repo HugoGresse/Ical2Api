@@ -6,39 +6,44 @@ import { DateTime } from 'luxon'
 const getUpcomingEvents = (icalFiles: IcalFile[]) => {
     const events: Event[] = []
     icalFiles.forEach(icalFile => {
-        const jCal = ICAL.parse(icalFile.data)
-        const comp = new ICAL.Component(jCal)
-        const subComponents = comp.getAllSubcomponents('vevent')
+        try {
+            const jCal = ICAL.parse(icalFile.data)
+            const comp = new ICAL.Component(jCal)
+            const subComponents = comp.getAllSubcomponents('vevent')
 
-        subComponents.forEach(vevent => {
-            const event = new ICAL.Event(vevent)
+            subComponents.forEach(vevent => {
+                const event = new ICAL.Event(vevent)
 
-            const startTime = getTimestampInCorrectUTCFromComponent(
-                comp,
-                vevent,
-                'dtstart'
-            )
-            const endTime = getTimestampInCorrectUTCFromComponent(
-                comp,
-                vevent,
-                'dtend'
-            )
-            events.push({
-                organizationId: icalFile.ical.organizationId,
-                url: vevent.getFirstPropertyValue('url'),
-                startDate: startTime,
-                endDate: endTime,
-                durationInMinutes: Math.floor(
-                    (endTime - startTime) / 1000 / 60
-                ),
-                description: event.description,
-                title: event.summary,
-                location: event.location,
-                icalId: icalFile.ical.id,
-                icalName: icalFile.ical.name,
-                icalFileId: vevent.getFirstPropertyValue('uid'),
+                const startTime = getTimestampInCorrectUTCFromComponent(
+                    comp,
+                    vevent,
+                    'dtstart'
+                )
+                const endTime = getTimestampInCorrectUTCFromComponent(
+                    comp,
+                    vevent,
+                    'dtend'
+                )
+                events.push({
+                    organizationId: icalFile.ical.organizationId,
+                    url: vevent.getFirstPropertyValue('url'),
+                    startDate: startTime,
+                    endDate: endTime,
+                    durationInMinutes: Math.floor(
+                        (endTime - startTime) / 1000 / 60
+                    ),
+                    description: event.description,
+                    title: event.summary,
+                    location: event.location,
+                    icalId: icalFile.ical.id,
+                    icalName: icalFile.ical.name,
+                    icalFileId: vevent.getFirstPropertyValue('uid'),
+                })
             })
-        })
+        } catch (error) {
+            console.error('Error parsing ical file: ', error)
+            console.error(icalFile)
+        }
     })
     return events
 }
