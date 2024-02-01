@@ -17,10 +17,12 @@ export const getUpcomingEventManually = functions.https.onCall(
         await assertOrganizationAdmins(context, data.organizationId)
 
         const icals: Ical[] = []
+
         const ical = await getIcal(data.icalId)
         if (ical) {
             icals.push(ical)
         }
+
         const icalsDatas = await getIcalFiles(icals)
         return getUpcomingEvents(icalsDatas)
     }

@@ -10,7 +10,28 @@ const getIcalFiles = async (icals: Ical[]): Promise<IcalFile[]> => {
     const icalFiles: IcalFile[] = []
     for (const ical of icals) {
         try {
-            const data = await fetch(ical.url).then(res => res.text())
+            const response = await fetch(ical.url, {
+                headers: {
+                    Cookie: 'MEETUP_MEMBER=id=184681297; ',
+                },
+            })
+
+            console.log(
+                'response',
+                response.status,
+                response.statusText,
+                response.ok
+            )
+            if (!response.ok) {
+                throw new Error(
+                    'Error fetching ical: ' +
+                        response.status +
+                        ' ' +
+                        response.statusText
+                )
+            }
+
+            const data = await response.text()
 
             icalFiles.push({
                 data,

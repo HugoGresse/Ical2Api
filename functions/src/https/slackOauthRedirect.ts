@@ -5,38 +5,43 @@ import { db, serverTimestamp } from '../utils/initFirebase'
 import { OrganizationId } from '../types/Organization'
 
 export const slackOauthRedirect = functions.https.onRequest(
-    async (request, response) => {
+    async (request, response): Promise<void> => {
         const { slack } = functions.config()
 
         if (!slack || !slack.client_id || !slack.client_secret) {
             console.error(
                 'Missing slack credentials (client_id or client_secret)'
             )
-            return response.status(501).send('Missing slack credentials')
+            response.status(501).send('Missing slack credentials')
+            return
         }
 
         if (request.method !== 'GET') {
             console.error(
                 'Got unsupported ${request.method} request. Expected GET.'
             )
-            return response.status(405).send('Only GET requests are accepted')
+            response.status(405).send('Only GET requests are accepted')
+            return
         }
 
         // SSL_CHECK by slack to confirm SSL cert
         if (request.query && request.query.ssl_check === '1') {
             console.log('Confirmed SSL Cert')
-            return response.status(200).send()
+            response.status(200).send()
+            return
         }
 
         // @ts-ignore
         if (!request.query && !request.query.code && !request.query.status) {
-            return response.status(401).send("Missing query attribute 'code'")
+            response.status(401).send("Missing query attribute 'code'")
+            return
         }
 
         const [organizationId] = request.query.state.split(',')
 
         if (!organizationId) {
-            return response.status(401).send('Missing required attribute')
+            response.status(401).send('Missing required attribute')
+            return
         }
 
         const params = new URLSearchParams()
@@ -55,12 +60,13 @@ export const slackOauthRedirect = functions.https.onRequest(
 
         if (!result.ok) {
             console.error('The request was not ok: ' + JSON.stringify(result))
-            return response
+            response
                 .header(
                     'Location',
                     `https://${process.env.GCLOUD_PROJECT}.web.app`
                 )
                 .send(302)
+            return
         }
 
         const slackResultData = await result.json()
@@ -69,12 +75,13 @@ export const slackOauthRedirect = functions.https.onRequest(
             slackResultData
         )
 
-        return response
+        response
             .header(
                 'Location',
                 `https://${process.env.GCLOUD_PROJECT}.web.app/slackResult?slackInstallId=${installId}`
             )
             .sendStatus(302)
+        return
     }
 )
 
@@ -105,5 +112,5 @@ export const saveNewInstallation = async (
             createdAt: serverTimestamp(),
             organizationId,
         })
-        .then(ref => ref.id)
+        .then((ref) => ref.id)
 }
