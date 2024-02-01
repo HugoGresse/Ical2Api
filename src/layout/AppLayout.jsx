@@ -2,11 +2,11 @@ import Container from '@material-ui/core/Container'
 import React from 'react'
 import Header from '../organisations/layout/Header'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import Box from '@material-ui/core/Box'
 import Footer from './Footer'
 
-const theme = createMuiTheme({
+const theme = createTheme({
     palette: {
         type: 'light',
         primary: {

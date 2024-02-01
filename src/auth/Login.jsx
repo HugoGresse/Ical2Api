@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { StyledFirebaseAuth } from 'react-firebaseui'
-import firebase from 'firebase/app'
+import firebase from "firebase/compat/app";
 import { useStateValue } from '../state/state'
 import { Link as RouterLink, useHistory } from 'react-router-dom'
 import Link from '@material-ui/core/Link'

@@ -29,6 +29,8 @@ const OrganizationsLoading = ({ children, userId }) => {
                         return acc
                     }, {}),
                 })
+            }, error => {
+                console.error("Error while loading organizations", error)
             })
         return () => {
             unsubscribe()
