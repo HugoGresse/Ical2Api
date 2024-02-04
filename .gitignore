@@ -42,6 +42,7 @@ bower_components
 
 # Compiled binary
 build
+dist
 
 # Dependency directories
 node_modules/

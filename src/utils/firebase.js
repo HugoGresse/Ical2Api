@@ -23,7 +23,7 @@ export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp
 export const nowTimestamp = firebase.firestore.Timestamp.now
 export const deleteField = firebase.firestore.FieldValue.delete
 
-firebase.functions().useFunctionsEmulator('http://localhost:5000')
+// firebase.functions().useFunctionsEmulator('http://localhost:5000')
 export const functions = {
     getUpcomingEventManually: firebase
         .functions()

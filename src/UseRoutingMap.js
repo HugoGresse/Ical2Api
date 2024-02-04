@@ -5,7 +5,7 @@ export const useRoutingMap = () => {
     return RoutingMap(organizationId)
 }
 
-export const RoutingMap = orgId => ({
+export const RoutingMap = (orgId) => ({
     orgs: {
         base: {
             name: 'Organizations',
@@ -41,7 +41,7 @@ export const RoutingMap = orgId => ({
 })
 
 export const getShareableEventUrl = (organization, organizationPrivateData) => {
-    const baseUrl = `https://${process.env.REACT_APP_HOSTING_FDL}${
+    const baseUrl = `https://${import.meta.env.VITE_HOSTING_FDL}${
         RoutingMap(organization.id).orgs.org.upcomingEvents.url
     }`
     if (organization.public) {

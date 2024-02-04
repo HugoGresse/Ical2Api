@@ -27,7 +27,7 @@ const uiConfig = {
             emailLinkSignIn: function() {
                 return {
                     // Custom FDL domain.
-                    dynamicLinkDomain: process.env.REACT_APP_LOGIN_EMAIL_FDL,
+                    dynamicLinkDomain: import.meta.env.VITE_LOGIN_EMAIL_FDL,
                     // Always true for email link sign-in.
                     handleCodeInApp: true,
                 }
